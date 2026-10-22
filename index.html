@@ -611,17 +611,35 @@
             <div>
               <span class="section-kicker">02 / Applied learning</span>
               <h2 class="text-lg font-bold tracking-tight text-[#141413]" data-i18n="secTutorialsTitle">Tutorial Guides & Automated Calculators</h2>
-              <p class="text-xs text-[#575653]" data-i18n="secTutorialsSub">Each module features a Google Docs-style outline with full tutorial theory on top and a blank-slate calculator + smart paste parser below.</p>
+              <p class="text-xs text-[#575653]" data-i18n="secTutorialsSub">Try the new Lecture 1 financial calculators or open a tutorial module for guided practice and interactive tools.</p>
             </div>
-            <span class="text-xs font-mono-code text-[#87867F]">3 Interactive Tools</span>
+            <span class="text-xs font-mono-code text-[#87867F]">4 Interactive Tools</span>
           </div>
 
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-            <!-- Tutorial 1: TLC Multimodal -->
+          <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5">
+            <!-- Lecture 1: Financial Metrics -->
+            <div onclick="navigateTo('t1calc')" class="editorial-card editorial-card-interactive p-6 cursor-pointer flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between mb-3">
+                  <span class="text-xs font-mono-code font-semibold px-2.5 py-1 rounded bg-sky-50 text-sky-900 border border-sky-200">LECTURE 1 • CALCULATOR 01</span>
+                  <span class="text-xs font-mono-code text-[#87867F]">Cost • ROA • Cash</span>
+                </div>
+                <h3 class="text-lg font-bold text-[#141413] mb-2">Logistics Cost & Performance</h3>
+                <p class="text-xs text-[#575653] leading-relaxed mb-4">
+                  Compare annual transport and inventory costs, measure WMS impact on ROA, and calculate the cash-to-cash cycle from Lecture 1.
+                </p>
+              </div>
+              <div class="pt-3 border-t border-[#E6E4DD] flex items-center justify-between text-xs font-semibold text-[#141413]">
+                <span>Open Lecture 1 Calculator</span>
+                <span>→</span>
+              </div>
+            </div>
+
+            <!-- Tutorial 2: TLC Multimodal -->
             <div onclick="navigateTo('tlc')" class="editorial-card editorial-card-interactive p-6 cursor-pointer flex flex-col justify-between">
               <div>
                 <div class="flex items-center justify-between mb-3">
-                  <span class="text-xs font-mono-code font-semibold px-2.5 py-1 rounded bg-blue-50 text-blue-800 border border-blue-200">TUTORIAL MODULE 01</span>
+                  <span class="text-xs font-mono-code font-semibold px-2.5 py-1 rounded bg-blue-50 text-blue-800 border border-blue-200">TUTORIAL MODULE 02</span>
                   <span class="text-xs font-mono-code text-[#87867F]">CW • RT • Multimodal</span>
                 </div>
                 <h3 class="text-lg font-bold text-[#141413] mb-2">Total Logistics Cost (TLC) & Multimodal</h3>
@@ -635,11 +653,11 @@
               </div>
             </div>
 
-            <!-- Tutorial 2: NWCM -->
+            <!-- Tutorial 3: NWCM -->
             <div onclick="navigateTo('nwcm')" class="editorial-card editorial-card-interactive p-6 cursor-pointer flex flex-col justify-between">
               <div>
                 <div class="flex items-center justify-between mb-3">
-                  <span class="text-xs font-mono-code font-semibold px-2.5 py-1 rounded bg-amber-50 text-amber-900 border border-amber-200">TUTORIAL MODULE 02</span>
+                  <span class="text-xs font-mono-code font-semibold px-2.5 py-1 rounded bg-amber-50 text-amber-900 border border-amber-200">TUTORIAL MODULE 03</span>
                   <span class="text-xs font-mono-code text-[#87867F]">M×N Matrix Solver</span>
                 </div>
                 <h3 class="text-lg font-bold text-[#141413] mb-2">North-West Corner Method (NWCM)</h3>
@@ -653,11 +671,11 @@
               </div>
             </div>
 
-            <!-- Tutorial 3: EOQ & EPQ -->
+            <!-- Tutorial 4: EOQ & EPQ -->
             <div onclick="navigateTo('eoq')" class="editorial-card editorial-card-interactive p-6 cursor-pointer flex flex-col justify-between">
               <div>
                 <div class="flex items-center justify-between mb-3">
-                  <span class="text-xs font-mono-code font-semibold px-2.5 py-1 rounded bg-emerald-50 text-emerald-900 border border-emerald-200">TUTORIAL MODULE 03</span>
+                  <span class="text-xs font-mono-code font-semibold px-2.5 py-1 rounded bg-emerald-50 text-emerald-900 border border-emerald-200">TUTORIAL MODULE 04</span>
                   <span class="text-xs font-mono-code text-[#87867F]">Q* • Qp* • Imax</span>
                 </div>
                 <h3 class="text-lg font-bold text-[#141413] mb-2">EOQ & EPQ Inventory Optimization</h3>
@@ -698,6 +716,164 @@
           <!-- Right Reader-Friendly Lecture Content -->
           <div id="lecture-body-content" class="lg:col-span-9 space-y-6"></div>
 
+        </div>
+      </section>
+
+      <!-- ==========================================
+           PAGE: LECTURE 1 — LOGISTICS COST & PERFORMANCE CALCULATOR
+           ========================================== -->
+      <section id="page-t1calc" class="hidden view-transition">
+        <div class="max-w-7xl mx-auto space-y-6">
+          <div class="editorial-card p-6 sm:p-8">
+            <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+              <div>
+                <span class="text-xs font-mono-code uppercase text-blue-700 font-semibold">Lecture 1 • Calculator 01</span>
+                <h1 class="font-serif-editorial text-3xl sm:text-4xl text-[#141413] mt-1">Logistics Cost & Performance Calculator</h1>
+                <p class="text-sm text-[#575653] mt-2 max-w-3xl">Work through the Lecture 1 transport-cost trade-off, Strategic Profit Model (ROA), and cash-to-cash cycle. Values start with the examples from slides 32–34; edit any input to try your own case.</p>
+              </div>
+              <button onclick="navigateTo('topic1', 't1-s5')" class="shrink-0 px-4 py-2 rounded-lg border border-[#C8D5E4] bg-white hover:bg-[#F3F7FC] text-xs font-semibold text-[#102238] transition">Back to Lecture 1 examples ↗</button>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 xl:grid-cols-3 gap-5 items-start">
+            <section class="editorial-card p-5 space-y-4" aria-labelledby="t1-cost-heading">
+              <div>
+                <span class="text-[10px] font-mono-code uppercase tracking-wider text-blue-700 font-semibold">Practice Q1 • Slide 32</span>
+                <h2 id="t1-cost-heading" class="text-base font-bold text-[#141413] mt-1">Transport Total Cost</h2>
+                <p class="text-xs text-[#575653] mt-1">Annual freight cost + average inventory × annual holding cost.</p>
+              </div>
+              <div class="space-y-3">
+                <div>
+                  <label for="t1-cost-demand" class="block text-xs text-[#575653] mb-1">Annual demand (units/year)</label>
+                  <input id="t1-cost-demand" type="number" value="500000" min="0" step="any" oninput="calculateT1Financials()" class="editorial-input w-full px-3 py-2 text-sm font-mono-code">
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                  <div>
+                    <label for="t1-cost-unit" class="block text-xs text-[#575653] mb-1">Unit cost ($/unit)</label>
+                    <input id="t1-cost-unit" type="number" value="40" min="0" step="any" oninput="calculateT1Financials()" class="editorial-input w-full px-3 py-2 text-sm font-mono-code">
+                  </div>
+                  <div>
+                    <label for="t1-cost-carry" class="block text-xs text-[#575653] mb-1">Carrying rate (%/year)</label>
+                    <input id="t1-cost-carry" type="number" value="25" min="0" step="any" oninput="calculateT1Financials()" class="editorial-input w-full px-3 py-2 text-sm font-mono-code">
+                  </div>
+                </div>
+                <div class="p-3 rounded-lg bg-[#F3F7FC] text-xs text-[#536477]">Annual holding cost: <strong id="t1-cost-holding-rate" class="text-[#102238]">—</strong> per unit</div>
+                <div class="grid grid-cols-2 gap-3">
+                  <div>
+                    <h3 class="text-xs font-bold text-[#141413] mb-2">Rail option</h3>
+                    <label for="t1-cost-rail-rate" class="block text-[11px] text-[#575653] mb-1">Transport rate ($/unit)</label>
+                    <input id="t1-cost-rail-rate" type="number" value="2" min="0" step="any" oninput="calculateT1Financials()" class="editorial-input w-full px-2.5 py-2 text-sm font-mono-code">
+                    <label for="t1-cost-rail-inventory" class="block text-[11px] text-[#575653] mt-2 mb-1">Average inventory (units)</label>
+                    <input id="t1-cost-rail-inventory" type="number" value="80000" min="0" step="any" oninput="calculateT1Financials()" class="editorial-input w-full px-2.5 py-2 text-sm font-mono-code">
+                  </div>
+                  <div>
+                    <h3 class="text-xs font-bold text-[#141413] mb-2">Truck option</h3>
+                    <label for="t1-cost-truck-rate" class="block text-[11px] text-[#575653] mb-1">Transport rate ($/unit)</label>
+                    <input id="t1-cost-truck-rate" type="number" value="3.5" min="0" step="any" oninput="calculateT1Financials()" class="editorial-input w-full px-2.5 py-2 text-sm font-mono-code">
+                    <label for="t1-cost-truck-inventory" class="block text-[11px] text-[#575653] mt-2 mb-1">Average inventory (units)</label>
+                    <input id="t1-cost-truck-inventory" type="number" value="30000" min="0" step="any" oninput="calculateT1Financials()" class="editorial-input w-full px-2.5 py-2 text-sm font-mono-code">
+                  </div>
+                </div>
+              </div>
+              <div id="t1-cost-error" class="hidden p-3 rounded-lg bg-rose-50 border border-rose-200 text-rose-800 text-xs" role="alert"></div>
+              <div id="t1-cost-results" class="p-3 rounded-xl bg-[#F3F7FC] space-y-2 text-xs font-mono-code" aria-live="polite">
+                <div class="font-semibold text-[#102238]">Rail</div>
+                <div class="flex justify-between gap-2"><span>Freight cost / year</span><strong id="t1-cost-rail-freight">—</strong></div>
+                <div class="flex justify-between gap-2"><span>Inventory holding / year</span><strong id="t1-cost-rail-holding">—</strong></div>
+                <div class="flex justify-between gap-2"><span>Total cost / year</span><strong id="t1-cost-rail-total">—</strong></div>
+                <div class="font-semibold text-[#102238] pt-2 border-t border-[#DCE7F4]">Truck</div>
+                <div class="flex justify-between gap-2"><span>Freight cost / year</span><strong id="t1-cost-truck-freight">—</strong></div>
+                <div class="flex justify-between gap-2"><span>Inventory holding / year</span><strong id="t1-cost-truck-holding">—</strong></div>
+                <div class="flex justify-between gap-2"><span>Total cost / year</span><strong id="t1-cost-truck-total">—</strong></div>
+                <div id="t1-cost-decision" class="pt-2 border-t border-[#DCE7F4] font-sans text-[#102238]">Enter valid values to compare options.</div>
+              </div>
+            </section>
+
+            <section class="editorial-card p-5 space-y-4" aria-labelledby="t1-roa-heading">
+              <div>
+                <span class="text-[10px] font-mono-code uppercase tracking-wider text-blue-700 font-semibold">Practice Q2 • Slide 33</span>
+                <h2 id="t1-roa-heading" class="text-base font-bold text-[#141413] mt-1">Strategic Profit Model (ROA)</h2>
+                <p class="text-xs text-[#575653] mt-1">Estimate how reducing inventory with a WMS affects asset turnover and return on assets. Monetary inputs are in millions.</p>
+              </div>
+              <div class="grid grid-cols-2 gap-3">
+                <div>
+                  <label for="t1-roa-sales" class="block text-xs text-[#575653] mb-1">Sales ($M)</label>
+                  <input id="t1-roa-sales" type="number" value="20" min="0" step="any" oninput="calculateT1Financials()" class="editorial-input w-full px-3 py-2 text-sm font-mono-code">
+                </div>
+                <div>
+                  <label for="t1-roa-profit" class="block text-xs text-[#575653] mb-1">Net profit ($M)</label>
+                  <input id="t1-roa-profit" type="number" value="1" step="any" oninput="calculateT1Financials()" class="editorial-input w-full px-3 py-2 text-sm font-mono-code">
+                </div>
+                <div>
+                  <label for="t1-roa-inventory" class="block text-xs text-[#575653] mb-1">Inventory ($M)</label>
+                  <input id="t1-roa-inventory" type="number" value="4" min="0" step="any" oninput="calculateT1Financials()" class="editorial-input w-full px-3 py-2 text-sm font-mono-code">
+                </div>
+                <div>
+                  <label for="t1-roa-assets" class="block text-xs text-[#575653] mb-1">Other assets ($M)</label>
+                  <input id="t1-roa-assets" type="number" value="6" min="0" step="any" oninput="calculateT1Financials()" class="editorial-input w-full px-3 py-2 text-sm font-mono-code">
+                </div>
+                <div class="col-span-2">
+                  <label for="t1-roa-reduction" class="block text-xs text-[#575653] mb-1">WMS inventory reduction (%)</label>
+                  <input id="t1-roa-reduction" type="number" value="25" min="0" max="100" step="any" oninput="calculateT1Financials()" class="editorial-input w-full px-3 py-2 text-sm font-mono-code">
+                </div>
+              </div>
+              <div id="t1-roa-error" class="hidden p-3 rounded-lg bg-rose-50 border border-rose-200 text-rose-800 text-xs" role="alert"></div>
+              <div id="t1-roa-results" class="p-3 rounded-xl bg-[#F3F7FC] space-y-2 text-xs font-mono-code" aria-live="polite">
+                <div class="font-semibold text-[#102238]">Current</div>
+                <div class="flex justify-between gap-2"><span>Inventory</span><strong id="t1-roa-current-inventory">—</strong></div>
+                <div class="flex justify-between gap-2"><span>Total assets</span><strong id="t1-roa-current-assets">—</strong></div>
+                <div class="flex justify-between gap-2"><span>Asset turnover</span><strong id="t1-roa-current-turnover">—</strong></div>
+                <div class="flex justify-between gap-2"><span>ROA</span><strong id="t1-roa-current-roa">—</strong></div>
+                <div class="font-semibold text-[#102238] pt-2 border-t border-[#DCE7F4]">After WMS</div>
+                <div class="flex justify-between gap-2"><span>Inventory</span><strong id="t1-roa-new-inventory">—</strong></div>
+                <div class="flex justify-between gap-2"><span>Total assets</span><strong id="t1-roa-new-assets">—</strong></div>
+                <div class="flex justify-between gap-2"><span>Asset turnover</span><strong id="t1-roa-new-turnover">—</strong></div>
+                <div class="flex justify-between gap-2"><span>ROA</span><strong id="t1-roa-new-roa">—</strong></div>
+                <div class="pt-2 border-t border-[#DCE7F4] text-[#102238]">ROA change: <strong id="t1-roa-change">—</strong></div>
+              </div>
+            </section>
+
+            <section class="editorial-card p-5 space-y-4" aria-labelledby="t1-c2c-heading">
+              <div>
+                <span class="text-[10px] font-mono-code uppercase tracking-wider text-blue-700 font-semibold">Practice Q3 • Slide 34</span>
+                <h2 id="t1-c2c-heading" class="text-base font-bold text-[#141413] mt-1">Cash-to-Cash Cycle</h2>
+                <p class="text-xs text-[#575653] mt-1">Calculate inventory, receivables, and payables days. Monetary inputs are in millions.</p>
+              </div>
+              <div class="grid grid-cols-2 gap-3">
+                <div>
+                  <label for="t1-c2c-cogs" class="block text-xs text-[#575653] mb-1">COGS ($M/year)</label>
+                  <input id="t1-c2c-cogs" type="number" value="14.6" min="0" step="any" oninput="calculateT1Financials()" class="editorial-input w-full px-3 py-2 text-sm font-mono-code">
+                </div>
+                <div>
+                  <label for="t1-c2c-sales" class="block text-xs text-[#575653] mb-1">Sales ($M/year)</label>
+                  <input id="t1-c2c-sales" type="number" value="20" min="0" step="any" oninput="calculateT1Financials()" class="editorial-input w-full px-3 py-2 text-sm font-mono-code">
+                </div>
+                <div>
+                  <label for="t1-c2c-inventory" class="block text-xs text-[#575653] mb-1">Avg. inventory ($M)</label>
+                  <input id="t1-c2c-inventory" type="number" value="2" min="0" step="any" oninput="calculateT1Financials()" class="editorial-input w-full px-3 py-2 text-sm font-mono-code">
+                </div>
+                <div>
+                  <label for="t1-c2c-ar" class="block text-xs text-[#575653] mb-1">Accounts receivable ($M)</label>
+                  <input id="t1-c2c-ar" type="number" value="1.5" min="0" step="any" oninput="calculateT1Financials()" class="editorial-input w-full px-3 py-2 text-sm font-mono-code">
+                </div>
+                <div>
+                  <label for="t1-c2c-ap" class="block text-xs text-[#575653] mb-1">Accounts payable ($M)</label>
+                  <input id="t1-c2c-ap" type="number" value="1.2" min="0" step="any" oninput="calculateT1Financials()" class="editorial-input w-full px-3 py-2 text-sm font-mono-code">
+                </div>
+                <div>
+                  <label for="t1-c2c-days" class="block text-xs text-[#575653] mb-1">Days per year</label>
+                  <input id="t1-c2c-days" type="number" value="365" min="1" step="any" oninput="calculateT1Financials()" class="editorial-input w-full px-3 py-2 text-sm font-mono-code">
+                </div>
+              </div>
+              <div id="t1-c2c-error" class="hidden p-3 rounded-lg bg-rose-50 border border-rose-200 text-rose-800 text-xs" role="alert"></div>
+              <div id="t1-c2c-results" class="p-3 rounded-xl bg-[#F3F7FC] space-y-2 text-xs font-mono-code" aria-live="polite">
+                <div class="flex justify-between gap-2"><span>Days of Inventory (DOI)</span><strong id="t1-c2c-doi">—</strong></div>
+                <div class="flex justify-between gap-2"><span>Days of Receivables (DOR)</span><strong id="t1-c2c-dor">—</strong></div>
+                <div class="flex justify-between gap-2"><span>Days of Payables (DOP)</span><strong id="t1-c2c-dop">—</strong></div>
+                <div class="pt-2 border-t border-[#DCE7F4] text-[#102238]">Cash-to-cash cycle: <strong id="t1-c2c-cycle">—</strong></div>
+              </div>
+            </section>
+          </div>
         </div>
       </section>
 
@@ -1559,7 +1735,7 @@
   <footer class="border-t border-[#E6E4DD] bg-white py-5 mt-12">
     <div class="max-w-[1440px] mx-auto px-4 sm:px-8 flex flex-col sm:flex-row items-center justify-between text-xs text-[#87867F] gap-2">
       <div>LGT3301 — Logistics Technologies & Distribution Management Study Portal</div>
-      <div class="font-mono-code">Topics 1–4 Study Notes • TLC • NWCM • EOQ/EPQ Calculators</div>
+      <div class="font-mono-code">Topics 1–4 Study Notes • Lecture 1 Metrics • TLC • NWCM • EOQ/EPQ Calculators</div>
     </div>
   </footer>
 
@@ -1582,7 +1758,7 @@
         secLecturesTitle: "Lecture Study Modules (Topics 1–4)",
         secLecturesSub: "Essential concepts, frameworks, and practice case studies extracted for fast revision.",
         secTutorialsTitle: "Tutorial Guides & Automated Calculators",
-        secTutorialsSub: "Each module features a Google Docs-style outline with full tutorial theory on top and a blank-slate calculator + smart paste parser below.",
+        secTutorialsSub: "Try the new Lecture 1 financial calculators or open a tutorial module for guided practice and interactive tools.",
         openNotes: "Read Study Notes"
       },
       zh: {
@@ -1595,7 +1771,7 @@
         secLecturesTitle: "課堂學習模組 (Topics 1–4)",
         secLecturesSub: "精煉提取課堂核心概念、管理框架與實戰練習題。",
         secTutorialsTitle: "導修指南與自動化計算工具",
-        secTutorialsSub: "每個模組左側均設有 Google Docs 風格大綱，包含導修理論講解與空白計算機。",
+        secTutorialsSub: "試用全新的課題一財務計算機，或開啟導修模組進行互動練習。",
         openNotes: "閱讀學習筆記"
       },
       id: {
@@ -1608,7 +1784,7 @@
         secLecturesTitle: "Modul Materi Kuliah (Topics 1–4)",
         secLecturesSub: "Rangkuman konsep inti, kerangka kerja, dan latihan studi kasus.",
         secTutorialsTitle: "Panduan Tutorial & Kalkulator Otomatis",
-        secTutorialsSub: "Dilengkapi tab outline bergaya Google Docs untuk membaca materi tutorial maupun kalkulator.",
+        secTutorialsSub: "Coba kalkulator keuangan Lecture 1 atau buka modul tutorial untuk latihan terpandu.",
         openNotes: "Baca Catatan"
       }
     };
@@ -1633,6 +1809,7 @@
         title: "Logistics in Supply Chain Management (SCM)",
         subtitle: "Foundations, Integrative Processes, Channel Design, Operational Models, SCIS, and Financial Metrics",
         relatedCalcs: [
+          { label: "Try the Lecture 1 Logistics Cost & Performance Calculator ↗", target: "t1calc" },
           { label: "Try the TLC & Multimodal Calculator ↗", target: "tlc" },
           { label: "Try the EOQ & EPQ Inventory Calculator ↗", target: "eoq" }
         ],
@@ -1717,7 +1894,7 @@
             title: "1.4 Logistical Value Proposition & SCIS (ERP, TMS, WMS, YMS)",
             html: `
               <p class="text-sm text-[#575653] leading-relaxed mb-3">
-                The Logistical Value Proposition balances <strong>Service Benefits</strong> (Availability, Operational Performance, Service Reliability—culminating in the <em>Perfect Order</em>) against <strong>Total Landed Cost Minimization</strong>.Want to test mode cost trade-offs quantitatively? <span onclick="navigateTo('tlc')" class="calc-inline-link">Try the TLC & Multimodal Calculator ↗</span>
+                The Logistical Value Proposition balances <strong>Service Benefits</strong> (Availability, Operational Performance, Service Reliability—culminating in the <em>Perfect Order</em>) against <strong>Total Landed Cost Minimization</strong>. Want to test Lecture 1 transport-cost trade-offs? <span onclick="navigateTo('t1calc')" class="calc-inline-link">Try the Logistics Cost & Performance Calculator ↗</span>
               </p>
               <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
                 <div class="p-4 rounded-xl bg-[#FAF9F5] border border-[#E6E4DD]">
@@ -1736,6 +1913,10 @@
             title: "1.5 Practice Questions & Financial Metrics (Slides 32–34)",
             html: String.raw`
               <div class="space-y-4">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 p-4 rounded-xl bg-blue-50 border border-blue-200">
+                  <p class="text-xs text-blue-950">Try your own values for the transport cost, ROA, and cash-to-cash examples.</p>
+                  <button onclick="navigateTo('t1calc')" class="shrink-0 px-4 py-2 rounded-lg bg-blue-700 hover:bg-blue-800 text-white text-xs font-semibold transition">Open Lecture 1 Calculator ↗</button>
+                </div>
                 <div class="p-4 rounded-xl bg-[#FAF9F5] border border-[#E6E4DD]">
                   <div class="text-xs font-bold text-[#141413]">Practice Q1: Total Cost Analysis & Transport Trade-Offs (Slide 32)</div>
                   <p class="text-xs text-[#575653] mt-1">Annual demand $D = 500,000\text{ units}$, Unit cost $C = \$40$, Carrying rate $i = 25\% \Rightarrow H = 0.25 \times \$40 = \$10/\text{unit/yr}$.<br>• <strong>Rail Option:</strong> Transport rate = $\$2.00/\text{unit}$, Avg Inventory = $80,000\text{ units}$.<br>• <strong>Truck Option:</strong> Transport rate = $\$3.50/\text{unit}$, Avg Inventory = $30,000\text{ units}$.</p>
@@ -2061,6 +2242,146 @@
       }
     };
 
+    function readT1Number(id, label) {
+      const rawValue = document.getElementById(id).value.trim();
+      if (!rawValue) throw new Error(`${label} is required.`);
+      const value = Number(rawValue);
+      if (!Number.isFinite(value)) throw new Error(`${label} must be a valid number.`);
+      return value;
+    }
+
+    function showT1CalculatorError(prefix, error) {
+      document.getElementById(`${prefix}-results`).classList.add('hidden');
+      const errorBox = document.getElementById(`${prefix}-error`);
+      errorBox.textContent = error.message;
+      errorBox.classList.remove('hidden');
+    }
+
+    function showT1CalculatorResults(prefix) {
+      document.getElementById(`${prefix}-error`).classList.add('hidden');
+      document.getElementById(`${prefix}-results`).classList.remove('hidden');
+    }
+
+    function formatT1Currency(value) {
+      return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 2 }).format(value);
+    }
+
+    function formatT1Millions(value) {
+      return `$${value.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}M`;
+    }
+
+    function calculateT1TransportCost() {
+      const prefix = 't1-cost';
+      try {
+        const demand = readT1Number(`${prefix}-demand`, 'Annual demand');
+        const unitCost = readT1Number(`${prefix}-unit`, 'Unit cost');
+        const carryingRate = readT1Number(`${prefix}-carry`, 'Carrying rate');
+        const railRate = readT1Number(`${prefix}-rail-rate`, 'Rail transport rate');
+        const railInventory = readT1Number(`${prefix}-rail-inventory`, 'Rail average inventory');
+        const truckRate = readT1Number(`${prefix}-truck-rate`, 'Truck transport rate');
+        const truckInventory = readT1Number(`${prefix}-truck-inventory`, 'Truck average inventory');
+        if (demand <= 0) throw new Error('Annual demand must be greater than zero.');
+        if ([unitCost, carryingRate, railRate, railInventory, truckRate, truckInventory].some(value => value < 0)) {
+          throw new Error('Costs, rates, and inventory values cannot be negative.');
+        }
+
+        const holdingRate = unitCost * carryingRate / 100;
+        const railFreight = demand * railRate;
+        const railHolding = railInventory * holdingRate;
+        const railTotal = railFreight + railHolding;
+        const truckFreight = demand * truckRate;
+        const truckHolding = truckInventory * holdingRate;
+        const truckTotal = truckFreight + truckHolding;
+
+        document.getElementById(`${prefix}-holding-rate`).textContent = formatT1Currency(holdingRate);
+        document.getElementById(`${prefix}-rail-freight`).textContent = formatT1Currency(railFreight);
+        document.getElementById(`${prefix}-rail-holding`).textContent = formatT1Currency(railHolding);
+        document.getElementById(`${prefix}-rail-total`).textContent = formatT1Currency(railTotal);
+        document.getElementById(`${prefix}-truck-freight`).textContent = formatT1Currency(truckFreight);
+        document.getElementById(`${prefix}-truck-holding`).textContent = formatT1Currency(truckHolding);
+        document.getElementById(`${prefix}-truck-total`).textContent = formatT1Currency(truckTotal);
+        const difference = Math.abs(railTotal - truckTotal);
+        const decision = railTotal === truckTotal
+          ? 'Both options have the same annual total cost.'
+          : `${railTotal < truckTotal ? 'Rail' : 'Truck'} is cheaper by ${formatT1Currency(difference)} per year.`;
+        document.getElementById(`${prefix}-decision`).textContent = decision;
+        showT1CalculatorResults(prefix);
+      } catch (error) {
+        showT1CalculatorError(prefix, error);
+      }
+    }
+
+    function calculateT1ROA() {
+      const prefix = 't1-roa';
+      try {
+        const sales = readT1Number(`${prefix}-sales`, 'Sales');
+        const profit = readT1Number(`${prefix}-profit`, 'Net profit');
+        const inventory = readT1Number(`${prefix}-inventory`, 'Inventory');
+        const otherAssets = readT1Number(`${prefix}-assets`, 'Other assets');
+        const reduction = readT1Number(`${prefix}-reduction`, 'WMS inventory reduction');
+        if (sales <= 0) throw new Error('Sales must be greater than zero.');
+        if (inventory < 0 || otherAssets < 0) throw new Error('Inventory and other assets cannot be negative.');
+        if (reduction < 0 || reduction > 100) throw new Error('WMS inventory reduction must be between 0% and 100%.');
+
+        const currentAssets = inventory + otherAssets;
+        const newInventory = inventory * (1 - reduction / 100);
+        const newAssets = newInventory + otherAssets;
+        if (currentAssets <= 0 || newAssets <= 0) throw new Error('Total assets must be greater than zero before and after the WMS change.');
+        const currentTurnover = sales / currentAssets;
+        const newTurnover = sales / newAssets;
+        const currentROA = profit / currentAssets;
+        const newROA = profit / newAssets;
+        const roaChange = (newROA - currentROA) * 100;
+
+        document.getElementById(`${prefix}-current-inventory`).textContent = formatT1Millions(inventory);
+        document.getElementById(`${prefix}-current-assets`).textContent = formatT1Millions(currentAssets);
+        document.getElementById(`${prefix}-current-turnover`).textContent = `${currentTurnover.toFixed(2)}x`;
+        document.getElementById(`${prefix}-current-roa`).textContent = `${(currentROA * 100).toFixed(2)}%`;
+        document.getElementById(`${prefix}-new-inventory`).textContent = formatT1Millions(newInventory);
+        document.getElementById(`${prefix}-new-assets`).textContent = formatT1Millions(newAssets);
+        document.getElementById(`${prefix}-new-turnover`).textContent = `${newTurnover.toFixed(2)}x`;
+        document.getElementById(`${prefix}-new-roa`).textContent = `${(newROA * 100).toFixed(2)}%`;
+        document.getElementById(`${prefix}-change`).textContent = `${roaChange >= 0 ? '+' : ''}${roaChange.toFixed(2)} percentage points`;
+        showT1CalculatorResults(prefix);
+      } catch (error) {
+        showT1CalculatorError(prefix, error);
+      }
+    }
+
+    function calculateT1CashToCash() {
+      const prefix = 't1-c2c';
+      try {
+        const cogs = readT1Number(`${prefix}-cogs`, 'COGS');
+        const sales = readT1Number(`${prefix}-sales`, 'Sales');
+        const inventory = readT1Number(`${prefix}-inventory`, 'Average inventory');
+        const receivables = readT1Number(`${prefix}-ar`, 'Accounts receivable');
+        const payables = readT1Number(`${prefix}-ap`, 'Accounts payable');
+        const daysPerYear = readT1Number(`${prefix}-days`, 'Days per year');
+        if (cogs <= 0 || sales <= 0 || daysPerYear <= 0) throw new Error('COGS, sales, and days per year must be greater than zero.');
+        if ([inventory, receivables, payables].some(value => value < 0)) {
+          throw new Error('Inventory, accounts receivable, and accounts payable cannot be negative.');
+        }
+
+        const daysInventory = inventory / cogs * daysPerYear;
+        const daysReceivables = receivables / sales * daysPerYear;
+        const daysPayables = payables / cogs * daysPerYear;
+        const cashToCash = daysInventory + daysReceivables - daysPayables;
+        document.getElementById(`${prefix}-doi`).textContent = `${daysInventory.toFixed(2)} days`;
+        document.getElementById(`${prefix}-dor`).textContent = `${daysReceivables.toFixed(2)} days`;
+        document.getElementById(`${prefix}-dop`).textContent = `${daysPayables.toFixed(2)} days`;
+        document.getElementById(`${prefix}-cycle`).textContent = `${cashToCash.toFixed(2)} days`;
+        showT1CalculatorResults(prefix);
+      } catch (error) {
+        showT1CalculatorError(prefix, error);
+      }
+    }
+
+    function calculateT1Financials() {
+      calculateT1TransportCost();
+      calculateT1ROA();
+      calculateT1CashToCash();
+    }
+
     function typesetMath(element) {
       const typeset = () => window.MathJax.typesetPromise([element]);
       if (window.MathJax?.typesetPromise) {
@@ -2077,7 +2398,7 @@
       backBtn.classList.toggle('hidden', target === 'home');
       backBtn.classList.toggle('inline-flex', target !== 'home');
 
-      ['home', 'lecture', 'tlc', 'nwcm', 'eoq'].forEach(p => {
+      ['home', 'lecture', 't1calc', 'tlc', 'nwcm', 'eoq'].forEach(p => {
         document.getElementById('page-' + p).classList.add('hidden');
       });
 
@@ -2095,7 +2416,7 @@
         }
       } else {
         document.getElementById('page-' + target).classList.remove('hidden');
-        const labelMap = { home: 'Home Portal', tlc: 'Tutorial 1: TLC Multimodal', nwcm: 'Tutorial 2: NWCM Solver', eoq: 'Tutorial 3: EOQ & EPQ' };
+        const labelMap = { home: 'Home Portal', t1calc: 'Lecture 1: Logistics Cost & Performance Calculator', tlc: 'Tutorial 2: TLC Multimodal', nwcm: 'Tutorial 3: NWCM Solver', eoq: 'Tutorial 4: EOQ & EPQ' };
         document.getElementById('ai-context-label').textContent = `Context: ${labelMap[target] || target}`;
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
@@ -2116,7 +2437,7 @@
       // Render Related Calculators
       const relEl = document.getElementById('lecture-related-calcs');
       relEl.innerHTML = data.relatedCalcs.map(c => `
-        <div><span onclick="navigateTo('${c.target}'); switchModuleSubTab('${c.target}', 'calc')" class="calc-inline-link inline-block">${c.label}</span></div>
+        <div><span onclick="navigateTo('${c.target}'); if (['tlc', 'nwcm', 'eoq'].includes('${c.target}')) switchModuleSubTab('${c.target}', 'calc')" class="calc-inline-link inline-block">${c.label}</span></div>
       `).join('');
 
       // Render Right Lecture Content
@@ -2164,6 +2485,7 @@
       { title: "Topic 3: Packaging, Unitization, Ethylene & Barcodes", keywords: "packaging building blocks unit load ethylene hazmat box maker certificate 1d 2d qr barcode smart package", target: "topic3", sec: "t3-s4", badge: "Lecture 3" },
       { title: "Topic 4: Inventory Management, EOQ, EPQ & Safety Stock", keywords: "inventory holding ordering cost eoq epq safety stock reorder point rop", target: "topic4", sec: "t4-s1", badge: "Lecture 4" },
       { title: "Topic 4: ABC Pareto Analysis, RFID & ML Demand Sensing", keywords: "abc analysis pareto 80 20 rfid barcode machine learning social media demand forecasting", target: "topic4", sec: "t4-s3", badge: "Lecture 4" },
+      { title: "Lecture 1: Logistics Cost & Performance Calculator", keywords: "lecture 1 total logistics cost transport rail truck roa return on assets strategic profit model wms cash to cash doi dor dop financial calculator", target: "t1calc", badge: "Calculator" },
       { title: "TLC & Multimodal Shipping Calculator", keywords: "chargeable weight volumetric weight dim 6000 5000 revenue ton lcl air road sea calculator", target: "tlc", sub: "calc", badge: "Calculator" },
       { title: "North-West Corner Method (NWCM) Solver", keywords: "nwcm northwest corner method matrix allocation supply demand transportation cost calculator", target: "nwcm", sub: "calc", badge: "Calculator" },
       { title: "EOQ & EPQ Inventory Optimization Simulator", keywords: "eoq epq max inventory imax sawtooth chart staggered shuttle calculator", target: "eoq", sub: "calc", badge: "Calculator" }
@@ -3248,6 +3570,7 @@
       loadTLCPreset('blank');
       loadNWCMPreset('blank');
       loadEOQPreset('blank');
+      calculateT1Financials();
     };
   </script>
 </body>
