@@ -39,6 +39,7 @@
       --navy-950: #071426;
       --navy-900: #0B1D34;
       --blue-bright: #32A8FF;
+      --ai-drawer-width: 420px;
       --ease-out-expo: cubic-bezier(0.22, 1, 0.36, 1);
       --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
     }
@@ -305,6 +306,101 @@
     [class~="bg-[#F3F2EE]"] { background-color: #F1F6FB !important; }
     [class~="border-[#E6E4DD]"] { border-color: var(--border-hairline) !important; }
     [class~="border-[#D1CFC7]"] { border-color: var(--border-strong) !important; }
+
+    #ai-drawer {
+      position: sticky;
+      top: 4rem;
+      width: var(--ai-drawer-width);
+      height: calc(100vh - 4rem);
+      height: calc(100dvh - 4rem);
+      flex: 0 0 var(--ai-drawer-width);
+      min-height: 0;
+      overflow: hidden;
+      background: #FFFFFF;
+      box-shadow: -12px 0 32px rgba(16, 34, 56, 0.07);
+    }
+
+    .ai-drawer-resizer {
+      position: absolute;
+      z-index: 2;
+      top: 0;
+      bottom: 0;
+      left: -5px;
+      width: 10px;
+      cursor: col-resize;
+      touch-action: none;
+    }
+
+    .ai-drawer-resizer::after {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 4px;
+      width: 2px;
+      background: transparent;
+      content: "";
+      transition: background-color 0.15s ease;
+    }
+
+    .ai-drawer-resizer:hover::after,
+    .ai-drawer-resizer:focus-visible::after,
+    .ai-drawer-resizer.is-resizing::after { background: var(--accent-primary); }
+
+    #ai-chat-messages {
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      overscroll-behavior: contain;
+    }
+
+    #ai-chat-messages > .ai-assistant-message {
+      align-self: center;
+      width: min(100%, 48rem);
+    }
+
+    #ai-chat-messages > .ai-user-message {
+      align-self: flex-end;
+      width: fit-content;
+      max-width: min(90%, 48rem);
+    }
+
+    .ai-composer {
+      width: min(100%, 48rem);
+      margin-inline: auto;
+      border: 1px solid var(--border-strong);
+      border-radius: 1.5rem;
+      background: #FFFFFF;
+      box-shadow: 0 2px 8px rgba(16, 34, 56, 0.05);
+    }
+
+    .ai-composer:focus-within {
+      border-color: #9BBDF0;
+      box-shadow: 0 0 0 3px rgba(22, 119, 248, 0.1);
+    }
+
+    .ai-composer input[type="text"] {
+      min-width: 0;
+      border: 0;
+      background: transparent;
+      box-shadow: none;
+    }
+
+    .ai-composer input[type="text"]:focus { box-shadow: none; }
+
+    @media (max-width: 720px) {
+      #ai-drawer {
+        position: fixed;
+        inset: 0;
+        z-index: 50;
+        width: 100vw;
+        height: 100vh;
+        height: 100dvh;
+        flex-basis: 100vw;
+        border-left: 0;
+      }
+
+      .ai-drawer-resizer { display: none; }
+    }
 
     @media (max-width: 720px) {
       .course-hero { grid-template-columns: 1fr; gap: 1.5rem; }
@@ -1396,68 +1492,64 @@
     <!-- ==========================================
          COLLAPSIBLE RIGHT AI STUDY ASSISTANT DRAWER
          ========================================== -->
-    <aside id="ai-drawer" class="hidden w-80 sm:w-96 border-l border-[#E6E4DD] bg-white flex-col justify-between sticky top-16 h-[calc(100vh-4rem)] z-30 shrink-0 shadow-lg">
+    <aside id="ai-drawer" class="hidden border-l border-[#E6E4DD] flex-col shrink-0">
+      <div id="ai-drawer-resizer" class="ai-drawer-resizer" role="separator" aria-orientation="vertical" aria-controls="ai-drawer" aria-label="Resize AI chat panel" aria-keyshortcuts="ArrowLeft ArrowRight Home End" aria-valuemin="320" aria-valuemax="720" aria-valuenow="420" tabindex="0" title="Drag to resize the AI chat panel"></div>
       <!-- Top Header -->
-      <div class="p-4 border-b border-[#E6E4DD] flex items-center justify-between bg-[#FAF9F5]">
+      <div class="shrink-0 px-5 py-4 border-b border-[#E6E4DD] flex items-center justify-between bg-white">
         <div class="flex items-center gap-2">
           <span class="w-2 h-2 rounded-full bg-emerald-600"></span>
           <div>
-            <h3 class="text-xs font-bold text-[#141413]">LGT3301 AI Study Tutor</h3>
-            <p id="ai-context-label" class="text-[10px] text-[#87867F] font-mono-code">Context: Home Portal</p>
+            <h3 class="text-sm font-semibold text-[#141413]">LGT3301 Study Tutor</h3>
+            <p id="ai-context-label" class="text-[11px] text-[#87867F]">Context: Home Portal</p>
           </div>
         </div>
         <div class="flex items-center gap-1">
-          <button onclick="toggleAISettings()" title="Optional API Key Settings" class="p-1.5 rounded hover:bg-[#E6E4DD]/50 text-[#575653] text-xs">⚙️</button>
-          <button onclick="toggleAIDrawer()" class="p-1.5 rounded hover:bg-[#E6E4DD]/50 text-[#575653] text-xs font-bold">✕</button>
+          <button onclick="toggleAISettings()" title="Tutor settings" aria-label="Tutor settings" class="p-2 rounded-full hover:bg-[#F1F6FB] text-[#536477] text-sm">⚙</button>
+          <button onclick="toggleAIDrawer()" title="Close chat" aria-label="Close chat" class="p-2 rounded-full hover:bg-[#F1F6FB] text-[#536477] text-sm font-semibold">✕</button>
         </div>
       </div>
 
       <!-- Optional API Key Settings Bar -->
-      <div id="ai-settings-box" class="hidden p-3 bg-[#F3F2EE] border-b border-[#E6E4DD] text-xs space-y-2">
+      <div id="ai-settings-box" class="hidden shrink-0 p-4 bg-[#F3F7FC] border-b border-[#E6E4DD] text-xs space-y-2">
         <div class="font-semibold text-[#141413]">Optional Gemini API Key</div>
         <p class="text-[11px] text-[#575653]">Works offline out-of-the-box using the built-in LGT3301 engine. Optionally add a Gemini API key for open-ended LLM generation:</p>
         <input type="password" id="ai-api-key" placeholder="AIzaSy..." class="editorial-input w-full px-2.5 py-1 text-xs font-mono-code" />
       </div>
 
       <!-- Messages Container -->
-      <div id="ai-chat-messages" class="flex-grow p-4 overflow-y-auto space-y-3 text-xs">
-        <div class="p-3 rounded-xl bg-[#F3F2EE] text-[#141413] leading-relaxed">
+      <div id="ai-chat-messages" class="flex-grow px-5 py-6 overflow-y-auto space-y-4 text-sm">
+        <div class="ai-assistant-message p-4 rounded-2xl bg-[#F3F7FC] text-[#141413] leading-relaxed">
           <strong>Hi! I'm your LGT3301 Study Assistant.</strong><br>
           Ask me about any concept from <strong>Topics 1–4</strong> (SCOR, Postponement, ROA, Cross-Docking, Consolidation, Containers, NWCM, EOQ/EPQ, ABC Analysis, RFID) or paste a calculation problem!
         </div>
-        <div class="flex flex-wrap gap-1.5 pt-1">
-          <button onclick="askAIQuick('Explain EOQ vs EPQ and why Imax is lower')" class="px-2.5 py-1 rounded-full border border-[#D1CFC7] bg-white hover:bg-[#F3F2EE] text-[11px] text-[#575653]">EOQ vs. EPQ?</button>
-          <button onclick="askAIQuick('What are the 5 SCOR pillars and EERS diamond?')" class="px-2.5 py-1 rounded-full border border-[#D1CFC7] bg-white hover:bg-[#F3F2EE] text-[11px] text-[#575653]">SCOR & EERS?</button>
-          <button onclick="askAIQuick('Explain Cross-Docking vs Consolidation')" class="px-2.5 py-1 rounded-full border border-[#D1CFC7] bg-white hover:bg-[#F3F2EE] text-[11px] text-[#575653]">Cross-Docking?</button>
-          <button onclick="askAIQuick('What are the limitations of NWCM?')" class="px-2.5 py-1 rounded-full border border-[#D1CFC7] bg-white hover:bg-[#F3F2EE] text-[11px] text-[#575653]">NWCM Limits?</button>
+        <div class="ai-assistant-message flex flex-wrap gap-2">
+          <button onclick="askAIQuick('Explain EOQ vs EPQ and why Imax is lower')" class="px-3 py-1.5 rounded-full border border-[#D1CFC7] bg-white hover:bg-[#F3F7FC] text-xs text-[#536477]">EOQ vs. EPQ?</button>
+          <button onclick="askAIQuick('What are the 5 SCOR pillars and EERS diamond?')" class="px-3 py-1.5 rounded-full border border-[#D1CFC7] bg-white hover:bg-[#F3F7FC] text-xs text-[#536477]">SCOR & EERS?</button>
+          <button onclick="askAIQuick('Explain Cross-Docking vs Consolidation')" class="px-3 py-1.5 rounded-full border border-[#D1CFC7] bg-white hover:bg-[#F3F7FC] text-xs text-[#536477]">Cross-Docking?</button>
+          <button onclick="askAIQuick('What are the limitations of NWCM?')" class="px-3 py-1.5 rounded-full border border-[#D1CFC7] bg-white hover:bg-[#F3F7FC] text-xs text-[#536477]">NWCM Limits?</button>
         </div>
       </div>
 
       <!-- Bottom Input -->
-      <div class="p-3 border-t border-[#E6E4DD] bg-[#FAF9F5]">
-        <!-- Attachments and Bottom Input -->
-        <div class="p-3 border-t border-[#E6E4DD] bg-[#FAF9F5] space-y-2">
+      <div class="shrink-0 px-4 pt-3 pb-4 border-t border-[#E6E4DD] bg-white">
+        <div class="ai-composer p-2 space-y-2">
           <div id="ai-attachment-list" class="hidden flex flex-wrap gap-1.5"></div>
-          <div class="flex items-center justify-between gap-2">
-            <label class="text-[10px] text-[#718198]">PDF, DOCX, PPTX, Excel, text, or images. 50 MiB per file.</label>
-            <span id="ai-file-status" class="text-[10px] text-[#536477] text-right" aria-live="polite"></span>
-          </div>
-          <form onsubmit="handleAIChatSubmit(event)" class="flex gap-2">
+          <form onsubmit="handleAIChatSubmit(event)" class="flex items-center gap-2">
             <input id="ai-file-input" type="file" class="hidden" multiple accept=".pdf,.docx,.pptx,.xlsx,.xls,.csv,.tsv,.txt,.md,.json,.html,.htm,.rtf,.png,.jpg,.jpeg,.webp,.gif" onchange="handleAIFileSelection(this.files); this.value = '';" />
-            <button type="button" onclick="document.getElementById('ai-file-input').click()" title="Attach files" aria-label="Attach files" class="shrink-0 px-2.5 py-2 rounded-lg border border-[#C8D5E4] bg-white hover:bg-[#EAF3FF] text-[#1677F8] transition">
+            <button type="button" onclick="document.getElementById('ai-file-input').click()" title="Attach files" aria-label="Attach files" class="shrink-0 w-10 h-10 rounded-full hover:bg-[#F1F6FB] text-[#536477] transition flex items-center justify-center">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l9.2-9.19a4 4 0 0 1 5.65 5.66l-9.2 9.19a2 2 0 0 1-2.82-2.83l8.48-8.48"/></svg>
             </button>
-          <input
-            type="text"
-            id="ai-chat-input"
-              placeholder="Ask about this topic or your files..."
-            class="editorial-input flex-grow px-3 py-2 text-xs"
-          />
-            <button type="submit" class="px-3.5 py-2 rounded-lg bg-[#102238] hover:bg-blue-700 text-white text-xs font-semibold transition">
-              <p class="text-[11px] text-[#575653]">The built-in tutor works offline. File analysis and open-ended answers use Gemini; selected file content is sent to Google when you submit a question.</p>
-            Send
-          </button>
-        </form>
+            <input type="text" id="ai-chat-input" placeholder="Ask about this topic or your files..." aria-label="Ask the AI tutor" class="flex-grow px-2 py-2 text-sm" />
+            <button type="submit" aria-label="Send message" title="Send message" class="shrink-0 w-10 h-10 rounded-full bg-[#102238] hover:bg-blue-700 text-white transition flex items-center justify-center">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m-7-7 7 7-7 7"/></svg>
+            </button>
+          </form>
+          <div class="px-2 flex items-center justify-between gap-2">
+            <label for="ai-file-input" class="text-[10px] text-[#718198]">PDF, DOCX, PPTX, Excel, text, or images. 50 MiB per file.</label>
+            <span id="ai-file-status" class="text-[10px] text-[#536477] text-right" aria-live="polite"></span>
+          </div>
+        </div>
+        <p class="max-w-2xl mx-auto mt-2 px-2 text-center text-[10px] leading-relaxed text-[#718198]">The built-in tutor works offline. File analysis and open-ended answers use Gemini; selected file content is sent to Google when you submit a question.</p>
       </div>
     </aside>
 
@@ -2954,6 +3046,83 @@
       }
     }
 
+    const AI_DRAWER_MIN_WIDTH = 320;
+    const AI_DRAWER_MAX_WIDTH = 720;
+
+    function setAIDrawerWidth(width, persist = true) {
+      const drawer = document.getElementById('ai-drawer');
+      const resizer = document.getElementById('ai-drawer-resizer');
+      const maxWidth = Math.max(AI_DRAWER_MIN_WIDTH, Math.min(AI_DRAWER_MAX_WIDTH, window.innerWidth - 320));
+      const nextWidth = Math.round(Math.max(AI_DRAWER_MIN_WIDTH, Math.min(maxWidth, width)));
+      document.documentElement.style.setProperty('--ai-drawer-width', `${nextWidth}px`);
+      resizer.setAttribute('aria-valuemin', String(AI_DRAWER_MIN_WIDTH));
+      resizer.setAttribute('aria-valuemax', String(maxWidth));
+      resizer.setAttribute('aria-valuenow', String(nextWidth));
+
+      if (persist) {
+        try {
+          localStorage.setItem('ai-drawer-width', String(nextWidth));
+        } catch (error) {
+          console.error('Could not save the AI chat width preference.', error);
+        }
+      }
+      return nextWidth;
+    }
+
+    function initializeAIDrawerResize() {
+      const resizer = document.getElementById('ai-drawer-resizer');
+      const drawer = document.getElementById('ai-drawer');
+      let initialWidth = 420;
+      try {
+        const storedWidth = Number(localStorage.getItem('ai-drawer-width'));
+        if (Number.isFinite(storedWidth) && storedWidth > 0) initialWidth = storedWidth;
+      } catch (error) {
+        console.error('Could not load the saved AI chat width preference.', error);
+      }
+      setAIDrawerWidth(initialWidth, false);
+
+      resizer.addEventListener('pointerdown', event => {
+        if (window.matchMedia('(max-width: 720px)').matches) return;
+        event.preventDefault();
+        resizer.classList.add('is-resizing');
+        resizer.setPointerCapture(event.pointerId);
+      });
+
+      resizer.addEventListener('pointermove', event => {
+        if (!resizer.hasPointerCapture(event.pointerId)) return;
+        setAIDrawerWidth(drawer.getBoundingClientRect().right - event.clientX);
+      });
+
+      const stopResizing = event => {
+        if (resizer.hasPointerCapture(event.pointerId)) resizer.releasePointerCapture(event.pointerId);
+        resizer.classList.remove('is-resizing');
+      };
+      resizer.addEventListener('pointerup', stopResizing);
+      resizer.addEventListener('pointercancel', stopResizing);
+
+      resizer.addEventListener('keydown', event => {
+        const currentWidth = drawer.getBoundingClientRect().width;
+        if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+          event.preventDefault();
+          const direction = event.key === 'ArrowLeft' ? 1 : -1;
+          setAIDrawerWidth(currentWidth + direction * (event.shiftKey ? 48 : 16));
+        } else if (event.key === 'Home') {
+          event.preventDefault();
+          setAIDrawerWidth(AI_DRAWER_MIN_WIDTH);
+        } else if (event.key === 'End') {
+          event.preventDefault();
+          setAIDrawerWidth(AI_DRAWER_MAX_WIDTH);
+        }
+      });
+
+      window.addEventListener('resize', () => {
+        const currentWidth = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--ai-drawer-width'));
+        setAIDrawerWidth(currentWidth);
+      });
+    }
+
+    initializeAIDrawerResize();
+
     function toggleAIDrawer() {
       const drawer = document.getElementById('ai-drawer');
       drawer.classList.toggle('hidden');
@@ -2983,7 +3152,7 @@
 
       const msgBox = document.getElementById('ai-chat-messages');
       const userMessage = document.createElement('div');
-      userMessage.className = 'p-2.5 rounded-xl bg-[#102238] text-white ml-6';
+      userMessage.className = 'ai-user-message p-3 rounded-2xl bg-[#EAF3FF] text-[#102238]';
       userMessage.textContent = question;
       msgBox.append(userMessage);
       msgBox.scrollTop = msgBox.scrollHeight;
@@ -3040,7 +3209,7 @@
       }
 
       msgBox.innerHTML += `
-        <div class="p-3 rounded-xl bg-[#F3F2EE] text-[#141413] mr-4 leading-relaxed border border-[#E6E4DD]">
+        <div class="ai-assistant-message p-4 rounded-2xl bg-[#F3F7FC] text-[#141413] leading-relaxed">
           ${replyHTML}
         </div>
       `;
