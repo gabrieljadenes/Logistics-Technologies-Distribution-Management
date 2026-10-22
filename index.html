@@ -229,55 +229,115 @@
     .course-hero {
       position: relative;
       display: grid;
-      grid-template-columns: minmax(0, 1.45fr) minmax(240px, 0.75fr);
-      gap: 2.5rem;
+      grid-template-columns: minmax(0, 1.05fr) minmax(280px, 0.95fr);
+      gap: clamp(1.5rem, 4vw, 4rem);
       align-items: center;
       overflow: hidden;
-      padding: clamp(2rem, 5vw, 4rem);
-      color: #F7FAFF;
-      background-color: var(--navy-950);
-      background-image: linear-gradient(110deg, rgba(7, 20, 38, 0.99) 12%, rgba(12, 41, 76, 0.97) 67%, rgba(15, 81, 143, 0.96)), linear-gradient(rgba(118, 180, 255, 0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(118, 180, 255, 0.08) 1px, transparent 1px);
-      background-size: auto, 34px 34px, 34px 34px;
-      border: 1px solid #183B60;
-      border-radius: 12px;
-      box-shadow: 0 22px 55px -35px rgba(12, 65, 125, 0.62);
+      padding: clamp(1.5rem, 4vw, 3.5rem);
+      color: var(--text-primary);
+      background: #FFFFFF;
+      border: 1px solid var(--border-hairline);
+      border-radius: 20px;
+      box-shadow: 0 12px 36px -28px rgba(16, 69, 130, 0.32);
     }
 
-    .course-hero h1 { max-width: 760px; color: #FFFFFF; }
-    .course-hero-copy { max-width: 670px; color: #C1D0E2; }
+    .course-hero h1 { max-width: 620px; color: var(--text-primary); }
+    .course-hero-copy { max-width: 440px; color: var(--text-secondary); }
 
     .course-hero-badge {
-      color: #B9E5FF;
-      background: rgba(31, 144, 236, 0.12);
-      border: 1px solid rgba(91, 183, 255, 0.3);
+      color: #1459B8;
+      background: #EFF6FF;
+      border: 1px solid #D7E8FF;
     }
 
-    .course-hero-map {
-      padding-left: 1.5rem;
-      border-left: 1px solid rgba(174, 207, 244, 0.25);
+    .course-hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 1.5rem;
     }
 
-    .course-hero-map-label {
-      margin-bottom: 0.65rem;
-      color: #77C9FF;
-      font: 600 0.68rem 'JetBrains Mono', monospace;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-
-    .course-hero-map-row {
-      display: grid;
-      grid-template-columns: 2.2rem 1fr;
+    .course-hero-primary,
+    .course-hero-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       gap: 0.5rem;
-      align-items: baseline;
-      padding: 0.65rem 0;
-      color: #ECF5FF;
-      border-bottom: 1px solid rgba(174, 207, 244, 0.15);
-      font-size: 0.85rem;
-      font-weight: 600;
+      min-height: 2.75rem;
+      padding: 0.65rem 1.1rem;
+      border-radius: 10px;
+      font-size: 0.8125rem;
+      font-weight: 700;
+      transition: background-color 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
     }
 
-    .course-hero-map-row span:first-child { color: #51B9FF; font: 500 0.7rem 'JetBrains Mono', monospace; }
+    .course-hero-primary {
+      color: #FFFFFF;
+      background: #1769E0;
+    }
+
+    .course-hero-primary:hover { background: #0F57C3; transform: translateY(-1px); }
+
+    .course-hero-secondary {
+      color: #17324F;
+      background: #FFFFFF;
+      border: 1px solid #C8D5E4;
+    }
+
+    .course-hero-secondary:hover { background: #F3F7FC; border-color: #9BBDF0; }
+
+    .course-hero-art {
+      position: relative;
+      display: grid;
+      min-height: 280px;
+      place-items: center;
+      overflow: hidden;
+      border-radius: 18px;
+      background: #EAF3FF;
+    }
+
+    .course-hero-art::before,
+    .course-hero-art::after {
+      position: absolute;
+      width: 190px;
+      height: 190px;
+      border: 1px solid rgba(36, 115, 224, 0.14);
+      border-radius: 50%;
+      content: "";
+    }
+
+    .course-hero-art::before { transform: scale(1.45); }
+    .course-hero-art::after { transform: scale(2.05); }
+
+    .course-hero-illustration {
+      position: relative;
+      z-index: 1;
+      width: min(88%, 430px);
+      height: auto;
+      filter: drop-shadow(0 18px 24px rgba(18, 70, 139, 0.12));
+    }
+
+    .calculator-clear-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      flex-shrink: 0;
+      padding: 0.45rem 0.7rem;
+      border: 1px solid var(--border-strong);
+      border-radius: 8px;
+      background: #FFFFFF;
+      color: var(--text-secondary);
+      font-size: 0.7rem;
+      font-weight: 600;
+      transition: color 0.15s ease, border-color 0.15s ease, background-color 0.15s ease;
+    }
+
+    .calculator-clear-button:hover {
+      color: #174F9D;
+      background: #EFF6FF;
+      border-color: #9BBDF0;
+    }
 
     .section-heading {
       display: flex;
@@ -298,7 +358,12 @@
       text-transform: uppercase;
     }
 
-    #page-home .editorial-card-interactive { border-top: 2px solid #D9E8F8; }
+    #page-home .editorial-card-interactive {
+      min-height: 188px;
+      border-top: 1px solid var(--border-hairline);
+      border-radius: 12px;
+    }
+
     #page-home .editorial-card-interactive:hover { border-top-color: var(--accent-primary); }
     #page-home .editorial-card h3 { line-height: 1.35; }
 
@@ -404,7 +469,7 @@
 
     @media (max-width: 720px) {
       .course-hero { grid-template-columns: 1fr; gap: 1.5rem; }
-      .course-hero-map { padding: 1rem 0 0; border-left: 0; border-top: 1px solid rgba(174, 207, 244, 0.25); }
+      .course-hero-art { min-height: 210px; }
       .site-header-inner { align-items: flex-start; }
       .site-header-inner > div:last-child { width: 100%; justify-content: space-between; gap: 0.45rem; }
       .site-header-inner > div:last-child > div:first-child { width: min(100%, 10rem); min-width: 0; flex: 1 1 9rem; }
@@ -495,53 +560,70 @@
       <!-- ==========================================
            PAGE: HOME PORTAL
            ========================================== -->
-      <section id="page-home" class="view-transition space-y-10 max-w-7xl mx-auto">
+      <section id="page-home" class="view-transition space-y-12 max-w-7xl mx-auto">
         
         <div class="course-hero">
           <div>
-            <div class="course-hero-badge inline-flex items-center gap-2 px-3 py-1.5 rounded-md text-[11px] font-mono-code uppercase tracking-wider mb-4">
-              <span class="w-1.5 h-1.5 rounded-full bg-sky-400"></span>
-              <span data-i18n="heroBadge">Interactive Course Companion & Computation Suite</span>
+            <div class="course-hero-badge inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-[11px] font-mono-code uppercase tracking-wider mb-5">
+              <span class="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
+              <span data-i18n="heroBadge">LGT3301 • Study Hub</span>
             </div>
-            <h1 class="font-serif-editorial text-4xl sm:text-5xl leading-[1.12]">
-              Logistics Technologies & Distribution Management
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.08]">
+              Logistics, made <span class="text-blue-700">clear.</span>
             </h1>
-            <p class="course-hero-copy text-sm sm:text-base mt-4 leading-relaxed" data-i18n="heroDesc">
-              A structured study workspace and quantitative solver suite for LGT3301. Review condensed lecture notes across Topics 1–4, practice with step-by-step tutorial guides, or launch blank-slate calculators with smart question auto-fill.
+            <p class="course-hero-copy text-base sm:text-lg mt-5 leading-relaxed" data-i18n="heroDesc">
+              Lecture notes and practical calculators for LGT3301 — all in one place.
             </p>
+            <div class="course-hero-actions">
+              <button onclick="document.getElementById('home-lectures').scrollIntoView({behavior:'smooth'})" class="course-hero-primary">Explore lectures <span aria-hidden="true">↓</span></button>
+              <button onclick="document.getElementById('home-calculators').scrollIntoView({behavior:'smooth'})" class="course-hero-secondary">Open calculators <span aria-hidden="true">→</span></button>
+            </div>
           </div>
-          <div class="course-hero-map" aria-label="Course topic index">
-            <div class="course-hero-map-label">Course index / 2026</div>
-            <div class="course-hero-map-row"><span>01</span><span>Supply chain systems</span></div>
-            <div class="course-hero-map-row"><span>02</span><span>Warehousing & handling</span></div>
-            <div class="course-hero-map-row"><span>03</span><span>Transport & packaging</span></div>
-            <div class="course-hero-map-row"><span>04</span><span>Inventory management</span></div>
+          <div class="course-hero-art" aria-hidden="true">
+            <svg class="course-hero-illustration" viewBox="0 0 440 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M95 185C137 185 132 111 181 111H266C307 111 289 203 341 203" stroke="#73A9F4" stroke-width="5" stroke-linecap="round" stroke-dasharray="2 12"/>
+              <path d="M75 205V122L139 93V176L75 205Z" fill="#BBD7FF" stroke="#5B92E7" stroke-width="3" stroke-linejoin="round"/>
+              <path d="M75 122L107 137L139 122" stroke="#5B92E7" stroke-width="3" stroke-linejoin="round"/>
+              <path d="M107 137V190" stroke="#5B92E7" stroke-width="3"/>
+              <path d="M188 177V85H267V177H188Z" fill="white" stroke="#5B92E7" stroke-width="3" stroke-linejoin="round"/>
+              <path d="M178 85L227.5 52L277 85" fill="#D8E8FF" stroke="#5B92E7" stroke-width="3" stroke-linejoin="round"/>
+              <path d="M211 177V131H244V177" fill="#EAF3FF" stroke="#5B92E7" stroke-width="3"/>
+              <path d="M201 103H211M226 103H251" stroke="#9BBDF0" stroke-width="4" stroke-linecap="round"/>
+              <path d="M322 157H370V205H322V157Z" fill="#1769E0"/>
+              <path d="M322 157L346 140L370 157" fill="#5B92E7"/>
+              <path d="M346 140V205" stroke="#FFFFFF" stroke-opacity=".7" stroke-width="2"/>
+              <rect x="31" y="47" width="126" height="37" rx="12" fill="white"/>
+              <circle cx="49" cy="65.5" r="5" fill="#1769E0"/>
+              <path d="M63 65H136" stroke="#A9BED9" stroke-width="4" stroke-linecap="round"/>
+              <rect x="284" y="76" width="118" height="37" rx="12" fill="white"/>
+              <circle cx="302" cy="94.5" r="5" fill="#1769E0"/>
+              <path d="M316 94H382" stroke="#A9BED9" stroke-width="4" stroke-linecap="round"/>
+              <circle cx="95" cy="185" r="8" fill="white" stroke="#1769E0" stroke-width="4"/>
+              <circle cx="341" cy="203" r="8" fill="white" stroke="#1769E0" stroke-width="4"/>
+            </svg>
           </div>
         </div>
 
         <!-- SECTION 1: LECTURE STUDY MODULES (TOPICS 1 - 4) -->
-        <div class="space-y-4">
+        <div id="home-lectures" class="space-y-4 scroll-mt-24">
           <div class="section-heading">
             <div>
-              <span class="section-kicker">01 / Course modules</span>
-              <h2 class="text-lg font-bold tracking-tight text-[#141413]" data-i18n="secLecturesTitle">Lecture Study Modules (Topics 1–4)</h2>
-              <p class="text-xs text-[#575653]" data-i18n="secLecturesSub">Essential concepts, frameworks, and practice case studies extracted for fast revision.</p>
+              <span class="section-kicker">01 / Lectures</span>
+              <h2 class="text-xl sm:text-2xl font-bold tracking-tight text-[#141413]" data-i18n="secLecturesTitle">Lecture modules</h2>
             </div>
-            <span class="text-xs font-mono-code text-[#87867F]">4 Modules Available</span>
+            <span class="text-xs font-mono-code text-[#87867F]">01 — 04</span>
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             <!-- Topic 1 Card -->
             <div onclick="navigateTo('topic1')" class="editorial-card editorial-card-interactive p-5 cursor-pointer flex flex-col justify-between">
               <div>
-                <div class="flex items-center justify-between text-xs font-mono-code text-[#87867F] mb-3">
-                  <span class="px-2 py-0.5 rounded bg-[#F3F2EE] text-[#141413] font-semibold">TOPIC 01</span>
-                  <span>6 Sections + 3 Cases</span>
+                <div class="flex items-center justify-between text-xs font-mono-code text-[#87867F] mb-5">
+                  <span class="px-2 py-0.5 rounded bg-[#EFF6FF] text-blue-800 font-semibold">TOPIC 01</span>
+                  <span>01</span>
                 </div>
-                <h3 class="text-base font-bold text-[#141413] mb-1.5">Logistics in Supply Chain Management</h3>
-                <p class="text-xs text-[#575653] leading-relaxed">
-                  Integrative Value Proposition, SCOR Model (Plan, Source, Make, Deliver, Return), Push vs. Pull & Postponement, ERP/TMS/WMS, and Strategic Profit Model (ROA & Cash-to-Cash).
-                </p>
+                <h3 class="text-base font-bold text-[#141413] mb-1.5">Supply chain management</h3>
+                <p class="text-xs text-[#575653] leading-relaxed">Strategy, service & performance</p>
               </div>
               <div class="mt-4 pt-3 border-t border-[#E6E4DD] flex items-center justify-between text-xs font-semibold text-blue-700">
                 <span data-i18n="openNotes">Read Study Notes</span>
@@ -552,14 +634,12 @@
             <!-- Topic 2 Card -->
             <div onclick="navigateTo('topic2')" class="editorial-card editorial-card-interactive p-5 cursor-pointer flex flex-col justify-between">
               <div>
-                <div class="flex items-center justify-between text-xs font-mono-code text-[#87867F] mb-3">
-                  <span class="px-2 py-0.5 rounded bg-[#F3F2EE] text-[#141413] font-semibold">TOPIC 02</span>
-                  <span>5 Sections + 2 Cases</span>
+                <div class="flex items-center justify-between text-xs font-mono-code text-[#87867F] mb-5">
+                  <span class="px-2 py-0.5 rounded bg-[#EFF6FF] text-blue-800 font-semibold">TOPIC 02</span>
+                  <span>02</span>
                 </div>
                 <h3 class="text-base font-bold text-[#141413] mb-1.5">Warehousing & Material Handling</h3>
-                <p class="text-xs text-[#575653] leading-relaxed">
-                  Spot vs. Full-Line Stocking, Value-Added Services, Consolidation, Break-Bulk, Cross-Docking, Mixing, Cube Utilization, and Mechanized vs. AS/RS Automation.
-                </p>
+                <p class="text-xs text-[#575653] leading-relaxed">Storage, flow & automation</p>
               </div>
               <div class="mt-4 pt-3 border-t border-[#E6E4DD] flex items-center justify-between text-xs font-semibold text-blue-700">
                 <span data-i18n="openNotes">Read Study Notes</span>
@@ -570,14 +650,12 @@
             <!-- Topic 3 Card -->
             <div onclick="navigateTo('topic3')" class="editorial-card editorial-card-interactive p-5 cursor-pointer flex flex-col justify-between">
               <div>
-                <div class="flex items-center justify-between text-xs font-mono-code text-[#87867F] mb-3">
-                  <span class="px-2 py-0.5 rounded bg-[#F3F2EE] text-[#141413] font-semibold">TOPIC 03</span>
-                  <span>6 Sections + NWCM</span>
+                <div class="flex items-center justify-between text-xs font-mono-code text-[#87867F] mb-5">
+                  <span class="px-2 py-0.5 rounded bg-[#EFF6FF] text-blue-800 font-semibold">TOPIC 03</span>
+                  <span>03</span>
                 </div>
                 <h3 class="text-base font-bold text-[#141413] mb-1.5">Transportation & Packaging</h3>
-                <p class="text-xs text-[#575653] leading-relaxed">
-                  5 Transport Modes (Rail COFC/TOFC, Road, Sea, Air, Pipeline), ISO Containers (TEU/FEU), NWCM Allocation, Building-Blocks Concept, Hazmat, and Smart Packaging.
-                </p>
+                <p class="text-xs text-[#575653] leading-relaxed">Transport modes & smart packaging</p>
               </div>
               <div class="mt-4 pt-3 border-t border-[#E6E4DD] flex items-center justify-between text-xs font-semibold text-blue-700">
                 <span data-i18n="openNotes">Read Study Notes</span>
@@ -588,14 +666,12 @@
             <!-- Topic 4 Card -->
             <div onclick="navigateTo('topic4')" class="editorial-card editorial-card-interactive p-5 cursor-pointer flex flex-col justify-between">
               <div>
-                <div class="flex items-center justify-between text-xs font-mono-code text-[#87867F] mb-3">
-                  <span class="px-2 py-0.5 rounded bg-[#F3F2EE] text-[#141413] font-semibold">TOPIC 04</span>
-                  <span>6 Sections + EOQ/EPQ</span>
+                <div class="flex items-center justify-between text-xs font-mono-code text-[#87867F] mb-5">
+                  <span class="px-2 py-0.5 rounded bg-[#EFF6FF] text-blue-800 font-semibold">TOPIC 04</span>
+                  <span>04</span>
                 </div>
                 <h3 class="text-base font-bold text-[#141413] mb-1.5">Inventory & Material Management</h3>
-                <p class="text-xs text-[#575653] leading-relaxed">
-                  Holding vs. Ordering Cost Trade-Offs, EOQ & Safety Stock, Non-Instantaneous EPQ ($I_{\max}$), ABC Pareto Analysis, RFID vs. Barcodes, and ML Demand Sensing.
-                </p>
+                <p class="text-xs text-[#575653] leading-relaxed">Inventory control & optimization</p>
               </div>
               <div class="mt-4 pt-3 border-t border-[#E6E4DD] flex items-center justify-between text-xs font-semibold text-blue-700">
                 <span data-i18n="openNotes">Read Study Notes</span>
@@ -606,14 +682,13 @@
         </div>
 
         <!-- SECTION 2: TUTORIAL GUIDES & AUTOMATED CALCULATORS -->
-        <div class="space-y-4 pt-2">
+        <div id="home-calculators" class="space-y-4 pt-2 scroll-mt-24">
           <div class="section-heading">
             <div>
-              <span class="section-kicker">02 / Applied learning</span>
-              <h2 class="text-lg font-bold tracking-tight text-[#141413]" data-i18n="secTutorialsTitle">Tutorial Guides & Automated Calculators</h2>
-              <p class="text-xs text-[#575653]" data-i18n="secTutorialsSub">Try the new Lecture 1 financial calculators or open a tutorial module for guided practice and interactive tools.</p>
+              <span class="section-kicker">02 / Practice</span>
+              <h2 class="text-xl sm:text-2xl font-bold tracking-tight text-[#141413]" data-i18n="secTutorialsTitle">Calculators & practice</h2>
             </div>
-            <span class="text-xs font-mono-code text-[#87867F]">4 Interactive Tools</span>
+            <span class="text-xs font-mono-code text-[#87867F]">04 TOOLS</span>
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5">
@@ -621,13 +696,11 @@
             <div onclick="navigateTo('t1calc')" class="editorial-card editorial-card-interactive p-6 cursor-pointer flex flex-col justify-between">
               <div>
                 <div class="flex items-center justify-between mb-3">
-                  <span class="text-xs font-mono-code font-semibold px-2.5 py-1 rounded bg-sky-50 text-sky-900 border border-sky-200">LECTURE 1 • CALCULATOR 01</span>
+                  <span class="text-xs font-mono-code font-semibold px-2.5 py-1 rounded bg-sky-50 text-sky-900 border border-sky-200">LECTURE 1</span>
                   <span class="text-xs font-mono-code text-[#87867F]">Cost • ROA • Cash</span>
                 </div>
                 <h3 class="text-lg font-bold text-[#141413] mb-2">Logistics Cost & Performance</h3>
-                <p class="text-xs text-[#575653] leading-relaxed mb-4">
-                  Compare annual transport and inventory costs, measure WMS impact on ROA, and calculate the cash-to-cash cycle from Lecture 1.
-                </p>
+                <p class="text-xs text-[#575653] leading-relaxed mb-4">Compare transport costs, ROA and cash-to-cash.</p>
               </div>
               <div class="pt-3 border-t border-[#E6E4DD] flex items-center justify-between text-xs font-semibold text-[#141413]">
                 <span>Open Lecture 1 Calculator</span>
@@ -639,13 +712,11 @@
             <div onclick="navigateTo('tlc')" class="editorial-card editorial-card-interactive p-6 cursor-pointer flex flex-col justify-between">
               <div>
                 <div class="flex items-center justify-between mb-3">
-                  <span class="text-xs font-mono-code font-semibold px-2.5 py-1 rounded bg-blue-50 text-blue-800 border border-blue-200">TUTORIAL MODULE 02</span>
+                  <span class="text-xs font-mono-code font-semibold px-2.5 py-1 rounded bg-blue-50 text-blue-800 border border-blue-200">TUTORIAL 02</span>
                   <span class="text-xs font-mono-code text-[#87867F]">CW • RT • Multimodal</span>
                 </div>
                 <h3 class="text-lg font-bold text-[#141413] mb-2">Total Logistics Cost (TLC) & Multimodal</h3>
-                <p class="text-xs text-[#575653] leading-relaxed mb-4">
-                  Learn and compute Actual Weight (AW), Volumetric Weight (VW), Chargeable Weight (CW), and Revenue Tons (RT) across Air, Road, and Sea LCL routes.
-                </p>
+                <p class="text-xs text-[#575653] leading-relaxed mb-4">Compare chargeable weight and shipping costs across modes.</p>
               </div>
               <div class="pt-3 border-t border-[#E6E4DD] flex items-center justify-between text-xs font-semibold text-[#141413]">
                 <span>Open Tutorial & Calculator</span>
@@ -657,13 +728,11 @@
             <div onclick="navigateTo('nwcm')" class="editorial-card editorial-card-interactive p-6 cursor-pointer flex flex-col justify-between">
               <div>
                 <div class="flex items-center justify-between mb-3">
-                  <span class="text-xs font-mono-code font-semibold px-2.5 py-1 rounded bg-amber-50 text-amber-900 border border-amber-200">TUTORIAL MODULE 03</span>
+                  <span class="text-xs font-mono-code font-semibold px-2.5 py-1 rounded bg-blue-50 text-blue-800 border border-blue-200">TUTORIAL 03</span>
                   <span class="text-xs font-mono-code text-[#87867F]">M×N Matrix Solver</span>
                 </div>
                 <h3 class="text-lg font-bold text-[#141413] mb-2">North-West Corner Method (NWCM)</h3>
-                <p class="text-xs text-[#575653] leading-relaxed mb-4">
-                  Master stepwise warehouse-to-customer allocation starting from top-left $(F_1, C_1)$, automatic dummy row/column balancing, and total transport cost calculation.
-                </p>
+                <p class="text-xs text-[#575653] leading-relaxed mb-4">Allocate supply across demand and calculate transport cost.</p>
               </div>
               <div class="pt-3 border-t border-[#E6E4DD] flex items-center justify-between text-xs font-semibold text-[#141413]">
                 <span>Open Tutorial & Calculator</span>
@@ -675,13 +744,11 @@
             <div onclick="navigateTo('eoq')" class="editorial-card editorial-card-interactive p-6 cursor-pointer flex flex-col justify-between">
               <div>
                 <div class="flex items-center justify-between mb-3">
-                  <span class="text-xs font-mono-code font-semibold px-2.5 py-1 rounded bg-emerald-50 text-emerald-900 border border-emerald-200">TUTORIAL MODULE 04</span>
+                  <span class="text-xs font-mono-code font-semibold px-2.5 py-1 rounded bg-blue-50 text-blue-800 border border-blue-200">TUTORIAL 04</span>
                   <span class="text-xs font-mono-code text-[#87867F]">Q* • Qp* • Imax</span>
                 </div>
                 <h3 class="text-lg font-bold text-[#141413] mb-2">EOQ & EPQ Inventory Optimization</h3>
-                <p class="text-xs text-[#575653] leading-relaxed mb-4">
-                  Compare Instantaneous Receipt ($Q^*$) against Staggered Shuttle Replenishment ($Q_p^*$), Peak Warehouse Footprint ($I_{\max}$), and interactive Sawtooth charts.
-                </p>
+                <p class="text-xs text-[#575653] leading-relaxed mb-4">Find optimal order sizes, stock levels and inventory costs.</p>
               </div>
               <div class="pt-3 border-t border-[#E6E4DD] flex items-center justify-between text-xs font-semibold text-[#141413]">
                 <span>Open Tutorial & Calculator</span>
@@ -735,10 +802,13 @@
             </div>
           </div>
 
-          <div id="t1calc-presets" class="editorial-card p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-            <div>
-              <span class="text-xs font-bold text-[#141413] block">Calculator Presets</span>
-              <span class="text-[11px] text-[#575653]">Start blank or load an example from Lecture 1.</span>
+          <div id="t1calc-presets" class="editorial-card p-4 flex flex-col gap-3">
+            <div class="flex items-center justify-between gap-3">
+              <div>
+                <span class="text-xs font-bold text-[#141413] block">Calculator Presets</span>
+                <span class="text-[11px] text-[#575653]">Start blank or load an example from Lecture 1.</span>
+              </div>
+              <button type="button" onclick="clearT1FinancialCalculator()" class="calculator-clear-button" title="Clear all Lecture 1 calculator values" aria-label="Clear all Lecture 1 calculator values">Clear</button>
             </div>
             <div class="flex flex-wrap gap-1.5">
               <button onclick="loadT1FinancialPreset('blank')" id="t1calc-btn-blank" class="preset-pill active">Blank Template</button>
@@ -1010,9 +1080,12 @@
             <div id="tlc-view-calc" class="hidden space-y-6">
               
               <!-- Preset Bar (Starts on Blank Template!) -->
-              <div class="editorial-card p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div class="editorial-card p-4 flex flex-col gap-3">
                 <div>
-                  <span class="text-xs font-bold text-[#141413] block">Template & Case Presets</span>
+                  <div class="flex items-center justify-between gap-3">
+                    <span class="text-xs font-bold text-[#141413] block">Template & Case Presets</span>
+                    <button type="button" onclick="clearTLCCalculator()" class="calculator-clear-button" title="Clear all shipping calculator values" aria-label="Clear all shipping calculator values">Clear</button>
+                  </div>
                   <span class="text-[11px] text-[#575653]">Starts blank by default. Click a preset or paste a question below.</span>
                 </div>
                 <div class="flex flex-wrap gap-1.5">
@@ -1279,9 +1352,12 @@
             <div id="nwcm-view-calc" class="hidden space-y-6">
 
               <!-- Preset Bar (Starts on Blank Template!) -->
-              <div class="editorial-card p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div class="editorial-card p-4 flex flex-col gap-3">
                 <div>
-                  <span class="text-xs font-bold text-[#141413] block">Matrix Presets (Slide 59–62)</span>
+                  <div class="flex items-center justify-between gap-3">
+                    <span class="text-xs font-bold text-[#141413] block">Matrix Presets (Slide 59–62)</span>
+                    <button type="button" onclick="clearNWCMCalculator()" class="calculator-clear-button" title="Clear the matrix and reset it to a blank grid" aria-label="Clear the matrix and reset it to a blank grid">Clear</button>
+                  </div>
                   <span class="text-[11px] text-[#575653]">Starts blank by default. Select a preset or enter custom values.</span>
                 </div>
                 <div class="flex flex-wrap gap-1.5">
@@ -1492,9 +1568,12 @@
             <div id="eoq-view-calc" class="hidden space-y-6">
 
               <!-- Preset Bar (Starts Blank by Default!) -->
-              <div class="editorial-card p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div class="editorial-card p-4 flex flex-col gap-3">
                 <div>
-                  <span class="text-xs font-bold text-[#141413] block">Tutorial #7 Case Presets</span>
+                  <div class="flex items-center justify-between gap-3">
+                    <span class="text-xs font-bold text-[#141413] block">Tutorial #7 Case Presets</span>
+                    <button type="button" onclick="clearEOQCalculator()" class="calculator-clear-button" title="Clear all inventory calculator values" aria-label="Clear all inventory calculator values">Clear</button>
+                  </div>
                   <span class="text-[11px] text-[#575653]">Starts blank by default. Click any preset or paste a question below.</span>
                 </div>
                 <div class="flex flex-wrap gap-1.5">
@@ -1766,11 +1845,11 @@
         courseSubtitle: "Logistics Technologies & Distribution Management",
         searchPlaceholder: "Search topics, formulas, calculators...",
         aiTutorBtn: "AI Tutor",
-        heroBadge: "Interactive Course Companion & Computation Suite",
-        heroDesc: "A structured study workspace and quantitative solver suite for LGT3301. Review condensed lecture notes across Topics 1–4, practice with step-by-step tutorial guides, or launch blank-slate calculators with smart question auto-fill.",
+        heroBadge: "LGT3301 • Study Hub",
+        heroDesc: "Lecture notes and practical calculators for LGT3301 — all in one place.",
         secLecturesTitle: "Lecture Study Modules (Topics 1–4)",
         secLecturesSub: "Essential concepts, frameworks, and practice case studies extracted for fast revision.",
-        secTutorialsTitle: "Tutorial Guides & Automated Calculators",
+        secTutorialsTitle: "Calculators & practice",
         secTutorialsSub: "Try the new Lecture 1 financial calculators or open a tutorial module for guided practice and interactive tools.",
         openNotes: "Read Study Notes"
       },
@@ -1779,11 +1858,11 @@
         courseSubtitle: "物流技術與配送管理",
         searchPlaceholder: "搜尋課題、公式、計算機...",
         aiTutorBtn: "AI 導師",
-        heroBadge: "互動學習與自動化計算平台",
-        heroDesc: "專為 LGT3301 設計的學習與運算工作區。涵蓋課題 1–4 重點筆記、逐步導修指南，以及支援智能題目解析的空白計算機。",
+        heroBadge: "LGT3301 • 學習中心",
+        heroDesc: "LGT3301 課堂筆記與實用計算機，一站式學習。",
         secLecturesTitle: "課堂學習模組 (Topics 1–4)",
         secLecturesSub: "精煉提取課堂核心概念、管理框架與實戰練習題。",
-        secTutorialsTitle: "導修指南與自動化計算工具",
+        secTutorialsTitle: "計算機與練習",
         secTutorialsSub: "試用全新的課題一財務計算機，或開啟導修模組進行互動練習。",
         openNotes: "閱讀學習筆記"
       },
@@ -1792,11 +1871,11 @@
         courseSubtitle: "Teknologi Logistik & Manajemen Distribusi",
         searchPlaceholder: "Cari topik, rumus, kalkulator...",
         aiTutorBtn: "Tutor AI",
-        heroBadge: "Portal Belajar & Kalkulator Otomatis",
-        heroDesc: "Ruang kerja belajar terstruktur dan solver kuantitatif untuk LGT3301. Pelajari rangkuman materi Topic 1–4, panduan tutorial, atau gunakan kalkulator dengan fitur paste soal otomatis.",
+        heroBadge: "LGT3301 • Pusat Belajar",
+        heroDesc: "Catatan kuliah dan kalkulator praktis untuk LGT3301 — dalam satu tempat.",
         secLecturesTitle: "Modul Materi Kuliah (Topics 1–4)",
         secLecturesSub: "Rangkuman konsep inti, kerangka kerja, dan latihan studi kasus.",
-        secTutorialsTitle: "Panduan Tutorial & Kalkulator Otomatis",
+        secTutorialsTitle: "Kalkulator & latihan",
         secTutorialsSub: "Coba kalkulator keuangan Lecture 1 atau buka modul tutorial untuk latihan terpandu.",
         openNotes: "Baca Catatan"
       }
@@ -2484,6 +2563,17 @@
       calculateT1Financials(false);
     }
 
+    function clearT1FinancialCalculator() {
+      loadT1FinancialPreset('blank');
+    }
+
+    function clearParserInput(inputId, feedbackId) {
+      document.getElementById(inputId).value = '';
+      const feedback = document.getElementById(feedbackId);
+      feedback.textContent = '';
+      feedback.classList.add('hidden');
+    }
+
     function typesetMath(element) {
       const typeset = () => window.MathJax.typesetPromise([element]);
       if (window.MathJax?.typesetPromise) {
@@ -2695,6 +2785,11 @@
       tlcRows = JSON.parse(JSON.stringify(p.rows));
       renderTLCRows();
       calcTLC();
+    }
+
+    function clearTLCCalculator() {
+      loadTLCPreset('blank');
+      clearParserInput('tlc-paste-input', 'tlc-parse-feedback');
     }
 
     function addTLCRow() {
@@ -2930,6 +3025,11 @@
       solveNWCM(true);
     }
 
+    function clearNWCMCalculator() {
+      loadNWCMPreset('blank');
+      clearParserInput('nwcm-paste-input', 'nwcm-parse-feedback');
+    }
+
     function resizeNWCMGrid() {
       const rows = Math.min(10, Math.max(2, parseInt(document.getElementById('nwcm-rows').value) || 3));
       const cols = Math.min(10, Math.max(2, parseInt(document.getElementById('nwcm-cols').value) || 3));
@@ -3096,6 +3196,15 @@
       if (btn) btn.classList.add('active');
 
       calculateEOQ();
+    }
+
+    function clearEOQCalculator() {
+      document.getElementById('toggle-ic').checked = false;
+      document.getElementById('input-i').value = '';
+      document.getElementById('input-C').value = '';
+      toggleHoldingMode();
+      loadEOQPreset('blank');
+      clearParserInput('eoq-paste-input', 'eoq-parse-feedback');
     }
 
     function toggleHoldingMode() {
