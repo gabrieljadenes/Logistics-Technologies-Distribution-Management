@@ -729,9 +729,22 @@
               <div>
                 <span class="text-xs font-mono-code uppercase text-blue-700 font-semibold">Lecture 1 • Calculator 01</span>
                 <h1 class="font-serif-editorial text-3xl sm:text-4xl text-[#141413] mt-1">Logistics Cost & Performance Calculator</h1>
-                <p class="text-sm text-[#575653] mt-2 max-w-3xl">Work through the Lecture 1 transport-cost trade-off, Strategic Profit Model (ROA), and cash-to-cash cycle. Values start with the examples from slides 32–34; edit any input to try your own case.</p>
+                <p class="text-sm text-[#575653] mt-2 max-w-3xl">Work through the Lecture 1 transport-cost trade-off, Strategic Profit Model (ROA), and cash-to-cash cycle. Start blank or load a practice question, then edit any input to try your own case.</p>
               </div>
               <button onclick="navigateTo('topic1', 't1-s5')" class="shrink-0 px-4 py-2 rounded-lg border border-[#C8D5E4] bg-white hover:bg-[#F3F7FC] text-xs font-semibold text-[#102238] transition">Back to Lecture 1 examples ↗</button>
+            </div>
+          </div>
+
+          <div id="t1calc-presets" class="editorial-card p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div>
+              <span class="text-xs font-bold text-[#141413] block">Calculator Presets</span>
+              <span class="text-[11px] text-[#575653]">Start blank or load an example from Lecture 1.</span>
+            </div>
+            <div class="flex flex-wrap gap-1.5">
+              <button onclick="loadT1FinancialPreset('blank')" id="t1calc-btn-blank" class="preset-pill active">Blank Template</button>
+              <button onclick="loadT1FinancialPreset('q1')" id="t1calc-btn-q1" class="preset-pill">Q1: Transport Cost</button>
+              <button onclick="loadT1FinancialPreset('q2')" id="t1calc-btn-q2" class="preset-pill">Q2: ROA</button>
+              <button onclick="loadT1FinancialPreset('q3')" id="t1calc-btn-q3" class="preset-pill">Q3: Cash-to-Cash</button>
             </div>
           </div>
 
@@ -745,16 +758,16 @@
               <div class="space-y-3">
                 <div>
                   <label for="t1-cost-demand" class="block text-xs text-[#575653] mb-1">Annual demand (units/year)</label>
-                  <input id="t1-cost-demand" type="number" value="500000" min="0" step="any" oninput="calculateT1Financials()" class="editorial-input w-full px-3 py-2 text-sm font-mono-code">
+                  <input id="t1-cost-demand" type="number" value="" min="0" step="any" oninput="calculateT1Financials()" class="editorial-input w-full px-3 py-2 text-sm font-mono-code">
                 </div>
                 <div class="grid grid-cols-2 gap-3">
                   <div>
                     <label for="t1-cost-unit" class="block text-xs text-[#575653] mb-1">Unit cost ($/unit)</label>
-                    <input id="t1-cost-unit" type="number" value="40" min="0" step="any" oninput="calculateT1Financials()" class="editorial-input w-full px-3 py-2 text-sm font-mono-code">
+                    <input id="t1-cost-unit" type="number" value="" min="0" step="any" oninput="calculateT1Financials()" class="editorial-input w-full px-3 py-2 text-sm font-mono-code">
                   </div>
                   <div>
                     <label for="t1-cost-carry" class="block text-xs text-[#575653] mb-1">Carrying rate (%/year)</label>
-                    <input id="t1-cost-carry" type="number" value="25" min="0" step="any" oninput="calculateT1Financials()" class="editorial-input w-full px-3 py-2 text-sm font-mono-code">
+                    <input id="t1-cost-carry" type="number" value="" min="0" step="any" oninput="calculateT1Financials()" class="editorial-input w-full px-3 py-2 text-sm font-mono-code">
                   </div>
                 </div>
                 <div class="p-3 rounded-lg bg-[#F3F7FC] text-xs text-[#536477]">Annual holding cost: <strong id="t1-cost-holding-rate" class="text-[#102238]">—</strong> per unit</div>
@@ -762,21 +775,21 @@
                   <div>
                     <h3 class="text-xs font-bold text-[#141413] mb-2">Rail option</h3>
                     <label for="t1-cost-rail-rate" class="block text-[11px] text-[#575653] mb-1">Transport rate ($/unit)</label>
-                    <input id="t1-cost-rail-rate" type="number" value="2" min="0" step="any" oninput="calculateT1Financials()" class="editorial-input w-full px-2.5 py-2 text-sm font-mono-code">
+                    <input id="t1-cost-rail-rate" type="number" value="" min="0" step="any" oninput="calculateT1Financials()" class="editorial-input w-full px-2.5 py-2 text-sm font-mono-code">
                     <label for="t1-cost-rail-inventory" class="block text-[11px] text-[#575653] mt-2 mb-1">Average inventory (units)</label>
-                    <input id="t1-cost-rail-inventory" type="number" value="80000" min="0" step="any" oninput="calculateT1Financials()" class="editorial-input w-full px-2.5 py-2 text-sm font-mono-code">
+                    <input id="t1-cost-rail-inventory" type="number" value="" min="0" step="any" oninput="calculateT1Financials()" class="editorial-input w-full px-2.5 py-2 text-sm font-mono-code">
                   </div>
                   <div>
                     <h3 class="text-xs font-bold text-[#141413] mb-2">Truck option</h3>
                     <label for="t1-cost-truck-rate" class="block text-[11px] text-[#575653] mb-1">Transport rate ($/unit)</label>
-                    <input id="t1-cost-truck-rate" type="number" value="3.5" min="0" step="any" oninput="calculateT1Financials()" class="editorial-input w-full px-2.5 py-2 text-sm font-mono-code">
+                    <input id="t1-cost-truck-rate" type="number" value="" min="0" step="any" oninput="calculateT1Financials()" class="editorial-input w-full px-2.5 py-2 text-sm font-mono-code">
                     <label for="t1-cost-truck-inventory" class="block text-[11px] text-[#575653] mt-2 mb-1">Average inventory (units)</label>
-                    <input id="t1-cost-truck-inventory" type="number" value="30000" min="0" step="any" oninput="calculateT1Financials()" class="editorial-input w-full px-2.5 py-2 text-sm font-mono-code">
+                    <input id="t1-cost-truck-inventory" type="number" value="" min="0" step="any" oninput="calculateT1Financials()" class="editorial-input w-full px-2.5 py-2 text-sm font-mono-code">
                   </div>
                 </div>
               </div>
               <div id="t1-cost-error" class="hidden p-3 rounded-lg bg-rose-50 border border-rose-200 text-rose-800 text-xs" role="alert"></div>
-              <div id="t1-cost-results" class="p-3 rounded-xl bg-[#F3F7FC] space-y-2 text-xs font-mono-code" aria-live="polite">
+              <div id="t1-cost-results" class="hidden p-3 rounded-xl bg-[#F3F7FC] space-y-2 text-xs font-mono-code" aria-live="polite">
                 <div class="font-semibold text-[#102238]">Rail</div>
                 <div class="flex justify-between gap-2"><span>Freight cost / year</span><strong id="t1-cost-rail-freight">—</strong></div>
                 <div class="flex justify-between gap-2"><span>Inventory holding / year</span><strong id="t1-cost-rail-holding">—</strong></div>
@@ -798,27 +811,27 @@
               <div class="grid grid-cols-2 gap-3">
                 <div>
                   <label for="t1-roa-sales" class="block text-xs text-[#575653] mb-1">Sales ($M)</label>
-                  <input id="t1-roa-sales" type="number" value="20" min="0" step="any" oninput="calculateT1Financials()" class="editorial-input w-full px-3 py-2 text-sm font-mono-code">
+                  <input id="t1-roa-sales" type="number" value="" min="0" step="any" oninput="calculateT1Financials()" class="editorial-input w-full px-3 py-2 text-sm font-mono-code">
                 </div>
                 <div>
                   <label for="t1-roa-profit" class="block text-xs text-[#575653] mb-1">Net profit ($M)</label>
-                  <input id="t1-roa-profit" type="number" value="1" step="any" oninput="calculateT1Financials()" class="editorial-input w-full px-3 py-2 text-sm font-mono-code">
+                  <input id="t1-roa-profit" type="number" value="" step="any" oninput="calculateT1Financials()" class="editorial-input w-full px-3 py-2 text-sm font-mono-code">
                 </div>
                 <div>
                   <label for="t1-roa-inventory" class="block text-xs text-[#575653] mb-1">Inventory ($M)</label>
-                  <input id="t1-roa-inventory" type="number" value="4" min="0" step="any" oninput="calculateT1Financials()" class="editorial-input w-full px-3 py-2 text-sm font-mono-code">
+                  <input id="t1-roa-inventory" type="number" value="" min="0" step="any" oninput="calculateT1Financials()" class="editorial-input w-full px-3 py-2 text-sm font-mono-code">
                 </div>
                 <div>
                   <label for="t1-roa-assets" class="block text-xs text-[#575653] mb-1">Other assets ($M)</label>
-                  <input id="t1-roa-assets" type="number" value="6" min="0" step="any" oninput="calculateT1Financials()" class="editorial-input w-full px-3 py-2 text-sm font-mono-code">
+                  <input id="t1-roa-assets" type="number" value="" min="0" step="any" oninput="calculateT1Financials()" class="editorial-input w-full px-3 py-2 text-sm font-mono-code">
                 </div>
                 <div class="col-span-2">
                   <label for="t1-roa-reduction" class="block text-xs text-[#575653] mb-1">WMS inventory reduction (%)</label>
-                  <input id="t1-roa-reduction" type="number" value="25" min="0" max="100" step="any" oninput="calculateT1Financials()" class="editorial-input w-full px-3 py-2 text-sm font-mono-code">
+                  <input id="t1-roa-reduction" type="number" value="" min="0" max="100" step="any" oninput="calculateT1Financials()" class="editorial-input w-full px-3 py-2 text-sm font-mono-code">
                 </div>
               </div>
               <div id="t1-roa-error" class="hidden p-3 rounded-lg bg-rose-50 border border-rose-200 text-rose-800 text-xs" role="alert"></div>
-              <div id="t1-roa-results" class="p-3 rounded-xl bg-[#F3F7FC] space-y-2 text-xs font-mono-code" aria-live="polite">
+              <div id="t1-roa-results" class="hidden p-3 rounded-xl bg-[#F3F7FC] space-y-2 text-xs font-mono-code" aria-live="polite">
                 <div class="font-semibold text-[#102238]">Current</div>
                 <div class="flex justify-between gap-2"><span>Inventory</span><strong id="t1-roa-current-inventory">—</strong></div>
                 <div class="flex justify-between gap-2"><span>Total assets</span><strong id="t1-roa-current-assets">—</strong></div>
@@ -842,31 +855,31 @@
               <div class="grid grid-cols-2 gap-3">
                 <div>
                   <label for="t1-c2c-cogs" class="block text-xs text-[#575653] mb-1">COGS ($M/year)</label>
-                  <input id="t1-c2c-cogs" type="number" value="14.6" min="0" step="any" oninput="calculateT1Financials()" class="editorial-input w-full px-3 py-2 text-sm font-mono-code">
+                  <input id="t1-c2c-cogs" type="number" value="" min="0" step="any" oninput="calculateT1Financials()" class="editorial-input w-full px-3 py-2 text-sm font-mono-code">
                 </div>
                 <div>
                   <label for="t1-c2c-sales" class="block text-xs text-[#575653] mb-1">Sales ($M/year)</label>
-                  <input id="t1-c2c-sales" type="number" value="20" min="0" step="any" oninput="calculateT1Financials()" class="editorial-input w-full px-3 py-2 text-sm font-mono-code">
+                  <input id="t1-c2c-sales" type="number" value="" min="0" step="any" oninput="calculateT1Financials()" class="editorial-input w-full px-3 py-2 text-sm font-mono-code">
                 </div>
                 <div>
                   <label for="t1-c2c-inventory" class="block text-xs text-[#575653] mb-1">Avg. inventory ($M)</label>
-                  <input id="t1-c2c-inventory" type="number" value="2" min="0" step="any" oninput="calculateT1Financials()" class="editorial-input w-full px-3 py-2 text-sm font-mono-code">
+                  <input id="t1-c2c-inventory" type="number" value="" min="0" step="any" oninput="calculateT1Financials()" class="editorial-input w-full px-3 py-2 text-sm font-mono-code">
                 </div>
                 <div>
                   <label for="t1-c2c-ar" class="block text-xs text-[#575653] mb-1">Accounts receivable ($M)</label>
-                  <input id="t1-c2c-ar" type="number" value="1.5" min="0" step="any" oninput="calculateT1Financials()" class="editorial-input w-full px-3 py-2 text-sm font-mono-code">
+                  <input id="t1-c2c-ar" type="number" value="" min="0" step="any" oninput="calculateT1Financials()" class="editorial-input w-full px-3 py-2 text-sm font-mono-code">
                 </div>
                 <div>
                   <label for="t1-c2c-ap" class="block text-xs text-[#575653] mb-1">Accounts payable ($M)</label>
-                  <input id="t1-c2c-ap" type="number" value="1.2" min="0" step="any" oninput="calculateT1Financials()" class="editorial-input w-full px-3 py-2 text-sm font-mono-code">
+                  <input id="t1-c2c-ap" type="number" value="" min="0" step="any" oninput="calculateT1Financials()" class="editorial-input w-full px-3 py-2 text-sm font-mono-code">
                 </div>
                 <div>
                   <label for="t1-c2c-days" class="block text-xs text-[#575653] mb-1">Days per year</label>
-                  <input id="t1-c2c-days" type="number" value="365" min="1" step="any" oninput="calculateT1Financials()" class="editorial-input w-full px-3 py-2 text-sm font-mono-code">
+                  <input id="t1-c2c-days" type="number" value="" min="1" step="any" oninput="calculateT1Financials()" class="editorial-input w-full px-3 py-2 text-sm font-mono-code">
                 </div>
               </div>
               <div id="t1-c2c-error" class="hidden p-3 rounded-lg bg-rose-50 border border-rose-200 text-rose-800 text-xs" role="alert"></div>
-              <div id="t1-c2c-results" class="p-3 rounded-xl bg-[#F3F7FC] space-y-2 text-xs font-mono-code" aria-live="polite">
+              <div id="t1-c2c-results" class="hidden p-3 rounded-xl bg-[#F3F7FC] space-y-2 text-xs font-mono-code" aria-live="polite">
                 <div class="flex justify-between gap-2"><span>Days of Inventory (DOI)</span><strong id="t1-c2c-doi">—</strong></div>
                 <div class="flex justify-between gap-2"><span>Days of Receivables (DOR)</span><strong id="t1-c2c-dor">—</strong></div>
                 <div class="flex justify-between gap-2"><span>Days of Payables (DOP)</span><strong id="t1-c2c-dop">—</strong></div>
@@ -2270,8 +2283,21 @@
       return `$${value.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}M`;
     }
 
+    function hasT1Input(ids) {
+      return ids.some(id => document.getElementById(id).value.trim() !== '');
+    }
+
     function calculateT1TransportCost() {
       const prefix = 't1-cost';
+      const inputIds = [
+        `${prefix}-demand`, `${prefix}-unit`, `${prefix}-carry`, `${prefix}-rail-rate`,
+        `${prefix}-rail-inventory`, `${prefix}-truck-rate`, `${prefix}-truck-inventory`
+      ];
+      if (!hasT1Input(inputIds)) {
+        document.getElementById(`${prefix}-error`).classList.add('hidden');
+        document.getElementById(`${prefix}-results`).classList.add('hidden');
+        return;
+      }
       try {
         const demand = readT1Number(`${prefix}-demand`, 'Annual demand');
         const unitCost = readT1Number(`${prefix}-unit`, 'Unit cost');
@@ -2313,6 +2339,12 @@
 
     function calculateT1ROA() {
       const prefix = 't1-roa';
+      const inputIds = [`${prefix}-sales`, `${prefix}-profit`, `${prefix}-inventory`, `${prefix}-assets`, `${prefix}-reduction`];
+      if (!hasT1Input(inputIds)) {
+        document.getElementById(`${prefix}-error`).classList.add('hidden');
+        document.getElementById(`${prefix}-results`).classList.add('hidden');
+        return;
+      }
       try {
         const sales = readT1Number(`${prefix}-sales`, 'Sales');
         const profit = readT1Number(`${prefix}-profit`, 'Net profit');
@@ -2350,6 +2382,12 @@
 
     function calculateT1CashToCash() {
       const prefix = 't1-c2c';
+      const inputIds = [`${prefix}-cogs`, `${prefix}-sales`, `${prefix}-inventory`, `${prefix}-ar`, `${prefix}-ap`, `${prefix}-days`];
+      if (!hasT1Input(inputIds)) {
+        document.getElementById(`${prefix}-error`).classList.add('hidden');
+        document.getElementById(`${prefix}-results`).classList.add('hidden');
+        return;
+      }
       try {
         const cogs = readT1Number(`${prefix}-cogs`, 'COGS');
         const sales = readT1Number(`${prefix}-sales`, 'Sales');
@@ -2376,10 +2414,74 @@
       }
     }
 
-    function calculateT1Financials() {
+    function calculateT1Financials(clearPreset = true) {
+      if (clearPreset) {
+        document.querySelectorAll('#t1calc-presets .preset-pill').forEach(button => button.classList.remove('active'));
+      }
       calculateT1TransportCost();
       calculateT1ROA();
       calculateT1CashToCash();
+    }
+
+    function loadT1FinancialPreset(key) {
+      const inputs = {
+        't1-cost-demand': '',
+        't1-cost-unit': '',
+        't1-cost-carry': '',
+        't1-cost-rail-rate': '',
+        't1-cost-rail-inventory': '',
+        't1-cost-truck-rate': '',
+        't1-cost-truck-inventory': '',
+        't1-roa-sales': '',
+        't1-roa-profit': '',
+        't1-roa-inventory': '',
+        't1-roa-assets': '',
+        't1-roa-reduction': '',
+        't1-c2c-cogs': '',
+        't1-c2c-sales': '',
+        't1-c2c-inventory': '',
+        't1-c2c-ar': '',
+        't1-c2c-ap': '',
+        't1-c2c-days': ''
+      };
+      const presets = {
+        blank: {},
+        q1: {
+          't1-cost-demand': '500000',
+          't1-cost-unit': '40',
+          't1-cost-carry': '25',
+          't1-cost-rail-rate': '2',
+          't1-cost-rail-inventory': '80000',
+          't1-cost-truck-rate': '3.5',
+          't1-cost-truck-inventory': '30000'
+        },
+        q2: {
+          't1-roa-sales': '20',
+          't1-roa-profit': '1',
+          't1-roa-inventory': '4',
+          't1-roa-assets': '6',
+          't1-roa-reduction': '25'
+        },
+        q3: {
+          't1-c2c-cogs': '14.6',
+          't1-c2c-sales': '20',
+          't1-c2c-inventory': '2',
+          't1-c2c-ar': '1.5',
+          't1-c2c-ap': '1.2',
+          't1-c2c-days': '365'
+        }
+      };
+      if (!Object.prototype.hasOwnProperty.call(presets, key)) {
+        throw new Error(`Unknown Lecture 1 calculator preset: ${key}`);
+      }
+
+      Object.assign(inputs, presets[key]);
+      Object.entries(inputs).forEach(([id, value]) => {
+        document.getElementById(id).value = value;
+      });
+      document.querySelectorAll('#t1calc-presets .preset-pill').forEach(button => button.classList.remove('active'));
+      document.getElementById(`t1calc-btn-${key}`).classList.add('active');
+      calculateT1Financials(false);
     }
 
     function typesetMath(element) {
@@ -3570,7 +3672,7 @@
       loadTLCPreset('blank');
       loadNWCMPreset('blank');
       loadEOQPreset('blank');
-      calculateT1Financials();
+      loadT1FinancialPreset('blank');
     };
   </script>
 </body>
