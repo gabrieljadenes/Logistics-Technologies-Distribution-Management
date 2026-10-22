@@ -1,0 +1,2679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LGT3301 — Logistics Technologies & Distribution Management</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-canvas: #FAF9F5;
+      --bg-surface: #FFFFFF;
+      --bg-subtle: #F3F2EE;
+      --text-primary: #141413;
+      --text-secondary: #575653;
+      --text-muted: #87867F;
+      --border-hairline: #E6E4DD;
+      --border-strong: #D1CFC7;
+      --accent-primary: #1D4ED8;
+      --accent-soft: #EFF6FF;
+      --ease-out-expo: cubic-bezier(0.22, 1, 0.36, 1);
+      --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg-canvas);
+      color: var(--text-primary);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    .font-serif-editorial {
+      font-family: 'Instrument Serif', Georgia, serif;
+    }
+
+    .font-mono-code {
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* Purposeful Motion from animate-skill */
+    .view-transition {
+      animation: fadeSlideUp 0.28s var(--ease-out-expo) forwards;
+    }
+
+    @keyframes fadeSlideUp {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .editorial-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-hairline);
+      border-radius: 12px;
+      box-shadow: 0 1px 2px rgba(20, 20, 19, 0.03);
+      transition: transform 0.22s var(--ease-out-expo), box-shadow 0.22s var(--ease-out-expo), border-color 0.22s var(--ease-out-expo);
+    }
+
+    .editorial-card-interactive:hover {
+      transform: translateY(-2px);
+      border-color: var(--border-strong);
+      box-shadow: 0 8px 24px -6px rgba(20, 20, 19, 0.07);
+    }
+
+    .editorial-input {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-strong);
+      color: var(--text-primary);
+      border-radius: 8px;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .editorial-input:focus {
+      border-color: var(--accent-primary);
+      box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.12);
+      outline: none;
+    }
+
+    /* Google Docs style left outline tab */
+    .gdoc-tab {
+      display: flex;
+      align-items: center;
+      gap: 0.625rem;
+      width: 100%;
+      text-align: left;
+      padding: 0.55rem 0.75rem;
+      border-radius: 0 20px 20px 0;
+      border-left: 3px solid transparent;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      transition: all 0.18s var(--ease-out-expo);
+    }
+
+    .gdoc-tab:hover {
+      background-color: var(--bg-subtle);
+      color: var(--text-primary);
+    }
+
+    .gdoc-tab.active {
+      background-color: #E8F0FE;
+      color: #1967D2;
+      border-left-color: #1967D2;
+      font-weight: 600;
+    }
+
+    /* Inline Calculator Deep Link */
+    .calc-inline-link {
+      color: #1D4ED8;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-thickness: 1.5px;
+      font-weight: 600;
+      cursor: pointer;
+      padding: 0.1rem 0.35rem;
+      border-radius: 4px;
+      background-color: #EFF6FF;
+      transition: background-color 0.15s ease, color 0.15s ease;
+    }
+
+    .calc-inline-link:hover {
+      background-color: #DBEAFE;
+      color: #1E40AF;
+    }
+
+    .preset-pill {
+      padding: 0.4rem 0.75rem;
+      border-radius: 8px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      border: 1px solid var(--border-strong);
+      background: var(--bg-surface);
+      color: var(--text-secondary);
+      transition: all 0.16s var(--ease-out-expo);
+    }
+
+    .preset-pill:hover {
+      background: var(--bg-subtle);
+      color: var(--text-primary);
+    }
+
+    .preset-pill.active {
+      background: #141413;
+      color: #FFFFFF;
+      border-color: #141413;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #D1CFC7; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #9CA3AF; }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+  <header class="sticky top-0 z-40 bg-[#FAF9F5]/90 backdrop-blur-md border-b border-[#E6E4DD]">
+    <div class="max-w-[1440px] mx-auto px-4 sm:px-8 h-16 flex items-center justify-between gap-4">
+      
+      <!-- Left: Brand + Conditional Back to Home Button -->
+      <div class="flex items-center gap-3">
+        <button id="btn-back-home" onclick="navigateTo('home')" class="hidden items-center gap-2 px-3 py-1.5 rounded-lg border border-[#D1CFC7] bg-white hover:bg-[#F3F2EE] text-xs font-semibold text-[#141413] shadow-sm transition">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+          <span data-i18n="backHome">Back to Home</span>
+        </button>
+
+        <div onclick="navigateTo('home')" class="flex items-center gap-2.5 cursor-pointer group">
+          <div class="w-8 h-8 rounded-lg bg-[#141413] text-white flex items-center justify-center font-mono-code font-bold text-xs tracking-tighter group-hover:bg-blue-700 transition">
+            3301
+          </div>
+          <div>
+            <span class="font-bold text-sm tracking-tight text-[#141413] block leading-none">LGT3301 Study Hub</span>
+            <span class="text-[11px] text-[#87867F] block mt-0.5" data-i18n="courseSubtitle">Logistics Technologies & Distribution Management</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Global Search Bar + Language Switcher + AI Drawer Toggle -->
+      <div class="flex items-center gap-2.5">
+        
+        <!-- Search Input with Dropdown -->
+        <div class="relative w-48 sm:w-72">
+          <div class="relative flex items-center">
+            <svg class="w-4 h-4 text-[#87867F] absolute left-3 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 103.5 10.5a7.5 7.5 0 0013.15 6.15z"/>
+            </svg>
+            <input
+              id="global-search-input"
+              type="text"
+              oninput="handleGlobalSearch(this.value)"
+              onfocus="handleGlobalSearch(this.value)"
+              placeholder="Search topics, formulas, calculators..."
+              data-i18n-placeholder="searchPlaceholder"
+              class="w-full pl-9 pr-8 py-1.5 text-xs bg-white border border-[#D1CFC7] rounded-lg focus:outline-none focus:border-blue-600 transition"
+            />
+            <kbd class="hidden sm:inline-block absolute right-2 text-[10px] font-mono-code text-[#87867F] bg-[#F3F2EE] px-1.5 py-0.5 rounded border border-[#E6E4DD]">/</kbd>
+          </div>
+          <!-- Search Results Popover -->
+          <div id="global-search-results" class="hidden absolute right-0 mt-1.5 w-80 sm:w-96 bg-white border border-[#D1CFC7] rounded-xl shadow-xl max-h-96 overflow-y-auto z-50 divide-y divide-[#E6E4DD]"></div>
+        </div>
+
+        <!-- Language Selector (EN / 中文 / ID) -->
+        <select id="lang-select" onchange="setLanguage(this.value)" aria-label="Select Language" class="px-2.5 py-1.5 text-xs font-semibold bg-white border border-[#D1CFC7] rounded-lg text-[#141413] focus:outline-none focus:border-blue-600 cursor-pointer">
+          <option value="en">EN (English)</option>
+          <option value="zh">繁體中文</option>
+          <option value="id">ID (Bahasa)</option>
+        </select>
+
+        <!-- AI Study Assistant Toggle -->
+        <button onclick="toggleAIDrawer()" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#141413] hover:bg-blue-700 text-white text-xs font-semibold transition shadow-sm">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>
+          <span data-i18n="aiTutorBtn">AI Tutor</span>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <div class="flex-grow flex relative max-w-[1440px] w-full mx-auto">
+
+    <!-- MAIN CONTENT AREA -->
+    <main id="main-workspace" class="flex-grow px-4 sm:px-8 py-8 transition-all duration-300 w-full">
+
+      <!-- ==========================================
+           PAGE: HOME PORTAL
+           ========================================== -->
+      <section id="page-home" class="view-transition space-y-10 max-w-6xl mx-auto">
+        
+        <!-- Editorial Hero -->
+        <div class="border-b border-[#E6E4DD] pb-8">
+          <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-md bg-[#F3F2EE] border border-[#E6E4DD] text-[11px] font-mono-code uppercase tracking-wider text-[#575653] mb-3">
+            <span class="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
+            <span data-i18n="heroBadge">Interactive Course Companion & Computation Suite</span>
+          </div>
+          <h1 class="font-serif-editorial text-4xl sm:text-5xl text-[#141413] tracking-tight leading-[1.12]">
+            Logistics Technologies & Distribution Management
+          </h1>
+          <p class="text-[#575653] text-sm sm:text-base mt-3 max-w-3xl leading-relaxed" data-i18n="heroDesc">
+            A structured study workspace and quantitative solver suite for LGT3301. Review condensed lecture notes across Topics 1–4, practice with step-by-step tutorial guides, or launch blank-slate calculators with smart question auto-fill.
+          </p>
+        </div>
+
+        <!-- SECTION 1: LECTURE STUDY MODULES (TOPICS 1 - 4) -->
+        <div class="space-y-4">
+          <div class="flex items-baseline justify-between">
+            <div>
+              <h2 class="text-lg font-bold tracking-tight text-[#141413]" data-i18n="secLecturesTitle">Lecture Study Modules (Topics 1–4)</h2>
+              <p class="text-xs text-[#575653]" data-i18n="secLecturesSub">Essential concepts, frameworks, and practice case studies extracted for fast revision.</p>
+            </div>
+            <span class="text-xs font-mono-code text-[#87867F]">4 Modules Available</span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <!-- Topic 1 Card -->
+            <div onclick="navigateTo('topic1')" class="editorial-card editorial-card-interactive p-5 cursor-pointer flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between text-xs font-mono-code text-[#87867F] mb-3">
+                  <span class="px-2 py-0.5 rounded bg-[#F3F2EE] text-[#141413] font-semibold">TOPIC 01</span>
+                  <span>6 Sections + 3 Cases</span>
+                </div>
+                <h3 class="text-base font-bold text-[#141413] mb-1.5">Logistics in Supply Chain Management</h3>
+                <p class="text-xs text-[#575653] leading-relaxed">
+                  Integrative Value Proposition, SCOR Model (Plan, Source, Make, Deliver, Return), Push vs. Pull & Postponement, ERP/TMS/WMS, and Strategic Profit Model (ROA & Cash-to-Cash).
+                </p>
+              </div>
+              <div class="mt-4 pt-3 border-t border-[#E6E4DD] flex items-center justify-between text-xs font-semibold text-blue-700">
+                <span data-i18n="openNotes">Read Study Notes</span>
+                <span>→</span>
+              </div>
+            </div>
+
+            <!-- Topic 2 Card -->
+            <div onclick="navigateTo('topic2')" class="editorial-card editorial-card-interactive p-5 cursor-pointer flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between text-xs font-mono-code text-[#87867F] mb-3">
+                  <span class="px-2 py-0.5 rounded bg-[#F3F2EE] text-[#141413] font-semibold">TOPIC 02</span>
+                  <span>5 Sections + 2 Cases</span>
+                </div>
+                <h3 class="text-base font-bold text-[#141413] mb-1.5">Warehousing & Material Handling</h3>
+                <p class="text-xs text-[#575653] leading-relaxed">
+                  Spot vs. Full-Line Stocking, Value-Added Services, Consolidation, Break-Bulk, Cross-Docking, Mixing, Cube Utilization, and Mechanized vs. AS/RS Automation.
+                </p>
+              </div>
+              <div class="mt-4 pt-3 border-t border-[#E6E4DD] flex items-center justify-between text-xs font-semibold text-blue-700">
+                <span data-i18n="openNotes">Read Study Notes</span>
+                <span>→</span>
+              </div>
+            </div>
+
+            <!-- Topic 3 Card -->
+            <div onclick="navigateTo('topic3')" class="editorial-card editorial-card-interactive p-5 cursor-pointer flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between text-xs font-mono-code text-[#87867F] mb-3">
+                  <span class="px-2 py-0.5 rounded bg-[#F3F2EE] text-[#141413] font-semibold">TOPIC 03</span>
+                  <span>6 Sections + NWCM</span>
+                </div>
+                <h3 class="text-base font-bold text-[#141413] mb-1.5">Transportation & Packaging</h3>
+                <p class="text-xs text-[#575653] leading-relaxed">
+                  5 Transport Modes (Rail COFC/TOFC, Road, Sea, Air, Pipeline), ISO Containers (TEU/FEU), NWCM Allocation, Building-Blocks Concept, Hazmat, and Smart Packaging.
+                </p>
+              </div>
+              <div class="mt-4 pt-3 border-t border-[#E6E4DD] flex items-center justify-between text-xs font-semibold text-blue-700">
+                <span data-i18n="openNotes">Read Study Notes</span>
+                <span>→</span>
+              </div>
+            </div>
+
+            <!-- Topic 4 Card -->
+            <div onclick="navigateTo('topic4')" class="editorial-card editorial-card-interactive p-5 cursor-pointer flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between text-xs font-mono-code text-[#87867F] mb-3">
+                  <span class="px-2 py-0.5 rounded bg-[#F3F2EE] text-[#141413] font-semibold">TOPIC 04</span>
+                  <span>6 Sections + EOQ/EPQ</span>
+                </div>
+                <h3 class="text-base font-bold text-[#141413] mb-1.5">Inventory & Material Management</h3>
+                <p class="text-xs text-[#575653] leading-relaxed">
+                  Holding vs. Ordering Cost Trade-Offs, EOQ & Safety Stock, Non-Instantaneous EPQ ($I_{\max}$), ABC Pareto Analysis, RFID vs. Barcodes, and ML Demand Sensing.
+                </p>
+              </div>
+              <div class="mt-4 pt-3 border-t border-[#E6E4DD] flex items-center justify-between text-xs font-semibold text-blue-700">
+                <span data-i18n="openNotes">Read Study Notes</span>
+                <span>→</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 2: TUTORIAL GUIDES & AUTOMATED CALCULATORS -->
+        <div class="space-y-4 pt-2">
+          <div class="flex items-baseline justify-between">
+            <div>
+              <h2 class="text-lg font-bold tracking-tight text-[#141413]" data-i18n="secTutorialsTitle">Tutorial Guides & Automated Calculators</h2>
+              <p class="text-xs text-[#575653]" data-i18n="secTutorialsSub">Each module features a Google Docs-style outline with full tutorial theory on top and a blank-slate calculator + smart paste parser below.</p>
+            </div>
+            <span class="text-xs font-mono-code text-[#87867F]">3 Interactive Tools</span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+            <!-- Tutorial 1: TLC Multimodal -->
+            <div onclick="navigateTo('tlc')" class="editorial-card editorial-card-interactive p-6 cursor-pointer flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between mb-3">
+                  <span class="text-xs font-mono-code font-semibold px-2.5 py-1 rounded bg-blue-50 text-blue-800 border border-blue-200">TUTORIAL MODULE 01</span>
+                  <span class="text-xs font-mono-code text-[#87867F]">CW • RT • Multimodal</span>
+                </div>
+                <h3 class="text-lg font-bold text-[#141413] mb-2">Total Logistics Cost (TLC) & Multimodal</h3>
+                <p class="text-xs text-[#575653] leading-relaxed mb-4">
+                  Learn and compute Actual Weight (AW), Volumetric Weight (VW), Chargeable Weight (CW), and Revenue Tons (RT) across Air, Road, and Sea LCL routes.
+                </p>
+              </div>
+              <div class="pt-3 border-t border-[#E6E4DD] flex items-center justify-between text-xs font-semibold text-[#141413]">
+                <span>Open Tutorial & Calculator</span>
+                <span>→</span>
+              </div>
+            </div>
+
+            <!-- Tutorial 2: NWCM -->
+            <div onclick="navigateTo('nwcm')" class="editorial-card editorial-card-interactive p-6 cursor-pointer flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between mb-3">
+                  <span class="text-xs font-mono-code font-semibold px-2.5 py-1 rounded bg-amber-50 text-amber-900 border border-amber-200">TUTORIAL MODULE 02</span>
+                  <span class="text-xs font-mono-code text-[#87867F]">M×N Matrix Solver</span>
+                </div>
+                <h3 class="text-lg font-bold text-[#141413] mb-2">North-West Corner Method (NWCM)</h3>
+                <p class="text-xs text-[#575653] leading-relaxed mb-4">
+                  Master stepwise warehouse-to-customer allocation starting from top-left $(F_1, C_1)$, automatic dummy row/column balancing, and total transport cost calculation.
+                </p>
+              </div>
+              <div class="pt-3 border-t border-[#E6E4DD] flex items-center justify-between text-xs font-semibold text-[#141413]">
+                <span>Open Tutorial & Calculator</span>
+                <span>→</span>
+              </div>
+            </div>
+
+            <!-- Tutorial 3: EOQ & EPQ -->
+            <div onclick="navigateTo('eoq')" class="editorial-card editorial-card-interactive p-6 cursor-pointer flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between mb-3">
+                  <span class="text-xs font-mono-code font-semibold px-2.5 py-1 rounded bg-emerald-50 text-emerald-900 border border-emerald-200">TUTORIAL MODULE 03</span>
+                  <span class="text-xs font-mono-code text-[#87867F]">Q* • Qp* • Imax</span>
+                </div>
+                <h3 class="text-lg font-bold text-[#141413] mb-2">EOQ & EPQ Inventory Optimization</h3>
+                <p class="text-xs text-[#575653] leading-relaxed mb-4">
+                  Compare Instantaneous Receipt ($Q^*$) against Staggered Shuttle Replenishment ($Q_p^*$), Peak Warehouse Footprint ($I_{\max}$), and interactive Sawtooth charts.
+                </p>
+              </div>
+              <div class="pt-3 border-t border-[#E6E4DD] flex items-center justify-between text-xs font-semibold text-[#141413]">
+                <span>Open Tutorial & Calculator</span>
+                <span>→</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ==========================================
+           DYNAMIC LECTURE PAGES (TOPICS 1 TO 4)
+           ========================================== -->
+      <section id="page-lecture" class="hidden view-transition">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          
+          <!-- Google Docs-Style Left Outline Sidebar -->
+          <aside class="lg:col-span-3 lg:sticky lg:top-24 space-y-4">
+            <div class="pr-2">
+              <div class="text-[11px] font-mono-code uppercase tracking-wider text-[#87867F] px-3 mb-2">Document Outline</div>
+              <div id="lecture-outline-nav" class="space-y-1"></div>
+            </div>
+
+            <div class="editorial-card p-4 bg-[#F3F2EE]/60">
+              <div class="text-xs font-bold text-[#141413] mb-1">Related Calculators</div>
+              <p class="text-[11px] text-[#575653] mb-2.5">Jump directly to the quantitative tools linked to this topic:</p>
+              <div id="lecture-related-calcs" class="space-y-1.5 text-xs"></div>
+            </div>
+          </aside>
+
+          <!-- Right Reader-Friendly Lecture Content -->
+          <div id="lecture-body-content" class="lg:col-span-9 space-y-6"></div>
+
+        </div>
+      </section>
+
+      <!-- ==========================================
+           PAGE: TUTORIAL 1 — TLC & MULTIMODAL
+           ========================================== -->
+      <section id="page-tlc" class="hidden view-transition">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          
+          <!-- Left Google Docs-Style Tab Switcher -->
+          <aside class="lg:col-span-3 lg:sticky lg:top-24 space-y-4">
+            <div>
+              <div class="text-[11px] font-mono-code uppercase tracking-wider text-[#87867F] px-3 mb-2">Module Workspace</div>
+              <button onclick="switchModuleSubTab('tlc', 'guide')" id="tlc-subtab-guide" class="gdoc-tab active">
+                <span>📖</span>
+                <span>1. Tutorial Material & Guide</span>
+              </button>
+              <button onclick="switchModuleSubTab('tlc', 'calc')" id="tlc-subtab-calc" class="gdoc-tab mt-1">
+                <span>🧮</span>
+                <span>2. Interactive TLC Calculator</span>
+              </button>
+            </div>
+
+            <div class="editorial-card p-4 bg-[#F3F2EE]/60 text-xs space-y-2">
+              <div class="font-bold text-[#141413]">Core Formulas</div>
+              <div class="font-mono-code text-[11px] text-[#575653] space-y-1">
+                <div>AW = Qty × Unit Wt (kg)</div>
+                <div>VW = Total Vol (cm³) / DIM</div>
+                <div>CW = max(AW, VW)</div>
+                <div>Sea RT = max(AW/1000, CBM)</div>
+              </div>
+            </div>
+          </aside>
+
+          <!-- Right Content Column -->
+          <div class="lg:col-span-9">
+
+            <!-- SUB-TAB 1: TUTORIAL GUIDE -->
+            <div id="tlc-view-guide" class="space-y-6">
+              <div class="editorial-card p-6 sm:p-8 space-y-6">
+                <div class="border-b border-[#E6E4DD] pb-5">
+                  <span class="text-xs font-mono-code uppercase text-blue-700 font-semibold">Tutorial Module 01 • Study Guide</span>
+                  <h2 class="font-serif-editorial text-3xl sm:text-4xl text-[#141413] mt-1">Total Logistics Cost (TLC) & Multimodal Shipping</h2>
+                  <p class="text-sm text-[#575653] mt-2">Understanding how freight carriers price cargo using Actual Weight vs. Volumetric Weight, Revenue Tons, and multimodal leg combinations.</p>
+                </div>
+
+                <!-- Concept 1 -->
+                <div class="space-y-3">
+                  <h3 class="text-base font-bold text-[#141413]">1. Why Do Carriers Use Volumetric (Dimensional) Weight?</h3>
+                  <p class="text-sm text-[#575653] leading-relaxed">
+                    Aircraft, trucks, and ocean containers are constrained by both <strong>weight capacity</strong> and <strong>cubic volume capacity</strong>. Light, bulky cargo ("balloon freight") occupies valuable space before reaching weight limits. Therefore, carriers charge based on whichever is greater: <strong>Actual Gross Weight (AW)</strong> or <strong>Volumetric Weight (VW)</strong>.
+                  </p>
+                  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
+                    <div class="p-4 rounded-xl bg-[#FAF9F5] border border-[#E6E4DD]">
+                      <div class="text-xs font-mono-code font-bold text-blue-700">Air Freight Standard</div>
+                      <div class="text-sm font-bold mt-1">DIM Factor = 6,000</div>
+                      <p class="text-xs text-[#575653] mt-1">$\text{VW (kg)} = \frac{L \times W \times H \text{ (cm)}}{6,000} \times \text{Qty}$<br>(Equivalent to $1\text{ CBM} = 166.67\text{ kg}$)</p>
+                    </div>
+                    <div class="p-4 rounded-xl bg-[#FAF9F5] border border-[#E6E4DD]">
+                      <div class="text-xs font-mono-code font-bold text-amber-700">Road / Express Standard</div>
+                      <div class="text-sm font-bold mt-1">DIM Factor = 5,000</div>
+                      <p class="text-xs text-[#575653] mt-1">$\text{VW (kg)} = \frac{L \times W \times H \text{ (cm)}}{5,000} \times \text{Qty}$<br>(Equivalent to $1\text{ CBM} = 200\text{ kg}$)</p>
+                    </div>
+                    <div class="p-4 rounded-xl bg-[#FAF9F5] border border-[#E6E4DD]">
+                      <div class="text-xs font-mono-code font-bold text-emerald-700">Sea Freight LCL (W/M)</div>
+                      <div class="text-sm font-bold mt-1">Revenue Ton (RT)</div>
+                      <p class="text-xs text-[#575653] mt-1">$\text{RT} = \max\left(\text{Metric Tons}, \text{CBM}\right)$ where $1\text{ MT} = 1,000\text{ kg}$ and $1\text{ CBM} = 10^6\text{ cm}^3$.</p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Step-by-Step Worked Examples -->
+                <div class="space-y-4 pt-4 border-t border-[#E6E4DD]">
+                  <h3 class="text-base font-bold text-[#141413]">2. Step-by-Step Tutorial Cases</h3>
+                  
+                  <div class="p-4 rounded-xl bg-[#FAF9F5] border border-[#E6E4DD] space-y-2">
+                    <div class="flex items-center justify-between">
+                      <span class="text-xs font-bold text-[#141413]">Worked Example: Air Consignment</span>
+                      <button onclick="switchModuleSubTab('tlc','calc'); loadTLCPreset('worked')" class="calc-inline-link text-xs">Load in TLC Calculator ↗</button>
+                    </div>
+                    <p class="text-xs text-[#575653]">10 cartons, each $15\text{ kg}$ and $50 \times 40 \times 30\text{ cm}$. Air rate: $\$5.00/\text{kg}$ (DIM 6000).</p>
+                    <div class="text-xs font-mono-code text-[#141413] bg-white p-3 rounded border border-[#E6E4DD]">
+                      • Total AW = 10 × 15 kg = 150 kg<br>
+                      • Total VW = [10 × (50 × 40 × 30)] / 6,000 = 600,000 / 6,000 = 100 kg<br>
+                      • Chargeable Weight (CW) = max(150, 100) = 150 kg → Total Cost = 150 × $5.00 = $750.00
+                    </div>
+                  </div>
+
+                  <div class="p-4 rounded-xl bg-[#FAF9F5] border border-[#E6E4DD] space-y-2">
+                    <div class="flex items-center justify-between">
+                      <span class="text-xs font-bold text-[#141413]">Question 2: Multimodal Journey (Road + Air)</span>
+                      <button onclick="switchModuleSubTab('tlc','calc'); loadTLCPreset('q2')" class="calc-inline-link text-xs">Load in TLC Calculator ↗</button>
+                    </div>
+                    <p class="text-xs text-[#575653]">20 boxes, $40\text{ kg}$ each, $60 \times 50 \times 50\text{ cm}$. Leg 1 Road (Shenzhen → HKG): DIM 5000, $\$0.50/\text{kg}$. Leg 2 Air (HKG → Frankfurt): DIM 6000, $\$3.20/\text{kg}$ base + $\$0.30/\text{kg}$ fuel surcharge.</p>
+                    <div class="text-xs font-mono-code text-[#141413] bg-white p-3 rounded border border-[#E6E4DD]">
+                      • Total AW = 800 kg | Total Volume = 3,000,000 cm³ (3.00 CBM)<br>
+                      • Leg 1 (Road): VW = 3,000,000 / 5,000 = 600 kg → CW₁ = max(800, 600) = 800 kg → Cost₁ = 800 × $0.50 = $400<br>
+                      • Leg 2 (Air): VW = 3,000,000 / 6,000 = 500 kg → CW₂ = max(800, 500) = 800 kg → Cost₂ = 800 × ($3.20 + $0.30) = $2,800<br>
+                      • Total Multimodal Cost = $400 + $2,800 = $3,200.00
+                    </div>
+                  </div>
+
+                  <div class="p-4 rounded-xl bg-[#FAF9F5] border border-[#E6E4DD] space-y-2">
+                    <div class="flex items-center justify-between">
+                      <span class="text-xs font-bold text-[#141413]">Question 3: Routing Decision with Budget & Time Constraints</span>
+                      <button onclick="switchModuleSubTab('tlc','calc'); loadTLCPreset('q3')" class="calc-inline-link text-xs">Load in TLC Calculator ↗</button>
+                    </div>
+                    <p class="text-xs text-[#575653]">50 cartons, $40\text{ kg}$ each, $80 \times 60 \times 50\text{ cm}$. Max Budget: $\$5,000$, Max Deadline: $20\text{ days}$. Compare Direct Air ($\$12,150$, 3d), Sea-Air via Dubai ($\$4,450$, 14d), and Sea LCL ($\$1,740$, 35d).</p>
+                  </div>
+                </div>
+
+                <div class="pt-2">
+                  <button onclick="switchModuleSubTab('tlc', 'calc')" class="px-5 py-2.5 rounded-lg bg-[#141413] hover:bg-blue-700 text-white text-xs font-semibold transition">
+                    Switch to Interactive TLC Calculator →
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- SUB-TAB 2: INTERACTIVE TLC CALCULATOR -->
+            <div id="tlc-view-calc" class="hidden space-y-6">
+              
+              <!-- Preset Bar (Starts on Blank Template!) -->
+              <div class="editorial-card p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div>
+                  <span class="text-xs font-bold text-[#141413] block">Template & Case Presets</span>
+                  <span class="text-[11px] text-[#575653]">Starts blank by default. Click a preset or paste a question below.</span>
+                </div>
+                <div class="flex flex-wrap gap-1.5">
+                  <button onclick="loadTLCPreset('blank')" id="tlc-btn-blank" class="preset-pill active">Blank Template</button>
+                  <button onclick="loadTLCPreset('worked')" id="tlc-btn-worked" class="preset-pill">Worked Example</button>
+                  <button onclick="loadTLCPreset('q1')" id="tlc-btn-q1" class="preset-pill">Q1: 5 Pallets</button>
+                  <button onclick="loadTLCPreset('q2')" id="tlc-btn-q2" class="preset-pill">Q2: Road+Air</button>
+                  <button onclick="loadTLCPreset('q3')" id="tlc-btn-q3" class="preset-pill">Q3: Routing</button>
+                </div>
+              </div>
+
+              <!-- Smart Paste Question Auto-Detector -->
+              <div class="editorial-card p-4 bg-blue-50/40 border-blue-200">
+                <div class="flex items-center justify-between mb-2">
+                  <label class="text-xs font-bold text-blue-900 flex items-center gap-1.5">
+                    <span>✨ Smart Question Parser — Paste Problem Text to Auto-Fill</span>
+                  </label>
+                  <button onclick="parseTLCQuestionText()" class="px-3 py-1 rounded-md bg-blue-700 hover:bg-blue-800 text-white text-xs font-semibold transition">
+                    Auto-Extract & Fill
+                  </button>
+                </div>
+                <textarea id="tlc-paste-input" rows="2" placeholder="Paste any shipping problem here (e.g. 'A shipment of 20 boxes, each weighing 40 kg with dimensions 60x50x50 cm... rate is $3.20/kg...')" class="editorial-input w-full p-2.5 text-xs"></textarea>
+                <div id="tlc-parse-feedback" class="text-[11px] text-blue-800 mt-1 hidden"></div>
+              </div>
+
+              <!-- Inputs + Physical Outputs -->
+              <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                <div class="lg:col-span-5 editorial-card p-5 space-y-4">
+                  <div class="flex items-center justify-between border-b border-[#E6E4DD] pb-3">
+                    <h3 class="text-sm font-bold text-[#141413]">1. Consignment Dimensions & Weight</h3>
+                    <span id="tlc-badge" class="text-[11px] font-mono-code px-2 py-0.5 rounded bg-[#F3F2EE] text-[#575653]">Blank Template</span>
+                  </div>
+
+                  <div class="grid grid-cols-2 gap-3">
+                    <div>
+                      <label class="block text-xs font-medium text-[#575653] mb-1">Quantity (Units)</label>
+                      <input type="number" id="tlc-qty" value="" placeholder="e.g. 50" min="1" oninput="calcTLC()" class="editorial-input w-full px-3 py-2 text-sm font-mono-code" />
+                    </div>
+                    <div>
+                      <label class="block text-xs font-medium text-[#575653] mb-1">Unit Weight (kg)</label>
+                      <input type="number" id="tlc-unit-wt" value="" placeholder="e.g. 40" min="0.1" step="0.5" oninput="calcTLC()" class="editorial-input w-full px-3 py-2 text-sm font-mono-code" />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label class="block text-xs font-medium text-[#575653] mb-1">Dimensions per Unit: L × W × H (cm)</label>
+                    <div class="grid grid-cols-3 gap-2">
+                      <input type="number" id="tlc-L" value="" placeholder="L (cm)" oninput="calcTLC()" class="editorial-input w-full px-2.5 py-2 text-sm font-mono-code" />
+                      <input type="number" id="tlc-W" value="" placeholder="W (cm)" oninput="calcTLC()" class="editorial-input w-full px-2.5 py-2 text-sm font-mono-code" />
+                      <input type="number" id="tlc-H" value="" placeholder="H (cm)" oninput="calcTLC()" class="editorial-input w-full px-2.5 py-2 text-sm font-mono-code" />
+                    </div>
+                  </div>
+
+                  <div class="pt-3 border-t border-[#E6E4DD] space-y-3">
+                    <div class="flex items-center justify-between">
+                      <span class="text-xs font-semibold text-[#141413]">Evaluation Mode</span>
+                      <select id="tlc-calc-mode" onchange="calcTLC()" class="editorial-input px-2.5 py-1 text-xs font-medium">
+                        <option value="compare">Compare Competing Routes</option>
+                        <option value="sequential">Sum Sequential Multimodal Legs</option>
+                      </select>
+                    </div>
+                    <div class="grid grid-cols-2 gap-3">
+                      <div>
+                        <label class="block text-[11px] text-[#575653] mb-1">Max Budget ($)</label>
+                        <input type="number" id="tlc-budget" value="" placeholder="Optional" oninput="calcTLC()" class="editorial-input w-full px-2.5 py-1.5 text-xs font-mono-code" />
+                      </div>
+                      <div>
+                        <label class="block text-[11px] text-[#575653] mb-1">Max Transit (Days)</label>
+                        <input type="number" id="tlc-maxdays" value="" placeholder="Optional" oninput="calcTLC()" class="editorial-input w-full px-2.5 py-1.5 text-xs font-mono-code" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Right Benchmarks -->
+                <div class="lg:col-span-7 editorial-card p-5 flex flex-col justify-between">
+                  <div>
+                    <div class="flex items-center justify-between border-b border-[#E6E4DD] pb-3 mb-4">
+                      <h3 class="text-sm font-bold text-[#141413]">2. Physical & Volumetric Benchmarks</h3>
+                      <span class="text-xs font-mono-code text-[#87867F]">CW = max(AW, VW)</span>
+                    </div>
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                      <div class="p-3.5 rounded-xl bg-[#FAF9F5] border border-[#E6E4DD]">
+                        <div class="text-[11px] text-[#575653]">Total Actual Wt</div>
+                        <div id="tlc-out-aw" class="text-lg font-bold text-[#141413] mt-1 font-mono-code">—</div>
+                      </div>
+                      <div class="p-3.5 rounded-xl bg-[#FAF9F5] border border-[#E6E4DD]">
+                        <div class="text-[11px] text-[#575653]">Total Volume</div>
+                        <div id="tlc-out-cbm" class="text-lg font-bold text-blue-700 mt-1 font-mono-code">—</div>
+                      </div>
+                      <div class="p-3.5 rounded-xl bg-[#FAF9F5] border border-[#E6E4DD]">
+                        <div class="text-[11px] text-[#575653]">Air VW (DIM 6000)</div>
+                        <div id="tlc-out-vw6000" class="text-lg font-bold text-[#141413] mt-1 font-mono-code">—</div>
+                      </div>
+                      <div class="p-3.5 rounded-xl bg-[#FAF9F5] border border-[#E6E4DD]">
+                        <div class="text-[11px] text-[#575653]">Road VW (DIM 5000)</div>
+                        <div id="tlc-out-vw5000" class="text-lg font-bold text-[#141413] mt-1 font-mono-code">—</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="mt-5 p-4 rounded-xl bg-[#F3F2EE] border border-[#D1CFC7]">
+                    <div class="text-[11px] font-mono-code uppercase text-[#575653] font-semibold mb-1">Decision Summary</div>
+                    <div id="tlc-verdict-text" class="text-xs sm:text-sm text-[#141413] leading-relaxed">
+                      Enter cargo dimensions and route rates (or select a preset above) to compute chargeable weights and optimal routing.
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Route / Leg Builder Table -->
+              <div class="editorial-card p-5 space-y-4">
+                <div class="flex items-center justify-between border-b border-[#E6E4DD] pb-3">
+                  <div>
+                    <h3 class="text-sm font-bold text-[#141413]">3. Route Options / Multimodal Legs</h3>
+                    <p class="text-xs text-[#575653]">Add or customize transport legs, billing rules (per kg vs. per Revenue Ton), and surcharges.</p>
+                  </div>
+                  <button onclick="addTLCRow()" class="px-3 py-1.5 rounded-lg border border-[#D1CFC7] bg-white hover:bg-[#F3F2EE] text-xs font-semibold">
+                    + Add Route / Leg
+                  </button>
+                </div>
+
+                <div class="overflow-x-auto">
+                  <table class="w-full text-left border-collapse text-xs">
+                    <thead>
+                      <tr class="border-b border-[#E6E4DD] text-[#575653] font-mono-code text-[11px]">
+                        <th class="py-2 px-2">Route / Leg Name</th>
+                        <th class="py-2 px-2">Billing Rule</th>
+                        <th class="py-2 px-2">DIM Factor</th>
+                        <th class="py-2 px-2">Base Rate ($)</th>
+                        <th class="py-2 px-2">Surcharge ($)</th>
+                        <th class="py-2 px-2">Fixed Fee ($)</th>
+                        <th class="py-2 px-2">Transit (Days)</th>
+                        <th class="py-2 px-2">VW / CBM</th>
+                        <th class="py-2 px-2">Chargeable</th>
+                        <th class="py-2 px-2">Total Cost</th>
+                        <th class="py-2 px-2">Status</th>
+                        <th class="py-2 px-1"></th>
+                      </tr>
+                    </thead>
+                    <tbody id="tlc-rows-body" class="divide-y divide-[#E6E4DD]"></tbody>
+                  </table>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           PAGE: TUTORIAL 2 — NWCM NETWORK SOLVER
+           ========================================== -->
+      <section id="page-nwcm" class="hidden view-transition">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+
+          <!-- Left Google Docs-Style Tab Switcher -->
+          <aside class="lg:col-span-3 lg:sticky lg:top-24 space-y-4">
+            <div>
+              <div class="text-[11px] font-mono-code uppercase tracking-wider text-[#87867F] px-3 mb-2">Module Workspace</div>
+              <button onclick="switchModuleSubTab('nwcm', 'guide')" id="nwcm-subtab-guide" class="gdoc-tab active">
+                <span>📖</span>
+                <span>1. Tutorial Material & Guide</span>
+              </button>
+              <button onclick="switchModuleSubTab('nwcm', 'calc')" id="nwcm-subtab-calc" class="gdoc-tab mt-1">
+                <span>🧮</span>
+                <span>2. Interactive NWCM Solver</span>
+              </button>
+            </div>
+
+            <div class="editorial-card p-4 bg-[#F3F2EE]/60 text-xs space-y-2">
+              <div class="font-bold text-[#141413]">NWCM Algorithm</div>
+              <ol class="list-decimal list-inside text-[11px] text-[#575653] space-y-1">
+                <li>Start at top-left cell $(F_1, C_1)$.</li>
+                <li>Allocate $x_{ij} = \min(\text{Supply}_i, \text{Demand}_j)$.</li>
+                <li>Subtract $x_{ij}$ from row & column.</li>
+                <li>Move right if column exhausted; move down if row exhausted.</li>
+              </ol>
+            </div>
+          </aside>
+
+          <!-- Right Content Column -->
+          <div class="lg:col-span-9">
+
+            <!-- SUB-TAB 1: NWCM TUTORIAL GUIDE -->
+            <div id="nwcm-view-guide" class="space-y-6">
+              <div class="editorial-card p-6 sm:p-8 space-y-6">
+                <div class="border-b border-[#E6E4DD] pb-5">
+                  <span class="text-xs font-mono-code uppercase text-blue-700 font-semibold">Tutorial Module 02 • Study Guide</span>
+                  <h2 class="font-serif-editorial text-3xl sm:text-4xl text-[#141413] mt-1">North-West Corner Method (NWCM)</h2>
+                  <p class="text-sm text-[#575653] mt-2">Generating an initial basic feasible solution for multi-warehouse distribution networks.</p>
+                </div>
+
+                <div class="space-y-3">
+                  <h3 class="text-base font-bold text-[#141413]">1. Purpose & Core Mechanics</h3>
+                  <p class="text-sm text-[#575653] leading-relaxed">
+                    The <strong>North-West Corner Method (NWCM)</strong> is a fast heuristic used in transportation problems to allocate supply from factory warehouses ($F_1 \dots F_m$) to regional demand centers ($C_1 \dots C_n$).
+                  </p>
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="p-4 rounded-xl bg-[#FAF9F5] border border-[#E6E4DD]">
+                      <div class="text-xs font-bold text-[#141413]">Strengths</div>
+                      <p class="text-xs text-[#575653] mt-1">Extremely simple and fast to compute by hand or code; guarantees an initial feasible solution that satisfies all supply and demand constraints without loops.</p>
+                    </div>
+                    <div class="p-4 rounded-xl bg-[#FAF9F5] border border-[#E6E4DD]">
+                      <div class="text-xs font-bold text-rose-800">Critical Limitation</div>
+                      <p class="text-xs text-[#575653] mt-1">NWCM is purely positional—it <strong>completely ignores unit transportation costs ($C_{ij}$)</strong> during allocation. Therefore, the resulting total cost is rarely optimal and requires further optimization (e.g., Stepping Stone, MODI, or Linear Programming).</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="space-y-4 pt-4 border-t border-[#E6E4DD]">
+                  <h3 class="text-base font-bold text-[#141413]">2. Worked Example & Student Scenarios (From Lecture Slides 58–62)</h3>
+                  
+                  <div class="p-4 rounded-xl bg-[#FAF9F5] border border-[#E6E4DD] space-y-2">
+                    <div class="flex items-center justify-between">
+                      <span class="text-xs font-bold text-[#141413]">Illustrative Example (3×3 Matrix)</span>
+                      <button onclick="switchModuleSubTab('nwcm','calc'); loadNWCMPreset('illus')" class="calc-inline-link text-xs">Load in NWCM Solver ↗</button>
+                    </div>
+                    <p class="text-xs text-[#575653]">Supply: $F_1=30, F_2=40, F_3=10$ (Total = 80). Demand: $C_1=20, C_2=30, C_3=30$ (Total = 80). Unit costs: Row 1 $[4, 8, 5]$, Row 2 $[7, 3, 9]$, Row 3 $[6, 4, 7]$.</p>
+                    <div class="text-xs font-mono-code text-[#141413] bg-white p-3 rounded border border-[#E6E4DD]">
+                      1. F1 → C1: min(30, 20) = 20 units @ $4 = $80 (C1 satisfied, F1 rem = 10)<br>
+                      2. F1 → C2: min(10, 30) = 10 units @ $8 = $80 (F1 exhausted, C2 rem = 20)<br>
+                      3. F2 → C2: min(40, 20) = 20 units @ $3 = $60 (C2 satisfied, F2 rem = 20)<br>
+                      4. F2 → C3: min(20, 30) = 20 units @ $9 = $180 (F2 exhausted, C3 rem = 10)<br>
+                      5. F3 → C3: min(10, 10) = 10 units @ $7 = $70 (All satisfied!)<br>
+                      Total Transportation Cost = $80 + $80 + $60 + $180 + $70 = $470
+                    </div>
+                  </div>
+
+                  <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                    <div class="p-3.5 rounded-xl bg-[#FAF9F5] border border-[#E6E4DD] flex flex-col justify-between">
+                      <div>
+                        <div class="text-xs font-bold">Scenario A (4×5 Matrix)</div>
+                        <p class="text-[11px] text-[#575653] mt-1">Total Supply = 140, Total Demand = 140. Slide 60 exercise.</p>
+                      </div>
+                      <button onclick="switchModuleSubTab('nwcm','calc'); loadNWCMPreset('scenA')" class="calc-inline-link text-xs mt-3 self-start">Solve Scenario A ↗</button>
+                    </div>
+                    <div class="p-3.5 rounded-xl bg-[#FAF9F5] border border-[#E6E4DD] flex flex-col justify-between">
+                      <div>
+                        <div class="text-xs font-bold">Scenario B (6×4 Matrix)</div>
+                        <p class="text-[11px] text-[#575653] mt-1">Total Supply = 120, Total Demand = 120. Slide 61 exercise.</p>
+                      </div>
+                      <button onclick="switchModuleSubTab('nwcm','calc'); loadNWCMPreset('scenB')" class="calc-inline-link text-xs mt-3 self-start">Solve Scenario B ↗</button>
+                    </div>
+                    <div class="p-3.5 rounded-xl bg-[#FAF9F5] border border-[#E6E4DD] flex flex-col justify-between">
+                      <div>
+                        <div class="text-xs font-bold">Scenario C (8×9 Matrix)</div>
+                        <p class="text-[11px] text-[#575653] mt-1">Total Supply = 210, Total Demand = 210. Slide 62 exercise.</p>
+                      </div>
+                      <button onclick="switchModuleSubTab('nwcm','calc'); loadNWCMPreset('scenC')" class="calc-inline-link text-xs mt-3 self-start">Solve Scenario C ↗</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="pt-2">
+                  <button onclick="switchModuleSubTab('nwcm', 'calc')" class="px-5 py-2.5 rounded-lg bg-[#141413] hover:bg-blue-700 text-white text-xs font-semibold transition">
+                    Switch to Interactive NWCM Solver →
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- SUB-TAB 2: INTERACTIVE NWCM SOLVER -->
+            <div id="nwcm-view-calc" class="hidden space-y-6">
+
+              <!-- Preset Bar (Starts on Blank Template!) -->
+              <div class="editorial-card p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div>
+                  <span class="text-xs font-bold text-[#141413] block">Matrix Presets (Slide 59–62)</span>
+                  <span class="text-[11px] text-[#575653]">Starts blank by default. Select a preset or enter custom values.</span>
+                </div>
+                <div class="flex flex-wrap gap-1.5">
+                  <button onclick="loadNWCMPreset('blank')" id="nwcm-btn-blank" class="preset-pill active">Blank (3×3)</button>
+                  <button onclick="loadNWCMPreset('illus')" id="nwcm-btn-illus" class="preset-pill">Illustrative (3×3)</button>
+                  <button onclick="loadNWCMPreset('scenA')" id="nwcm-btn-scenA" class="preset-pill">Scenario A (4×5)</button>
+                  <button onclick="loadNWCMPreset('scenB')" id="nwcm-btn-scenB" class="preset-pill">Scenario B (6×4)</button>
+                  <button onclick="loadNWCMPreset('scenC')" id="nwcm-btn-scenC" class="preset-pill">Scenario C (8×9)</button>
+                </div>
+              </div>
+
+              <!-- Smart Paste Question Auto-Detector -->
+              <div class="editorial-card p-4 bg-blue-50/40 border-blue-200">
+                <div class="flex items-center justify-between mb-2">
+                  <label class="text-xs font-bold text-blue-900">✨ Smart Matrix Parser — Paste Supply, Demand & Cost Text</label>
+                  <button onclick="parseNWCMQuestionText()" class="px-3 py-1 rounded-md bg-blue-700 hover:bg-blue-800 text-white text-xs font-semibold transition">
+                    Auto-Extract & Fill
+                  </button>
+                </div>
+                <textarea id="nwcm-paste-input" rows="2" placeholder="Paste problem text here (e.g. 'Supply: 30, 40, 10. Demand: 20, 30, 30. Costs: 4, 8, 5; 7, 3, 9; 6, 4, 7')" class="editorial-input w-full p-2.5 text-xs"></textarea>
+                <div id="nwcm-parse-feedback" class="text-[11px] text-blue-800 mt-1 hidden"></div>
+              </div>
+
+              <!-- Grid Controls & Step Log -->
+              <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                <div class="lg:col-span-5 editorial-card p-5 flex flex-col justify-between gap-4">
+                  <div>
+                    <h3 class="text-sm font-bold text-[#141413] mb-3">1. Grid Dimensions ($M \times N$)</h3>
+                    <div class="grid grid-cols-3 gap-2.5 items-end">
+                      <div>
+                        <label class="block text-xs text-[#575653] mb-1">Supply Rows</label>
+                        <input type="number" id="nwcm-rows" value="3" min="2" max="10" class="editorial-input w-full px-3 py-1.5 text-sm font-mono-code" />
+                      </div>
+                      <div>
+                        <label class="block text-xs text-[#575653] mb-1">Demand Cols</label>
+                        <input type="number" id="nwcm-cols" value="3" min="2" max="10" class="editorial-input w-full px-3 py-1.5 text-sm font-mono-code" />
+                      </div>
+                      <button onclick="resizeNWCMGrid()" class="py-2 px-3 rounded-lg bg-[#141413] hover:bg-blue-700 text-white font-semibold text-xs transition">
+                        Resize Blank
+                      </button>
+                    </div>
+                  </div>
+
+                  <div class="grid grid-cols-3 gap-2.5 pt-3 border-t border-[#E6E4DD]">
+                    <div class="p-3 rounded-xl bg-[#FAF9F5] border border-[#E6E4DD]">
+                      <div class="text-[11px] text-[#575653]">Total Supply</div>
+                      <div id="nwcm-sum-supply" class="text-base font-bold text-[#141413] font-mono-code mt-0.5">0</div>
+                    </div>
+                    <div class="p-3 rounded-xl bg-[#FAF9F5] border border-[#E6E4DD]">
+                      <div class="text-[11px] text-[#575653]">Total Demand</div>
+                      <div id="nwcm-sum-demand" class="text-base font-bold text-[#141413] font-mono-code mt-0.5">0</div>
+                    </div>
+                    <div class="p-3 rounded-xl bg-blue-50 border border-blue-200">
+                      <div class="text-[11px] text-blue-800 font-medium">Total Cost</div>
+                      <div id="nwcm-total-cost" class="text-base font-bold text-blue-900 font-mono-code mt-0.5">—</div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Step-by-Step Allocation Log -->
+                <div class="lg:col-span-7 editorial-card p-5 flex flex-col justify-between">
+                  <div class="flex items-center justify-between border-b border-[#E6E4DD] pb-2.5 mb-3">
+                    <div>
+                      <h3 class="text-sm font-bold text-[#141413]">2. Step-by-Step NWCM Allocation Path</h3>
+                      <p class="text-xs text-[#575653]">Traces each allocation from top-left $(F_1, C_1)$ to bottom-right.</p>
+                    </div>
+                    <span id="nwcm-balance-badge" class="text-[11px] font-mono-code px-2.5 py-0.5 rounded bg-[#F3F2EE] text-[#575653]">Awaiting Input</span>
+                  </div>
+                  <div id="nwcm-steps-list" class="max-h-44 overflow-y-auto space-y-1.5 pr-2 font-mono-code text-xs text-[#141413]">
+                    <div class="text-[#87867F] italic">Fill in Supply, Demand, and Unit Costs below (or click a preset above) to generate the step-by-step allocation path.</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Interactive Matrix Table -->
+              <div class="editorial-card p-5 space-y-3">
+                <div class="flex items-center justify-between">
+                  <div>
+                    <h3 class="text-sm font-bold text-[#141413]">3. Cost & Allocation Matrix</h3>
+                    <p class="text-xs text-[#575653]">Input fields represent <strong>Unit Cost ($C_{ij}$)</strong>. Allocated quantities appear as green badges inside active cells.</p>
+                  </div>
+                </div>
+                <div id="nwcm-table-container" class="overflow-x-auto pb-2"></div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           PAGE: TUTORIAL 3 — EOQ & EPQ SIMULATOR
+           ========================================== -->
+      <section id="page-eoq" class="hidden view-transition">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+
+          <!-- Left Google Docs-Style Tab Switcher -->
+          <aside class="lg:col-span-3 lg:sticky lg:top-24 space-y-4">
+            <div>
+              <div class="text-[11px] font-mono-code uppercase tracking-wider text-[#87867F] px-3 mb-2">Module Workspace</div>
+              <button onclick="switchModuleSubTab('eoq', 'guide')" id="eoq-subtab-guide" class="gdoc-tab active">
+                <span>📖</span>
+                <span>1. Tutorial Material & Guide</span>
+              </button>
+              <button onclick="switchModuleSubTab('eoq', 'calc')" id="eoq-subtab-calc" class="gdoc-tab mt-1">
+                <span>🧮</span>
+                <span>2. EOQ & EPQ Calculator</span>
+              </button>
+            </div>
+
+            <div class="editorial-card p-4 bg-[#F3F2EE]/60 text-xs space-y-2">
+              <div class="font-bold text-[#141413]">Key Equations</div>
+              <div class="font-mono-code text-[11px] text-[#575653] space-y-1.5">
+                <div>EOQ: Q* = √(2DS / H)</div>
+                <div>TC* = (D/Q*)S + (Q*/2)H</div>
+                <div>EPQ: Qp* = √(2DS / [H(1 - d/p)])</div>
+                <div>I_max = Qp* × (1 - d/p)</div>
+              </div>
+            </div>
+          </aside>
+
+          <!-- Right Content Column -->
+          <div class="lg:col-span-9">
+
+            <!-- SUB-TAB 1: EOQ & EPQ TUTORIAL GUIDE -->
+            <div id="eoq-view-guide" class="space-y-6">
+              <div class="editorial-card p-6 sm:p-8 space-y-6">
+                <div class="border-b border-[#E6E4DD] pb-5">
+                  <span class="text-xs font-mono-code uppercase text-blue-700 font-semibold">Tutorial Module 03 • Study Guide</span>
+                  <h2 class="font-serif-editorial text-3xl sm:text-4xl text-[#141413] mt-1">Inventory Optimization: EOQ vs. Staggered EPQ</h2>
+                  <p class="text-sm text-[#575653] mt-2">Complete theoretical breakdown and worked solutions from Tutorial #7.</p>
+                </div>
+
+                <div class="space-y-3">
+                  <h3 class="text-base font-bold text-[#141413]">1. The Optimization Principle (Basic EOQ)</h3>
+                  <p class="text-sm text-[#575653] leading-relaxed">
+                    Total annual inventory cost consists of <strong>Annual Ordering Cost</strong> $\left(\frac{D}{Q}S\right)$, which decreases as order size $Q$ grows, and <strong>Annual Holding Cost</strong> $\left(\frac{Q}{2}H\right)$, which increases linearly with $Q$. Total cost is minimized at the exact point where Ordering Cost equals Holding Cost:
+                  </p>
+                  <div class="p-4 rounded-xl bg-[#FAF9F5] border border-[#E6E4DD] font-mono-code text-xs text-[#141413]">
+                    (D / Q) × S = (Q / 2) × H   ⇒   Q² = 2DS / H   ⇒   Q* = √(2DS / H)
+                  </div>
+                </div>
+
+                <div class="space-y-3 pt-4 border-t border-[#E6E4DD]">
+                  <h3 class="text-base font-bold text-[#141413]">2. Non-Instantaneous Replenishment (EPQ in Distribution Logistics)</h3>
+                  <p class="text-sm text-[#575653] leading-relaxed">
+                    Basic EOQ assumes the entire batch $Q^*$ hits the receiving dock all at once (instantaneous receipt). In real distribution centers, goods often arrive via staggered daily truck shuttles or continuous kitting lines at an inbound rate $p$ while customer orders are simultaneously dispatched at daily rate $d$ (where $p > d$):
+                  </p>
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="p-4 rounded-xl bg-[#FAF9F5] border border-[#E6E4DD]">
+                      <div class="text-xs font-bold text-[#141413]">Phase 1: Inbound & Dispatch Window</div>
+                      <p class="text-xs text-[#575653] mt-1">Goods arrive at rate $p$ and leave at rate $d$. Stock accumulates at a slower net rate of $(p - d)$. Peak warehouse inventory $I_{\max} = Q_p^*\left(1 - \frac{d}{p}\right)$ never reaches full batch size $Q_p^*$.</p>
+                    </div>
+                    <div class="p-4 rounded-xl bg-[#FAF9F5] border border-[#E6E4DD]">
+                      <div class="text-xs font-bold text-[#141413]">Phase 2: Pure Dispatch</div>
+                      <p class="text-xs text-[#575653] mt-1">Inbound shuttle stops once $Q_p^*$ units have been delivered. Outbound dispatch continues at daily rate $d$ until warehouse stock hits zero.</p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- All 4 Tutorial Cases -->
+                <div class="space-y-3 pt-4 border-t border-[#E6E4DD]">
+                  <h3 class="text-base font-bold text-[#141413]">3. Tutorial #7 Cases & Solutions</h3>
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="p-4 rounded-xl bg-[#FAF9F5] border border-[#E6E4DD] space-y-1.5">
+                      <div class="flex justify-between items-center">
+                        <span class="text-xs font-bold">Illustration Example ($D=12,000$)</span>
+                        <button onclick="switchModuleSubTab('eoq','calc'); loadEOQPreset('illus')" class="calc-inline-link text-xs">Load Case ↗</button>
+                      </div>
+                      <p class="text-xs text-[#575653]">$S=\$150, H=\$40, d=40, p=100$.<br>EOQ $Q^* = 300\text{ units}$.<br>EPQ $Q_p^* = 387.30\text{ units}$, $I_{\max} = 232.38\text{ units}$.</p>
+                    </div>
+
+                    <div class="p-4 rounded-xl bg-[#FAF9F5] border border-[#E6E4DD] space-y-1.5">
+                      <div class="flex justify-between items-center">
+                        <span class="text-xs font-bold">Question 1: Simple EOQ ($D=8,000$)</span>
+                        <button onclick="switchModuleSubTab('eoq','calc'); loadEOQPreset('q1')" class="calc-inline-link text-xs">Load Case ↗</button>
+                      </div>
+                      <p class="text-xs text-[#575653]">$S=\$50, H=\$5$.<br>EOQ $Q^* = 400\text{ units}$.<br>Minimum Total Annual Cost $TC^* = \$2,000/\text{yr}$.</p>
+                    </div>
+
+                    <div class="p-4 rounded-xl bg-[#FAF9F5] border border-[#E6E4DD] space-y-1.5">
+                      <div class="flex justify-between items-center">
+                        <span class="text-xs font-bold">Question 2: 3PL Kitting EPQ ($D=25,000$)</span>
+                        <button onclick="switchModuleSubTab('eoq','calc'); loadEOQPreset('q2')" class="calc-inline-link text-xs">Load Case ↗</button>
+                      </div>
+                      <p class="text-xs text-[#575653]">$S=\$400, H=\$8, d=100, p=250$.<br>EPQ $Q_p^* = 2,041.24\text{ units}$, Max Inventory $I_{\max} = 1,224.74\text{ units}$.</p>
+                    </div>
+
+                    <div class="p-4 rounded-xl bg-[#FAF9F5] border border-[#E6E4DD] space-y-1.5">
+                      <div class="flex justify-between items-center">
+                        <span class="text-xs font-bold">Question 3: DC Shuttle Strategy ($D=50,000$)</span>
+                        <button onclick="switchModuleSubTab('eoq','calc'); loadEOQPreset('q3')" class="calc-inline-link text-xs">Load Case ↗</button>
+                      </div>
+                      <p class="text-xs text-[#575653]">$S=\$500, H=\$20, d=200, p=500$.<br>EOQ $Q^* = 1,581.14$ vs. EPQ $Q_p^* = 2,041.24$, $I_{\max} = 1,224.74$ ($-22.5\%$ peak footprint & cost).</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="pt-2">
+                  <button onclick="switchModuleSubTab('eoq', 'calc')" class="px-5 py-2.5 rounded-lg bg-[#141413] hover:bg-blue-700 text-white text-xs font-semibold transition">
+                    Switch to Interactive EOQ & EPQ Calculator →
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- SUB-TAB 2: INTERACTIVE EOQ & EPQ CALCULATOR -->
+            <div id="eoq-view-calc" class="hidden space-y-6">
+
+              <!-- Preset Bar (Starts Blank by Default!) -->
+              <div class="editorial-card p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div>
+                  <span class="text-xs font-bold text-[#141413] block">Tutorial #7 Case Presets</span>
+                  <span class="text-[11px] text-[#575653]">Starts blank by default. Click any preset or paste a question below.</span>
+                </div>
+                <div class="flex flex-wrap gap-1.5">
+                  <button onclick="loadEOQPreset('blank')" id="eoq-btn-blank" class="preset-pill active">Blank Template</button>
+                  <button onclick="loadEOQPreset('illus')" id="eoq-btn-illus" class="preset-pill">Illustration (D=12k)</button>
+                  <button onclick="loadEOQPreset('q1')" id="eoq-btn-q1" class="preset-pill">Q1: Basic EOQ</button>
+                  <button onclick="loadEOQPreset('q2')" id="eoq-btn-q2" class="preset-pill">Q2: 3PL Kitting</button>
+                  <button onclick="loadEOQPreset('q3')" id="eoq-btn-q3" class="preset-pill">Q3: DC Shuttle</button>
+                </div>
+              </div>
+
+              <!-- Smart Paste Question Auto-Detector -->
+              <div class="editorial-card p-4 bg-blue-50/40 border-blue-200">
+                <div class="flex items-center justify-between mb-2">
+                  <label class="text-xs font-bold text-blue-900">✨ Smart Question Parser — Paste EOQ/EPQ Problem Text to Auto-Fill</label>
+                  <button onclick="parseEOQQuestionText()" class="px-3 py-1 rounded-md bg-blue-700 hover:bg-blue-800 text-white text-xs font-semibold transition">
+                    Auto-Extract & Fill
+                  </button>
+                </div>
+                <textarea id="eoq-paste-input" rows="2" placeholder="Paste any EOQ/EPQ question here (e.g. 'Annual Demand (D): 50,000 units, Order Dispatch Cost (S): $500, Holding Cost (H): $20, Daily Demand Rate (d): 200, rate (p) of 500 units/day...')" class="editorial-input w-full p-2.5 text-xs"></textarea>
+                <div id="eoq-parse-feedback" class="text-[11px] text-blue-800 mt-1 hidden"></div>
+              </div>
+
+              <!-- Main Grid: Parameters + Output Cards -->
+              <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                
+                <!-- Left Parameters -->
+                <div class="lg:col-span-5 editorial-card p-5 flex flex-col justify-between space-y-4">
+                  <div class="space-y-4">
+                    <div class="flex items-center justify-between border-b border-[#E6E4DD] pb-3">
+                      <h3 class="text-sm font-bold text-[#141413]">1. Model Parameters</h3>
+                      <span id="eoq-case-badge" class="text-[11px] font-mono-code px-2 py-0.5 rounded bg-[#F3F2EE] text-[#575653]">Blank Template</span>
+                    </div>
+
+                    <div>
+                      <label class="block text-xs font-medium text-[#575653] mb-1">Annual Demand ($D$) [units/year]</label>
+                      <input type="number" id="input-D" value="" placeholder="e.g. 50000" min="1" oninput="calculateEOQ()" class="editorial-input w-full px-3 py-2 text-sm font-mono-code" />
+                    </div>
+
+                    <div>
+                      <label class="block text-xs font-medium text-[#575653] mb-1">Order / Setup Cost ($S$) [$/batch]</label>
+                      <input type="number" id="input-S" value="" placeholder="e.g. 500" min="0.01" oninput="calculateEOQ()" class="editorial-input w-full px-3 py-2 text-sm font-mono-code" />
+                    </div>
+
+                    <div class="p-3 rounded-xl bg-[#FAF9F5] border border-[#E6E4DD]">
+                      <div class="flex items-center justify-between mb-1.5">
+                        <label class="text-xs font-medium text-[#575653]">Holding Cost ($H$) [$/unit/yr]</label>
+                        <label class="inline-flex items-center text-[11px] text-blue-700 font-medium cursor-pointer">
+                          <input type="checkbox" id="toggle-ic" onchange="toggleHoldingMode()" class="mr-1 rounded" /> Use H = i × C
+                        </label>
+                      </div>
+                      <div id="direct-H-box">
+                        <input type="number" id="input-H" value="" placeholder="e.g. 20" min="0.01" oninput="calculateEOQ()" class="editorial-input w-full px-3 py-1.5 text-sm font-mono-code" />
+                      </div>
+                      <div id="ic-H-box" class="hidden grid grid-cols-2 gap-2 mt-2">
+                        <input type="number" id="input-i" placeholder="Rate i (%)" oninput="updateHFromIC()" class="editorial-input w-full px-2.5 py-1.5 text-xs font-mono-code" />
+                        <input type="number" id="input-C" placeholder="Unit Cost C ($)" oninput="updateHFromIC()" class="editorial-input w-full px-2.5 py-1.5 text-xs font-mono-code" />
+                      </div>
+                    </div>
+
+                    <div class="pt-2 border-t border-[#E6E4DD] space-y-3">
+                      <div class="flex items-center justify-between">
+                        <span class="text-xs font-bold text-[#141413]">Staggered EPQ Rates (Optional)</span>
+                        <span class="text-[11px] font-mono-code text-[#87867F]">Requires p &gt; d</span>
+                      </div>
+                      <div class="grid grid-cols-2 gap-2.5">
+                        <div>
+                          <label class="block text-[11px] text-[#575653] mb-1">Daily Demand ($d$)</label>
+                          <input type="number" id="input-d" value="" placeholder="e.g. 200" oninput="calculateEOQ()" class="editorial-input w-full px-2.5 py-1.5 text-sm font-mono-code" />
+                        </div>
+                        <div>
+                          <label class="block text-[11px] text-[#575653] mb-1">Inbound Rate ($p$)</label>
+                          <input type="number" id="input-p" value="" placeholder="e.g. 500" oninput="calculateEOQ()" class="editorial-input w-full px-2.5 py-1.5 text-sm font-mono-code" />
+                        </div>
+                      </div>
+                      <div>
+                        <label class="block text-[11px] text-[#575653] mb-1">Lead Time ($L$) [days — for Reorder Point]</label>
+                        <input type="number" id="input-L" value="" placeholder="Optional (e.g. 5)" oninput="calculateEOQ()" class="editorial-input w-full px-2.5 py-1.5 text-xs font-mono-code" />
+                      </div>
+                    </div>
+
+                    <div id="validation-alert" class="hidden p-3 rounded-lg bg-rose-50 border border-rose-200 text-rose-800 text-xs">
+                      ⚠️ <strong>Invalid EPQ Condition:</strong> Inbound rate ($p$) must be strictly greater than Daily Demand rate ($d$).
+                    </div>
+                  </div>
+
+                  <div class="pt-3 border-t border-[#E6E4DD] text-xs text-[#575653] flex justify-between font-mono-code">
+                    <span>Working Days: <strong id="out-workdays" class="text-[#141413]">—</strong></span>
+                    <span>ROP ($d \times L$): <strong id="out-rop" class="text-[#141413]">—</strong></span>
+                  </div>
+                </div>
+
+                <!-- Right Output Cards -->
+                <div class="lg:col-span-7 space-y-4">
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    
+                    <!-- Basic EOQ Output -->
+                    <div class="editorial-card p-5 border-t-4 border-t-[#141413]">
+                      <span class="text-[10px] font-mono-code uppercase text-[#87867F]">Model A • Instantaneous Receipt</span>
+                      <h4 class="text-base font-bold text-[#141413] mt-0.5">Basic EOQ Model</h4>
+                      
+                      <div class="mt-4 grid grid-cols-2 gap-2.5 p-3 rounded-lg bg-[#FAF9F5] border border-[#E6E4DD]">
+                        <div>
+                          <div class="text-[11px] text-[#575653]">Optimal Q*</div>
+                          <div id="eoq-Q" class="text-lg font-bold font-mono-code text-[#141413] mt-0.5">—</div>
+                        </div>
+                        <div>
+                          <div class="text-[11px] text-[#575653]">Peak Footprint</div>
+                          <div id="eoq-Imax" class="text-lg font-bold font-mono-code text-rose-700 mt-0.5">—</div>
+                        </div>
+                      </div>
+
+                      <div class="mt-4 space-y-1.5 text-xs font-mono-code">
+                        <div class="flex justify-between py-1 border-b border-[#E6E4DD]"><span class="text-[#575653]">Avg Inventory:</span> <span id="eoq-avgInv">—</span></div>
+                        <div class="flex justify-between py-1 border-b border-[#E6E4DD]"><span class="text-[#575653]">Batches/Yr:</span> <span id="eoq-orders">—</span></div>
+                        <div class="flex justify-between py-1 border-b border-[#E6E4DD]"><span class="text-[#575653]">Ordering Cost:</span> <span id="eoq-orderCost">—</span></div>
+                        <div class="flex justify-between py-1 border-b border-[#E6E4DD]"><span class="text-[#575653]">Holding Cost:</span> <span id="eoq-holdCost">—</span></div>
+                        <div class="flex justify-between pt-1.5 font-bold text-sm text-[#141413]"><span>Total Cost (TC*):</span> <span id="eoq-TC">—</span></div>
+                      </div>
+                    </div>
+
+                    <!-- Staggered EPQ Output -->
+                    <div class="editorial-card p-5 border-t-4 border-t-blue-700">
+                      <span class="text-[10px] font-mono-code uppercase text-blue-700 font-semibold">Model B • Staggered Shuttle</span>
+                      <h4 class="text-base font-bold text-[#141413] mt-0.5">Staggered EPQ Model</h4>
+                      
+                      <div class="mt-4 grid grid-cols-2 gap-2.5 p-3 rounded-lg bg-blue-50/50 border border-blue-200">
+                        <div>
+                          <div class="text-[11px] text-[#575653]">Optimal Qp*</div>
+                          <div id="epq-Q" class="text-lg font-bold font-mono-code text-[#141413] mt-0.5">—</div>
+                        </div>
+                        <div>
+                          <div class="text-[11px] text-[#575653]">Max Inv (Imax)</div>
+                          <div id="epq-Imax" class="text-lg font-bold font-mono-code text-emerald-700 mt-0.5">—</div>
+                        </div>
+                      </div>
+
+                      <div class="mt-4 space-y-1.5 text-xs font-mono-code">
+                        <div class="flex justify-between py-1 border-b border-[#E6E4DD]"><span class="text-[#575653]">Factor (1 - d/p):</span> <span id="epq-factor">—</span></div>
+                        <div class="flex justify-between py-1 border-b border-[#E6E4DD]"><span class="text-[#575653]">Inbound Window:</span> <span id="epq-window">—</span></div>
+                        <div class="flex justify-between py-1 border-b border-[#E6E4DD]"><span class="text-[#575653]">Setup Cost:</span> <span id="epq-orderCost">—</span></div>
+                        <div class="flex justify-between py-1 border-b border-[#E6E4DD]"><span class="text-[#575653]">Holding Cost:</span> <span id="epq-holdCost">—</span></div>
+                        <div class="flex justify-between pt-1.5 font-bold text-sm text-blue-700"><span>Total Cost (TCp*):</span> <span id="epq-TC">—</span></div>
+                      </div>
+                    </div>
+
+                  </div>
+
+                  <!-- Managerial Comparison Summary -->
+                  <div class="editorial-card p-5 bg-[#FAF9F5]">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#E6E4DD] pb-3">
+                      <div class="text-xs font-bold text-[#141413]">Strategic Comparison (EPQ vs. Basic EOQ)</div>
+                      <div class="flex gap-3 text-xs font-mono-code">
+                        <span>Space Saved: <strong id="diff-space" class="text-emerald-700">—</strong></span>
+                        <span>Cost Saved: <strong id="diff-cost" class="text-blue-700">—</strong></span>
+                      </div>
+                    </div>
+                    <p id="eoq-strategy-summary" class="text-xs text-[#575653] mt-3 leading-relaxed">
+                      Enter parameters ($D, S, H, d, p$) to generate a comparative managerial analysis and render the Sawtooth Inventory & Cost Trade-Off charts below.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Charts -->
+              <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div class="editorial-card p-5">
+                  <h4 class="text-xs font-bold uppercase tracking-wider text-[#575653] mb-3">Sawtooth Inventory Cycle (EOQ vs. EPQ)</h4>
+                  <div class="h-64"><canvas id="sawtoothChart"></canvas></div>
+                </div>
+                <div class="editorial-card p-5">
+                  <h4 class="text-xs font-bold uppercase tracking-wider text-[#575653] mb-3">Annual Cost Trade-Off Curves TC(Q)</h4>
+                  <div class="h-64"><canvas id="costChart"></canvas></div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- ==========================================
+         COLLAPSIBLE RIGHT AI STUDY ASSISTANT DRAWER
+         ========================================== -->
+    <aside id="ai-drawer" class="hidden w-80 sm:w-96 border-l border-[#E6E4DD] bg-white flex-col justify-between sticky top-16 h-[calc(100vh-4rem)] z-30 shrink-0 shadow-lg">
+      <!-- Top Header -->
+      <div class="p-4 border-b border-[#E6E4DD] flex items-center justify-between bg-[#FAF9F5]">
+        <div class="flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-emerald-600"></span>
+          <div>
+            <h3 class="text-xs font-bold text-[#141413]">LGT3301 AI Study Tutor</h3>
+            <p id="ai-context-label" class="text-[10px] text-[#87867F] font-mono-code">Context: Home Portal</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-1">
+          <button onclick="toggleAISettings()" title="Optional API Key Settings" class="p-1.5 rounded hover:bg-[#E6E4DD]/50 text-[#575653] text-xs">⚙️</button>
+          <button onclick="toggleAIDrawer()" class="p-1.5 rounded hover:bg-[#E6E4DD]/50 text-[#575653] text-xs font-bold">✕</button>
+        </div>
+      </div>
+
+      <!-- Optional API Key Settings Bar -->
+      <div id="ai-settings-box" class="hidden p-3 bg-[#F3F2EE] border-b border-[#E6E4DD] text-xs space-y-2">
+        <div class="font-semibold text-[#141413]">Optional Gemini API Key</div>
+        <p class="text-[11px] text-[#575653]">Works offline out-of-the-box using the built-in LGT3301 engine. Optionally add a Gemini API key for open-ended LLM generation:</p>
+        <input type="password" id="ai-api-key" placeholder="AIzaSy..." class="editorial-input w-full px-2.5 py-1 text-xs font-mono-code" />
+      </div>
+
+      <!-- Messages Container -->
+      <div id="ai-chat-messages" class="flex-grow p-4 overflow-y-auto space-y-3 text-xs">
+        <div class="p-3 rounded-xl bg-[#F3F2EE] text-[#141413] leading-relaxed">
+          <strong>Hi! I'm your LGT3301 Study Assistant.</strong><br>
+          Ask me about any concept from <strong>Topics 1–4</strong> (SCOR, Postponement, ROA, Cross-Docking, Consolidation, Containers, NWCM, EOQ/EPQ, ABC Analysis, RFID) or paste a calculation problem!
+        </div>
+        <div class="flex flex-wrap gap-1.5 pt-1">
+          <button onclick="askAIQuick('Explain EOQ vs EPQ and why Imax is lower')" class="px-2.5 py-1 rounded-full border border-[#D1CFC7] bg-white hover:bg-[#F3F2EE] text-[11px] text-[#575653]">EOQ vs. EPQ?</button>
+          <button onclick="askAIQuick('What are the 5 SCOR pillars and EERS diamond?')" class="px-2.5 py-1 rounded-full border border-[#D1CFC7] bg-white hover:bg-[#F3F2EE] text-[11px] text-[#575653]">SCOR & EERS?</button>
+          <button onclick="askAIQuick('Explain Cross-Docking vs Consolidation')" class="px-2.5 py-1 rounded-full border border-[#D1CFC7] bg-white hover:bg-[#F3F2EE] text-[11px] text-[#575653]">Cross-Docking?</button>
+          <button onclick="askAIQuick('What are the limitations of NWCM?')" class="px-2.5 py-1 rounded-full border border-[#D1CFC7] bg-white hover:bg-[#F3F2EE] text-[11px] text-[#575653]">NWCM Limits?</button>
+        </div>
+      </div>
+
+      <!-- Bottom Input -->
+      <div class="p-3 border-t border-[#E6E4DD] bg-[#FAF9F5]">
+        <form onsubmit="handleAIChatSubmit(event)" class="flex gap-2">
+          <input
+            type="text"
+            id="ai-chat-input"
+            placeholder="Ask a question about this topic..."
+            class="editorial-input flex-grow px-3 py-2 text-xs"
+          />
+          <button type="submit" class="px-3.5 py-2 rounded-lg bg-[#141413] hover:bg-blue-700 text-white text-xs font-semibold transition">
+            Send
+          </button>
+        </form>
+      </div>
+    </aside>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-[#E6E4DD] bg-white py-5 mt-12">
+    <div class="max-w-[1440px] mx-auto px-4 sm:px-8 flex flex-col sm:flex-row items-center justify-between text-xs text-[#87867F] gap-2">
+      <div>LGT3301 — Logistics Technologies & Distribution Management Study Portal</div>
+      <div class="font-mono-code">Topics 1–4 Study Notes • TLC • NWCM • EOQ/EPQ Calculators</div>
+    </div>
+  </footer>
+
+  <!-- ==========================================
+       COMPLETE APPLICATION LOGIC & DATA ENGINE
+       ========================================== -->
+  <script>
+    let currentPage = 'home';
+    let currentLang = 'en';
+
+    // --- MULTILINGUAL UI DICTIONARY (EN / 繁體中文 / ID) ---
+    const i18nDict = {
+      en: {
+        backHome: "Back to Home",
+        courseSubtitle: "Logistics Technologies & Distribution Management",
+        searchPlaceholder: "Search topics, formulas, calculators...",
+        aiTutorBtn: "AI Tutor",
+        heroBadge: "Interactive Course Companion & Computation Suite",
+        heroDesc: "A structured study workspace and quantitative solver suite for LGT3301. Review condensed lecture notes across Topics 1–4, practice with step-by-step tutorial guides, or launch blank-slate calculators with smart question auto-fill.",
+        secLecturesTitle: "Lecture Study Modules (Topics 1–4)",
+        secLecturesSub: "Essential concepts, frameworks, and practice case studies extracted for fast revision.",
+        secTutorialsTitle: "Tutorial Guides & Automated Calculators",
+        secTutorialsSub: "Each module features a Google Docs-style outline with full tutorial theory on top and a blank-slate calculator + smart paste parser below.",
+        openNotes: "Read Study Notes"
+      },
+      zh: {
+        backHome: "返回主頁",
+        courseSubtitle: "物流技術與配送管理",
+        searchPlaceholder: "搜尋課題、公式、計算機...",
+        aiTutorBtn: "AI 導師",
+        heroBadge: "互動學習與自動化計算平台",
+        heroDesc: "專為 LGT3301 設計的學習與運算工作區。涵蓋課題 1–4 重點筆記、逐步導修指南，以及支援智能題目解析的空白計算機。",
+        secLecturesTitle: "課堂學習模組 (Topics 1–4)",
+        secLecturesSub: "精煉提取課堂核心概念、管理框架與實戰練習題。",
+        secTutorialsTitle: "導修指南與自動化計算工具",
+        secTutorialsSub: "每個模組左側均設有 Google Docs 風格大綱，包含導修理論講解與空白計算機。",
+        openNotes: "閱讀學習筆記"
+      },
+      id: {
+        backHome: "Kembali ke Beranda",
+        courseSubtitle: "Teknologi Logistik & Manajemen Distribusi",
+        searchPlaceholder: "Cari topik, rumus, kalkulator...",
+        aiTutorBtn: "Tutor AI",
+        heroBadge: "Portal Belajar & Kalkulator Otomatis",
+        heroDesc: "Ruang kerja belajar terstruktur dan solver kuantitatif untuk LGT3301. Pelajari rangkuman materi Topic 1–4, panduan tutorial, atau gunakan kalkulator dengan fitur paste soal otomatis.",
+        secLecturesTitle: "Modul Materi Kuliah (Topics 1–4)",
+        secLecturesSub: "Rangkuman konsep inti, kerangka kerja, dan latihan studi kasus.",
+        secTutorialsTitle: "Panduan Tutorial & Kalkulator Otomatis",
+        secTutorialsSub: "Dilengkapi tab outline bergaya Google Docs untuk membaca materi tutorial maupun kalkulator.",
+        openNotes: "Baca Catatan"
+      }
+    };
+
+    function setLanguage(lang) {
+      currentLang = lang;
+      const d = i18nDict[lang] || i18nDict.en;
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const k = el.getAttribute('data-i18n');
+        if (d[k]) el.textContent = d[k];
+      });
+      document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+        const k = el.getAttribute('data-i18n-placeholder');
+        if (d[k]) el.setAttribute('placeholder', d[k]);
+      });
+    }
+
+    // --- STRUCTURED LECTURE CONTENT (TOPICS 1 - 4) ---
+    const lectureData = {
+      topic1: {
+        code: "TOPIC 01",
+        title: "Logistics in Supply Chain Management (SCM)",
+        subtitle: "Foundations, Integrative Processes, Channel Design, Operational Models, SCIS, and Financial Metrics",
+        relatedCalcs: [
+          { label: "Try the TLC & Multimodal Calculator ↗", target: "tlc" },
+          { label: "Try the EOQ & EPQ Inventory Calculator ↗", target: "eoq" }
+        ],
+        sections: [
+          {
+            id: "t1-s1",
+            title: "1.1 Foundations & Integrative Value Proposition",
+            html: `
+              <p class="text-sm text-[#575653] leading-relaxed mb-4">
+                Modern supply chains have shifted from adversarial, fragmented channels to managerially coordinated competitive networks. While <strong>Supply Chain Management (SCM)</strong> is the broader cross-functional strategy linking internal and external partners, <strong>Logistics</strong> is the core operational conduit that creates value by controlling the timing and geographical positioning of inventory at the lowest total cost.
+              </p>
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="p-4 rounded-xl bg-[#FAF9F5] border border-[#E6E4DD]">
+                  <div class="text-xs font-mono-code font-bold text-blue-700">1. Economic Value</div>
+                  <div class="text-sm font-bold mt-1">Lowest Total Cost</div>
+                  <p class="text-xs text-[#575653] mt-1">Efficiency-driven via <strong>Economies of Scale</strong> in procurement and manufacturing (product/service creation).</p>
+                </div>
+                <div class="p-4 rounded-xl bg-[#FAF9F5] border border-[#E6E4DD]">
+                  <div class="text-xs font-mono-code font-bold text-amber-700">2. Market Value</div>
+                  <div class="text-sm font-bold mt-1">Attractive Assortment</div>
+                  <p class="text-xs text-[#575653] mt-1">Effectiveness-driven via <strong>Economies of Scope</strong> in market distribution (presenting the right assortment when/where needed).</p>
+                </div>
+                <div class="p-4 rounded-xl bg-[#FAF9F5] border border-[#E6E4DD]">
+                  <div class="text-xs font-mono-code font-bold text-emerald-700">3. Relevancy Value</div>
+                  <div class="text-sm font-bold mt-1">Customization</div>
+                  <p class="text-xs text-[#575653] mt-1">Segmental diversity—transforming standard products into customer-specific value through unique positioning and services.</p>
+                </div>
+              </div>
+              <div class="mt-4 p-4 rounded-xl bg-[#F3F2EE] border border-[#D1CFC7] text-xs">
+                <strong>The SCOR Model (5 Operational Pillars):</strong> Standardizes supply chain linkage across <strong>Plan</strong> (balancing demand/supply), <strong>Source</strong> (procurement), <strong>Make</strong> (manufacturing/customization), <strong>Deliver</strong> (order management, warehousing, transport), and <strong>Return</strong> (reverse logistics).
+              </div>
+            `
+          },
+          {
+            id: "t1-s2",
+            title: "1.2 Eight Integrative Processes & Channel Structures",
+            html: `
+              <p class="text-sm text-[#575653] leading-relaxed mb-3">
+                Achieving supply chain excellence requires moving away from functional silos to simultaneously manage <strong>8 Integrative Processes</strong>: (1) Demand Planning Responsiveness, (2) Customer Relationship Collaboration, (3) Order Fulfillment/Service Delivery, (4) Product/Service Development Launch, (5) Manufacturing Customization, (6) Supplier Relationship Collaboration, (7) Life-Cycle Support, and (8) Reverse Logistics.
+              </p>
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-3">
+                <div class="p-4 rounded-xl bg-[#FAF9F5] border border-[#E6E4DD]">
+                  <div class="text-xs font-bold text-[#141413]">Echelon Structure</div>
+                  <p class="text-xs text-[#575653] mt-1">Multi-tier flow: Supplier → Consolidation Warehouse → Manufacturer → Wholesaler DC → Retailer → Customer.</p>
+                </div>
+                <div class="p-4 rounded-xl bg-[#FAF9F5] border border-[#E6E4DD]">
+                  <div class="text-xs font-bold text-[#141413]">Direct Structure</div>
+                  <p class="text-xs text-[#575653] mt-1">Bypasses intermediate warehouses, shipping directly from Manufacturer/Distribution Center to the final Consumer (e.g., B2C e-commerce).</p>
+                </div>
+                <div class="p-4 rounded-xl bg-[#FAF9F5] border border-[#E6E4DD]">
+                  <div class="text-xs font-bold text-[#141413]">3PL vs. 4PL Providers</div>
+                  <p class="text-xs text-[#575653] mt-1"><strong>3PL (Asset-based):</strong> Owns trucks/warehouses and executes operations.<br><strong>4PL (Non-asset-based):</strong> Integrates information & coordinates multiple 3PLs across the supply chain.</p>
+                </div>
+              </div>
+            `
+          },
+          {
+            id: "t1-s3",
+            title: "1.3 Push (Anticipatory) vs. Pull (Responsive) & Postponement",
+            html: `
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="p-4 rounded-xl bg-[#FAF9F5] border border-[#E6E4DD]">
+                  <div class="text-xs font-mono-code font-bold text-rose-700">Anticipatory (Push)</div>
+                  <p class="text-xs text-[#575653] mt-1">Driven by forecasts: <em>Forecast → Buy → Manufacture → Warehouse → Sell → Deliver</em>. High risk of unplanned inventory & stock-outs.</p>
+                </div>
+                <div class="p-4 rounded-xl bg-[#FAF9F5] border border-[#E6E4DD]">
+                  <div class="text-xs font-mono-code font-bold text-emerald-700">Responsive (Pull)</div>
+                  <p class="text-xs text-[#575653] mt-1">Driven by customer orders: <em>Sell → Buy Components → Manufacture → Deliver</em>. Minimizes inventory and supports custom configurations.</p>
+                </div>
+                <div class="p-4 rounded-xl bg-[#FAF9F5] border border-[#E6E4DD]">
+                  <div class="text-xs font-mono-code font-bold text-blue-700">Postponement (Hybrid)</div>
+                  <p class="text-xs text-[#575653] mt-1"><strong>Manufacturing (Form) Postponement:</strong> Keep products generic until ordered.<br><strong>Logistics (Geographic) Postponement:</strong> Centralize stock until orders arrive.</p>
+                </div>
+              </div>
+              <div class="mt-4 p-4 rounded-xl bg-[#FAF9F5] border border-[#E6E4DD] text-xs">
+                <strong>The EERS Value Diamond:</strong> Evaluates performance across four dimensions: <strong>Effectiveness</strong> (timely delivery), <strong>Efficiency</strong> (minimum total cost), <strong>Relevancy</strong> (flexibility to market changes), and <strong>Sustainability</strong> (environmental health & risk reduction).
+              </div>
+            `
+          },
+          {
+            id: "t1-s4",
+            title: "1.4 Logistical Value Proposition & SCIS (ERP, TMS, WMS, YMS)",
+            html: `
+              <p class="text-sm text-[#575653] leading-relaxed mb-3">
+                The Logistical Value Proposition balances <strong>Service Benefits</strong> (Availability, Operational Performance, Service Reliability—culminating in the <em>Perfect Order</em>) against <strong>Total Landed Cost Minimization</strong>.Want to test mode cost trade-offs quantitatively? <span onclick="navigateTo('tlc')" class="calc-inline-link">Try the TLC & Multimodal Calculator ↗</span>
+              </p>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                <div class="p-4 rounded-xl bg-[#FAF9F5] border border-[#E6E4DD]">
+                  <div class="font-bold text-[#141413] mb-1">SCIS 4-Level Pyramid & ERP</div>
+                  <p class="text-[#575653]">1. Transaction System (order processing, invoicing)<br>2. Management Control (KPIs, cost/asset measurement)<br>3. Decision Analysis (routing, inventory optimization)<br>4. Strategic Planning (alliances, network design).</p>
+                </div>
+                <div class="p-4 rounded-xl bg-[#FAF9F5] border border-[#E6E4DD]">
+                  <div class="font-bold text-[#141413] mb-1">Execution Modules & Blockchain</div>
+                  <p class="text-[#575653]"><strong>TMS:</strong> Load building, routing, transit tracking.<br><strong>WMS:</strong> Receiving, put-away, picking, VAS.<br><strong>YMS:</strong> Yard trailer/container management.<br><strong>Blockchain:</strong> Tamper-resistant ledger for provenance & anti-counterfeiting.</p>
+                </div>
+              </div>
+            `
+          },
+          {
+            id: "t1-s5",
+            title: "1.5 Practice Questions & Financial Metrics (Slides 32–34)",
+            html: `
+              <div class="space-y-4">
+                <div class="p-4 rounded-xl bg-[#FAF9F5] border border-[#E6E4DD]">
+                  <div class="text-xs font-bold text-[#141413]">Practice Q1: Total Cost Analysis & Transport Trade-Offs (Slide 32)</div>
+                  <p class="text-xs text-[#575653] mt-1">Annual demand $D = 500,000\text{ units}$, Unit cost $C = \$40$, Carrying rate $i = 25\% \Rightarrow H = 0.25 \times \$40 = \$10/\text{unit/yr}$.<br>• <strong>Rail Option:</strong> Transport rate = $\$2.00/\text{unit}$, Avg Inventory = $80,000\text{ units}$.<br>• <strong>Truck Option:</strong> Transport rate = $\$3.50/\text{unit}$, Avg Inventory = $30,000\text{ units}$.</p>
+                  <div class="mt-2 p-3 bg-white rounded border border-[#E6E4DD] font-mono-code text-xs">
+                    • Rail Total Cost = (500,000 × $2.00) + (80,000 × $10) = $1,000,000 + $800,000 = $1,800,000<br>
+                    • Truck Total Cost = (500,000 × $3.50) + (30,000 × $10) = $1,750,000 + $300,000 = $2,050,000<br>
+                    • Decision: Choose Rail ($250,000 cheaper overall despite higher inventory holding cost), unless service speed dictates otherwise.
+                  </div>
+                </div>
+
+                <div class="p-4 rounded-xl bg-[#FAF9F5] border border-[#E6E4DD]">
+                  <div class="text-xs font-bold text-[#141413]">Practice Q2: Strategic Profit Model — Return on Assets (ROA) (Slide 33)</div>
+                  <p class="text-xs text-[#575653] mt-1">Sales = $\$20\text{M}$, Net Profit = $\$1\text{M}$, Inventory = $\$4\text{M}$, Other Assets = $\$6\text{M}$ (Total Assets = $\$10\text{M}$). New WMS reduces inventory by $25\%$ (to $\$3\text{M}$, New Total Assets = $\$9\text{M}$).</p>
+                  <div class="mt-2 p-3 bg-white rounded border border-[#E6E4DD] font-mono-code text-xs">
+                    • Current: Asset Turnover = $20M / $10M = 2.0x | ROA = $1M / $10M = 10.0%<br>
+                    • After WMS: Asset Turnover = $20M / $9M = 2.22x | ROA = $1M / $9M = 11.11% (+1.11% ROA boost!)
+                  </div>
+                </div>
+
+                <div class="p-4 rounded-xl bg-[#FAF9F5] border border-[#E6E4DD]">
+                  <div class="text-xs font-bold text-[#141413]">Practice Q3: SCOR Metrics — Cash-to-Cash Cycle Time (Slide 34)</div>
+                  <p class="text-xs text-[#575653] mt-1">COGS = $\$14.6\text{M}$, Sales = $\$20\text{M}$, Avg Inventory = $\$2\text{M}$, AR = $\$1.5\text{M}$, AP = $\$1.2\text{M}$ (365 days).</p>
+                  <div class="mt-2 p-3 bg-white rounded border border-[#E6E4DD] font-mono-code text-xs">
+                    • Days of Inventory (DOI) = ($2.0M / $14.6M) × 365 = 50.00 days<br>
+                    • Days of Receivables (DOR) = ($1.5M / $20.0M) × 365 = 27.38 days<br>
+                    • Days of Payables (DOP) = ($1.2M / $14.6M) × 365 = 30.00 days<br>
+                    • Cash-to-Cash Cycle = DOI + DOR - DOP = 50.00 + 27.38 - 30.00 = 47.38 days
+                  </div>
+                </div>
+              </div>
+            `
+          }
+        ]
+      },
+
+      topic2: {
+        code: "TOPIC 02",
+        title: "Warehousing and Material Handling",
+        subtitle: "Strategic Warehousing, Service & Economic Benefits, Layout Design, and Automation Spectrum",
+        relatedCalcs: [
+          { label: "Try the NWCM Warehouse Network Calculator ↗", target: "nwcm" },
+          { label: "Try the EOQ & EPQ Warehouse Footprint Calculator ↗", target: "eoq" }
+        ],
+        sections: [
+          {
+            id: "t2-s1",
+            title: "2.1 Traditional Warehouse vs. Modern Distribution Center (DC)",
+            html: `
+              <p class="text-sm text-[#575653] leading-relaxed mb-3">
+                Historically, a warehouse was a passive, static facility for long-term storage. Today, a <strong>Distribution Center (DC)</strong> is a dynamic, strategic hub focused on <strong>throughput, velocity, sorting, and value creation</strong>. A warehouse is only justified if it delivers tangible cost savings or service improvements.
+              </p>
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="p-4 rounded-xl bg-[#FAF9F5] border border-[#E6E4DD]">
+                  <div class="text-xs font-mono-code font-bold text-blue-700">Service Benefit 1</div>
+                  <div class="text-sm font-bold mt-1">Spot-Stocking</div>
+                  <p class="text-xs text-[#575653] mt-1">Temporary placement of seasonal inventory (e.g., agricultural fertilizer or holiday goods) close to key markets during peak windows only.</p>
+                </div>
+                <div class="p-4 rounded-xl bg-[#FAF9F5] border border-[#E6E4DD]">
+                  <div class="text-xs font-mono-code font-bold text-amber-700">Service Benefit 2</div>
+                  <div class="text-sm font-bold mt-1">Full-Line Stocking</div>
+                  <p class="text-xs text-[#575653] mt-1">Year-round one-stop storage aggregating products from multiple manufacturers so customers can consolidate orders from a single hub.</p>
+                </div>
+                <div class="p-4 rounded-xl bg-[#FAF9F5] border border-[#E6E4DD]">
+                  <div class="text-xs font-mono-code font-bold text-emerald-700">Service Benefit 3</div>
+                  <div class="text-sm font-bold mt-1">Value-Added Services (VAS)</div>
+                  <p class="text-xs text-[#575653] mt-1">Kitting, bundling, regional labeling, and light assembly enabling <strong>postponement</strong> until final customer orders arrive.</p>
+                </div>
+              </div>
+            `
+          },
+          {
+            id: "t2-s2",
+            title: "2.2 Four Economic Benefits of Warehousing (Slides 8–14)",
+            html: `
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                <div class="p-4 rounded-xl bg-[#FAF9F5] border border-[#E6E4DD]">
+                  <div class="font-bold text-[#141413] mb-1">1. Consolidation & Break-Bulk</div>
+                  <p class="text-[#575653]"><strong>Consolidation:</strong> Combines small LTL inbound shipments from multiple plants into one economical FTL outbound shipment.<br><strong>Break-Bulk:</strong> Splits one large FTL inbound shipment into smaller local customer deliveries.</p>
+                </div>
+                <div class="p-4 rounded-xl bg-[#FAF9F5] border border-[#E6E4DD]">
+                  <div class="font-bold text-[#141413] mb-1">2. Sorting (Cross-Docking, Mixing, Assembly)</div>
+                  <p class="text-[#575653]"><strong>Cross-Docking:</strong> Moves goods directly from inbound to outbound docks without storage (FMCG retail).<br><strong>Mixing:</strong> Reconfigures bulk freight at an intermediate point into custom assortments.<br><strong>Assembly:</strong> Supports JIT manufacturing near factories.</p>
+                </div>
+                <div class="p-4 rounded-xl bg-[#FAF9F5] border border-[#E6E4DD]">
+                  <div class="font-bold text-[#141413] mb-1">3. Seasonal Storage</div>
+                  <p class="text-[#575653]">Decouples level year-round production from seasonal consumption (e.g., toys) or seasonal harvest from year-round consumption.</p>
+                </div>
+                <div class="p-4 rounded-xl bg-[#FAF9F5] border border-[#E6E4DD]">
+                  <div class="font-bold text-[#141413] mb-1">4. Reverse Logistics Processing</div>
+                  <p class="text-[#575653]">Manages e-commerce returns (~30% return rate), inspection, refurbishment, remanufacturing, recycling, and safe disposal.</p>
+                </div>
+              </div>
+            `
+          },
+          {
+            id: "t2-s3",
+            title: "2.3 Warehouse Design, Layout & Primary Operations (Slides 16–23)",
+            html: `
+              <p class="text-sm text-[#575653] leading-relaxed mb-3">
+                An ideal warehouse uses a <strong>single-floor layout</strong> (eliminating vertical lift bottlenecks), maximizes <strong>vertical cube space</strong> (30–40 ft ceilings, or up to 100 ft with AS/RS), and enforces a <strong>linear unidirectional product flow</strong> from Receiving to Shipping. To optimize peak storage footprint quantitatively, <span onclick="navigateTo('eoq')" class="calc-inline-link">Try the EOQ & EPQ Calculator ↗</span>.
+              </p>
+              <div class="p-4 rounded-xl bg-[#FAF9F5] border border-[#E6E4DD] text-xs font-mono-code">
+                <strong>5 Primary Warehouse Operations Workflow:</strong><br>
+                1. Receiving (Unload, inspect, verify OS&D) → 2. Putaway (Assign to racks) → 3. In-Storage Handling (FIFO rotation, replenishment) → 4. Order-Picking (Discrete vs. Wave/Batch picking — most labor-intensive!) → 5. Shipping (Verify manifest, load & secure with dunnage).
+              </div>
+            `
+          },
+          {
+            id: "t2-s4",
+            title: "2.4 Material Handling Spectrum & Practice Questions (Slides 24–30)",
+            html: `
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4 text-xs">
+                <div class="p-3.5 rounded-xl bg-[#FAF9F5] border border-[#E6E4DD]">
+                  <div class="font-bold text-[#141413]">1. Mechanized</div>
+                  <p class="text-[#575653] mt-1">Labor + basic equipment (forklifts, pallet jacks, towlines, carousels). Low capex, high flexibility for small/medium volumes.</p>
+                </div>
+                <div class="p-3.5 rounded-xl bg-[#FAF9F5] border border-[#E6E4DD]">
+                  <div class="font-bold text-[#141413]">2. Semi-Automated</div>
+                  <p class="text-[#575653] mt-1">Gravity flow racks (FIFO), driverless AGVs, robotic palletizers, and automated sortation.</p>
+                </div>
+                <div class="p-3.5 rounded-xl bg-[#FAF9F5] border border-[#E6E4DD]">
+                  <div class="font-bold text-[#141413]">3. Fully Automated (AS/RS)</div>
+                  <p class="text-[#575653] mt-1">"Lights-out" high-rise storage & retrieval cranes. High capex, 24/7 operation, zero human error, ideal for cold chain & high volume.</p>
+                </div>
+              </div>
+
+              <div class="space-y-3">
+                <div class="p-4 rounded-xl bg-[#FAF9F5] border border-[#E6E4DD]">
+                  <div class="text-xs font-bold text-[#141413]">Practice Q1: Economic Benefit of Consolidation (Slide 29)</div>
+                  <p class="text-xs text-[#575653] mt-1">3 plants ship directly via LTL at $\$1,200/\text{week}$ each. Using a consolidation warehouse costs $\$300/\text{plant}$ inbound + $\$1,800$ consolidated FTL outbound + $\$200$ handling fee.</p>
+                  <div class="mt-2 p-3 bg-white rounded border border-[#E6E4DD] font-mono-code text-xs">
+                    • Direct LTL Cost = 3 × $1,200 = $3,600 / week<br>
+                    • Consolidation Cost = (3 × $300) + $1,800 + $200 = $900 + $1,800 + $200 = $2,900 / week<br>
+                    • Weekly Savings = $3,600 - $2,900 = $700 / week
+                  </div>
+                </div>
+
+                <div class="p-4 rounded-xl bg-[#FAF9F5] border border-[#E6E4DD]">
+                  <div class="text-xs font-bold text-[#141413]">Practice Q2: Public vs. Private Warehouse Break-Even (Slide 30)</div>
+                  <p class="text-xs text-[#575653] mt-1">Public Warehouse: $\$15/\text{pallet/month}$. Private Warehouse: $\$20,000/\text{month}$ fixed + $\$5/\text{pallet/month}$ variable.</p>
+                  <div class="mt-2 p-3 bg-white rounded border border-[#E6E4DD] font-mono-code text-xs">
+                    • $15 × Q = $20,000 + ($5 × Q)  ⇒  $10 × Q = $20,000  ⇒  Break-Even Volume Q = 2,000 pallets/month
+                  </div>
+                </div>
+              </div>
+            `
+          }
+        ]
+      },
+
+      topic3: {
+        code: "TOPIC 03",
+        title: "Transportation and Packaging",
+        subtitle: "Transport Participants, 5 Modes, Containerization, NWCM Allocation, and Packaging Science",
+        relatedCalcs: [
+          { label: "Try the NWCM Allocation Calculator ↗", target: "nwcm" },
+          { label: "Try the TLC & Multimodal Calculator ↗", target: "tlc" }
+        ],
+        sections: [
+          {
+            id: "t3-s1",
+            title: "3.1 Five Transport Participants & Five Modes of Transport",
+            html: `
+              <p class="text-sm text-[#575653] leading-relaxed mb-3">
+                Transportation bridges the geographical gap between supply and demand across 5 key participants: <strong>Consignor (Shipper)</strong>, <strong>Consignee (Receiver)</strong>, <strong>Carriers & Agents</strong>, <strong>Government</strong> (infrastructure & regulation), <strong>Internet</strong> (real-time visibility), and the <strong>Public</strong>.
+              </p>
+              <div class="grid grid-cols-1 md:grid-cols-5 gap-3 text-xs">
+                <div class="p-3.5 rounded-xl bg-[#FAF9F5] border border-[#E6E4DD]">
+                  <div class="font-bold text-[#141413]">1. Rail</div>
+                  <p class="text-[#575653] mt-1">Heavy/bulky cargo over long inland distances (&gt;300 km). Uses TOFC (Piggyback) & COFC (Doublestack). China–Europe rail takes ~12 days.</p>
+                </div>
+                <div class="p-3.5 rounded-xl bg-[#FAF9F5] border border-[#E6E4DD]">
+                  <div class="font-bold text-[#141413]">2. Road</div>
+                  <p class="text-[#575653] mt-1">Most widely used door-to-door mode. Low fixed cost (public roads), high variable cost (fuel, labor, tolls), high flexibility.</p>
+                </div>
+                <div class="p-3.5 rounded-xl bg-[#FAF9F5] border border-[#E6E4DD]">
+                  <div class="font-bold text-[#141413]">3. Water / Sea</div>
+                  <p class="text-[#575653] mt-1">Carries 90% of world trade volume. Inland waterways, coastal, & ocean. Lowest unit variable cost via massive economies of scale.</p>
+                </div>
+                <div class="p-3.5 rounded-xl bg-[#FAF9F5] border border-[#E6E4DD]">
+                  <div class="font-bold text-[#141413]">4. Air</div>
+                  <p class="text-[#575653] mt-1">Fastest transit, high reliability, low damage/theft risk, but highest cost and strict weight/volume limits.</p>
+                </div>
+                <div class="p-3.5 rounded-xl bg-[#FAF9F5] border border-[#E6E4DD]">
+                  <div class="font-bold text-[#141413]">5. Pipeline</div>
+                  <p class="text-[#575653] mt-1">Continuous flow for crude oil, natural gas, and liquid chemicals with no empty backhaul.</p>
+                </div>
+              </div>
+              <div class="mt-3 text-xs text-[#575653]">
+                Want to compare Air, Road, and Sea LCL freight costs on real cargo dimensions? <span onclick="navigateTo('tlc')" class="calc-inline-link">Try the TLC & Multimodal Calculator ↗</span>
+              </div>
+            `
+          },
+          {
+            id: "t3-s2",
+            title: "3.2 Mode Selection & ISO Containerization (Slides 33–43)",
+            html: `
+              <p class="text-sm text-[#575653] leading-relaxed mb-3">
+                Mode selection is a 2-part process (1. Select Mode, 2. Select Carrier) based on 5 factors: <strong>Transportation Cost, Transit Time & Reliability, Accessibility, Capability, and Security</strong>.
+              </p>
+              <div class="p-4 rounded-xl bg-[#FAF9F5] border border-[#E6E4DD] text-xs space-y-2">
+                <div><strong>ISO Containers (TEU & FEU):</strong> Standard lengths are 20ft (1 TEU), 40ft (1 FEU = 2 TEU), 45ft, 48ft, and 53ft.</div>
+                <div><strong>Specialized Containers:</strong> <strong>Reefer</strong> (temperature-controlled perishables), <strong>Open Top</strong> (over-height machinery), <strong>Flat Rack & Platform</strong> (oversized vehicles/construction materials), <strong>Ventilated</strong> (coffee/cocoa to prevent condensation), <strong>Tank</strong> (bulk liquids), and <strong>Garment on Hangers (GOH)</strong>.</div>
+              </div>
+            `
+          },
+          {
+            id: "t3-s3",
+            title: "3.3 North-West Corner Method (NWCM) in Warehouse Networks (Slides 56–62)",
+            html: `
+              <p class="text-sm text-[#575653] leading-relaxed mb-3">
+                Topic 3 introduces the <strong>North-West Corner Method (NWCM)</strong> to allocate factory warehouse supply ($F_i$) to regional customer demand ($C_j$). You can practice all 4 slide matrices interactively: <span onclick="navigateTo('nwcm')" class="calc-inline-link">Try the NWCM Calculator ↗</span>
+              </p>
+            `
+          },
+          {
+            id: "t3-s4",
+            title: "3.4 Packaging Science, Building-Blocks & Smart Packaging (Slides 63–106)",
+            html: `
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                <div class="p-4 rounded-xl bg-[#FAF9F5] border border-[#E6E4DD]">
+                  <div class="font-bold text-[#141413] mb-1">Chemical & Hazmat Considerations</div>
+                  <p class="text-[#575653]"><strong>Ethylene Gas:</strong> Emitted by apples/avocados; accelerates ripening & spoilage in bananas/broccoli—never store together!<br><strong>7 Hazmat Classes:</strong> Explosives, Compressed gases, Flammable liquids, Oxidizers, Poisons, Radioactive, and Corrosives.</p>
+                </div>
+                <div class="p-4 rounded-xl bg-[#FAF9F5] border border-[#E6E4DD]">
+                  <div class="font-bold text-[#141413] mb-1">The Building-Blocks Concept (Unitization)</div>
+                  <p class="text-[#575653]">1. Primary Consumer Package (Can) → 2. Fiberboard Carton → 3. Unit Load on Pallet (Unitization) → 4. Intermodal Container / Trailer → 5. Train / Vessel.</p>
+                </div>
+                <div class="p-4 rounded-xl bg-[#FAF9F5] border border-[#E6E4DD]">
+                  <div class="font-bold text-[#141413] mb-1">Protection, Testing & Environment</div>
+                  <p class="text-[#575653]"><strong>Box Maker's Certificate:</strong> Guarantees bursting test strength, minimum combined weight of facings, and gross weight limit. <strong>Pallet Shredders</strong> reduce scrap wood volume to cut disposal transport costs.</p>
+                </div>
+                <div class="p-4 rounded-xl bg-[#FAF9F5] border border-[#E6E4DD]">
+                  <div class="font-bold text-[#141413] mb-1">1D vs. 2D Barcodes & Smart Packaging</div>
+                  <p class="text-[#575653]"><strong>1D Barcodes (UPC/EAN, Code 128):</strong> Hold horizontal data only.<br><strong>2D Barcodes (QR, DataMatrix) & NFC/RFID:</strong> Store rich 2D data, enabling connected pharmaceutical & cold-chain smart packages.</p>
+                </div>
+              </div>
+            `
+          }
+        ]
+      },
+
+      topic4: {
+        code: "TOPIC 04",
+        title: "Inventory and Material Management",
+        subtitle: "Inventory Trade-Offs, EOQ & EPQ Models, Safety Stock, ABC Analysis, RFID, and ML Demand Sensing",
+        relatedCalcs: [
+          { label: "Try the EOQ & EPQ Inventory Calculator ↗", target: "eoq" }
+        ],
+        sections: [
+          {
+            id: "t4-s1",
+            title: "4.1 Inventory Basics & Conflicting Perspectives (Slides 4–14)",
+            html: `
+              <p class="text-sm text-[#575653] leading-relaxed mb-3">
+                Inventories act as essential cushions against uncertain demand and operational disruptions, directly impacting transportation choices, warehouse footprints, and customer service levels.
+              </p>
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+                <div class="p-4 rounded-xl bg-[#FAF9F5] border border-[#E6E4DD]">
+                  <div class="font-bold text-blue-700">Marketing Perspective</div>
+                  <p class="text-[#575653] mt-1">Prefers high inventory levels to guarantee 100% product availability and zero stock-outs for customers.</p>
+                </div>
+                <div class="p-4 rounded-xl bg-[#FAF9F5] border border-[#E6E4DD]">
+                  <div class="font-bold text-rose-700">Finance Perspective</div>
+                  <p class="text-[#575653] mt-1">Prefers minimal inventory to reduce tied-up working capital, holding costs, and improve ROA.</p>
+                </div>
+                <div class="p-4 rounded-xl bg-[#FAF9F5] border border-[#E6E4DD]">
+                  <div class="font-bold text-amber-700">SCM Perspective</div>
+                  <p class="text-[#575653] mt-1">Seeks to coordinate across channel partners (e.g., via VMI or JIT) so inventory isn't redundantly buffered at every tier.</p>
+                </div>
+              </div>
+            `
+          },
+          {
+            id: "t4-s2",
+            title: "4.2 Economic Order Quantity (EOQ) & Staggered EPQ (Slides 18–27)",
+            html: `
+              <p class="text-sm text-[#575653] leading-relaxed mb-3">
+                Topic 4 derives both the classical <strong>Basic EOQ Model</strong> ($Q^* = \sqrt{\frac{2DS}{H}}$) and the <strong>Non-Instantaneous EPQ Model</strong> ($Q_p^* = \sqrt{\frac{2DS}{H(1-d/p)}}$), where staggered deliveries reduce peak warehouse storage footprint to $I_{\max} = Q_p^*\left(1 - \frac{d}{p}\right)$. Test any scenario interactively: <span onclick="navigateTo('eoq')" class="calc-inline-link">Try the EOQ & EPQ Calculator ↗</span>
+              </p>
+            `
+          },
+          {
+            id: "t4-s3",
+            title: "4.3 ABC Inventory Analysis (Pareto 80/20 Rule) (Slides 28–32)",
+            html: `
+              <p class="text-sm text-[#575653] leading-relaxed mb-3">
+                <strong>ABC Analysis</strong> classifies inventory based on <strong>Annual Cost Volume</strong> ($\text{Annual Demand} \times \text{Unit Cost}$) so management focuses attention on the most critical items:
+              </p>
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+                <div class="p-4 rounded-xl bg-[#FAF9F5] border border-[#E6E4DD]">
+                  <div class="font-bold text-emerald-800">Class A Items (Strategic)</div>
+                  <p class="text-[#575653] mt-1">~15–20% of items accounting for <strong>~80% of annual dollar volume</strong>. Action: Tightest control, frequent review, accurate forecasting, strategic supplier partnerships, and prime warehouse picking slots near docks.</p>
+                </div>
+                <div class="p-4 rounded-xl bg-[#FAF9F5] border border-[#E6E4DD]">
+                  <div class="font-bold text-amber-800">Class B Items (Moderate)</div>
+                  <p class="text-[#575653] mt-1">~30% of items accounting for <strong>~15% of annual dollar volume</strong>. Action: Standard automated EOQ/ROP controls and periodic review.</p>
+                </div>
+                <div class="p-4 rounded-xl bg-[#FAF9F5] border border-[#E6E4DD]">
+                  <div class="font-bold text-slate-700">Class C Items (Trivial)</div>
+                  <p class="text-[#575653] mt-1">~50–55% of items accounting for only <strong>~5% of annual dollar volume</strong>. Action: Simple two-bin or bulk ordering, stored in rear warehouse zones.</p>
+                </div>
+              </div>
+            `
+          },
+          {
+            id: "t4-s4",
+            title: "4.4 Inventory Tracking (RFID vs. Barcodes) & ML Demand Sensing (Slides 33–52)",
+            html: `
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                <div class="p-4 rounded-xl bg-[#FAF9F5] border border-[#E6E4DD]">
+                  <div class="font-bold text-[#141413] mb-1">RFID vs. Barcodes in Warehousing</div>
+                  <p class="text-[#575653]">An RFID system uses a reader/antenna emitting RF signals to energize a tag's microchip. <strong>3 Major Advantages over Barcodes:</strong> (1) No line-of-sight required & simultaneous high-speed bulk reading at dock doors, (2) Longer read range (several feet+), and (3) Read/Write mobile database capability (whereas barcodes are read-only).</p>
+                </div>
+                <div class="p-4 rounded-xl bg-[#FAF9F5] border border-[#E6E4DD]">
+                  <div class="font-bold text-[#141413] mb-1">Machine Learning & Social Media Demand Sensing</div>
+                  <p class="text-[#575653]">Combines internal structured data (POS, ERP, orders) with external unstructured data (social media sentiment, weather, clickstreams). Best suited for <strong>short/mid-term planning, New Product Introductions (NPI), short life-cycle goods, weather-sensitive items, and critical healthcare supplies</strong>.</p>
+                </div>
+              </div>
+            `
+          }
+        ]
+      }
+    };
+
+    // --- NAVIGATION & SUB-TAB CONTROLLER ---
+    function navigateTo(target, sectionId = null) {
+      currentPage = target;
+      const backBtn = document.getElementById('btn-back-home');
+      backBtn.classList.toggle('hidden', target === 'home');
+      backBtn.classList.toggle('inline-flex', target !== 'home');
+
+      ['home', 'lecture', 'tlc', 'nwcm', 'eoq'].forEach(p => {
+        document.getElementById('page-' + p).classList.add('hidden');
+      });
+
+      if (target.startsWith('topic')) {
+        renderLectureTopic(target);
+        document.getElementById('page-lecture').classList.remove('hidden');
+        document.getElementById('ai-context-label').textContent = `Context: ${lectureData[target].code}`;
+        if (sectionId) {
+          setTimeout(() => {
+            const el = document.getElementById(sectionId);
+            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }, 60);
+        } else {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      } else {
+        document.getElementById('page-' + target).classList.remove('hidden');
+        const labelMap = { home: 'Home Portal', tlc: 'Tutorial 1: TLC Multimodal', nwcm: 'Tutorial 2: NWCM Solver', eoq: 'Tutorial 3: EOQ & EPQ' };
+        document.getElementById('ai-context-label').textContent = `Context: ${labelMap[target] || target}`;
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }
+
+    function renderLectureTopic(topicKey) {
+      const data = lectureData[topicKey];
+      if (!data) return;
+
+      // Render Left Google Docs Outline
+      const outlineEl = document.getElementById('lecture-outline-nav');
+      outlineEl.innerHTML = data.sections.map((s, idx) => `
+        <button onclick="scrollToLectureSection('${s.id}', this)" class="gdoc-tab ${idx === 0 ? 'active' : ''}">
+          <span class="truncate">${s.title}</span>
+        </button>
+      `).join('');
+
+      // Render Related Calculators
+      const relEl = document.getElementById('lecture-related-calcs');
+      relEl.innerHTML = data.relatedCalcs.map(c => `
+        <div><span onclick="navigateTo('${c.target}'); switchModuleSubTab('${c.target}', 'calc')" class="calc-inline-link inline-block">${c.label}</span></div>
+      `).join('');
+
+      // Render Right Lecture Content
+      const bodyEl = document.getElementById('lecture-body-content');
+      bodyEl.innerHTML = `
+        <div class="editorial-card p-6 sm:p-8 space-y-8">
+          <div class="border-b border-[#E6E4DD] pb-5">
+            <span class="text-xs font-mono-code uppercase text-blue-700 font-semibold">${data.code} • Lecture Study Notes</span>
+            <h1 class="font-serif-editorial text-3xl sm:text-4xl text-[#141413] mt-1">${data.title}</h1>
+            <p class="text-sm text-[#575653] mt-1.5">${data.subtitle}</p>
+          </div>
+          ${data.sections.map(s => `
+            <div id="${s.id}" class="space-y-3 pt-2 scroll-mt-24">
+              <h2 class="text-base sm:text-lg font-bold text-[#141413] border-b border-[#E6E4DD] pb-2">${s.title}</h2>
+              <div>${s.html}</div>
+            </div>
+          `).join('')}
+        </div>
+      `;
+    }
+
+    function scrollToLectureSection(secId, btnEl) {
+      document.querySelectorAll('#lecture-outline-nav .gdoc-tab').forEach(b => b.classList.remove('active'));
+      if (btnEl) btnEl.classList.add('active');
+      const targetEl = document.getElementById(secId);
+      if (targetEl) targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function switchModuleSubTab(mod, sub) {
+      ['guide', 'calc'].forEach(t => {
+        document.getElementById(`${mod}-view-${t}`).classList.toggle('hidden', t !== sub);
+        document.getElementById(`${mod}-subtab-${t}`).classList.toggle('active', t === sub);
+      });
+      if (mod === 'eoq' && sub === 'calc') calculateEOQ();
+    }
+
+    // --- GLOBAL SEARCH ENGINE ---
+    const searchIndex = [
+      { title: "Topic 1: Logistics in Supply Chain Management", keywords: "scor eers value proposition push pull postponement 3pl 4pl erp tms wms yms roa cash to cash", target: "topic1", sec: "t1-s1", badge: "Lecture 1" },
+      { title: "Topic 1: Practice Q1–Q3 (Rail vs Truck, ROA, Cash-to-Cash)", keywords: "rail truck total cost strategic profit model return on assets doi dor dop", target: "topic1", sec: "t1-s5", badge: "Lecture 1 Cases" },
+      { title: "Topic 2: Warehousing & Material Handling", keywords: "spot stocking full line vas consolidation break bulk cross docking mixing assembly seasonal reverse logistics", target: "topic2", sec: "t2-s1", badge: "Lecture 2" },
+      { title: "Topic 2: AS/RS Automation & Warehouse Break-Even", keywords: "mechanized semi automated asrs public private warehouse break even", target: "topic2", sec: "t2-s4", badge: "Lecture 2 Cases" },
+      { title: "Topic 3: Transportation Modes & ISO Containers", keywords: "rail cofc tofc piggyback doublestack road water sea air pipeline teu feu reefer flat rack", target: "topic3", sec: "t3-s1", badge: "Lecture 3" },
+      { title: "Topic 3: Packaging, Unitization, Ethylene & Barcodes", keywords: "packaging building blocks unit load ethylene hazmat box maker certificate 1d 2d qr barcode smart package", target: "topic3", sec: "t3-s4", badge: "Lecture 3" },
+      { title: "Topic 4: Inventory Management, EOQ, EPQ & Safety Stock", keywords: "inventory holding ordering cost eoq epq safety stock reorder point rop", target: "topic4", sec: "t4-s1", badge: "Lecture 4" },
+      { title: "Topic 4: ABC Pareto Analysis, RFID & ML Demand Sensing", keywords: "abc analysis pareto 80 20 rfid barcode machine learning social media demand forecasting", target: "topic4", sec: "t4-s3", badge: "Lecture 4" },
+      { title: "TLC & Multimodal Shipping Calculator", keywords: "chargeable weight volumetric weight dim 6000 5000 revenue ton lcl air road sea calculator", target: "tlc", sub: "calc", badge: "Calculator" },
+      { title: "North-West Corner Method (NWCM) Solver", keywords: "nwcm northwest corner method matrix allocation supply demand transportation cost calculator", target: "nwcm", sub: "calc", badge: "Calculator" },
+      { title: "EOQ & EPQ Inventory Optimization Simulator", keywords: "eoq epq max inventory imax sawtooth chart staggered shuttle calculator", target: "eoq", sub: "calc", badge: "Calculator" }
+    ];
+
+    function handleGlobalSearch(query) {
+      const box = document.getElementById('global-search-results');
+      const q = (query || '').trim().toLowerCase();
+      if (!q) {
+        box.classList.add('hidden');
+        return;
+      }
+      const matches = searchIndex.filter(item =>
+        item.title.toLowerCase().includes(q) || item.keywords.includes(q)
+      );
+      if (matches.length === 0) {
+        box.innerHTML = `<div class="p-3 text-xs text-[#87867F]">No matching topics or calculators found.</div>`;
+      } else {
+        box.innerHTML = matches.map(m => `
+          <div onclick="selectSearchResult('${m.target}', '${m.sec || ''}', '${m.sub || ''}')" class="p-3 hover:bg-[#F3F2EE] cursor-pointer flex items-center justify-between gap-2">
+            <span class="text-xs font-medium text-[#141413]">${m.title}</span>
+            <span class="text-[10px] font-mono-code px-2 py-0.5 rounded bg-[#FAF9F5] border border-[#E6E4DD] text-[#575653] shrink-0">${m.badge}</span>
+          </div>
+        `).join('');
+      }
+      box.classList.remove('hidden');
+    }
+
+    function selectSearchResult(target, sec, sub) {
+      document.getElementById('global-search-results').classList.add('hidden');
+      document.getElementById('global-search-input').value = '';
+      navigateTo(target, sec || null);
+      if (sub) switchModuleSubTab(target, sub);
+    }
+
+    document.addEventListener('click', (e) => {
+      const box = document.getElementById('global-search-results');
+      const inp = document.getElementById('global-search-input');
+      if (box && !box.contains(e.target) && e.target !== inp) {
+        box.classList.add('hidden');
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === '/' && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
+        e.preventDefault();
+        document.getElementById('global-search-input').focus();
+      }
+    });
+
+    function fmt(n, dec = 2) {
+      return Number(n).toLocaleString('en-US', { minimumFractionDigits: dec, maximumFractionDigits: dec });
+    }
+
+    // =====================================================
+    // MODULE 1: TLC & MULTIMODAL ENGINE (BLANK BY DEFAULT)
+    // =====================================================
+    let tlcRows = [];
+    const tlcPresets = {
+      blank: {
+        badge: "Blank Template", qty: "", unitWt: "", L: "", W: "", H: "", mode: "compare", budget: "", maxDays: "",
+        rows: [{ name: "Route / Leg 1", billing: "kg", dim: 6000, rate: "", surcharge: "", fixed: "", days: "" }]
+      },
+      worked: {
+        badge: "Worked Example (Air)", qty: 10, unitWt: 15, L: 50, W: 40, H: 30, mode: "compare", budget: "", maxDays: "",
+        rows: [{ name: "Air Freight Shipment", billing: "kg", dim: 6000, rate: 5.00, surcharge: 0, fixed: 0, days: 2 }]
+      },
+      q1: {
+        badge: "Q1: 5 Pallets (Air)", qty: 5, unitWt: 200, L: 120, W: 80, H: 100, mode: "compare", budget: "", maxDays: "",
+        rows: [{ name: "HKG to London Air Freight", billing: "kg", dim: 6000, rate: 4.50, surcharge: 0, fixed: 0, days: 2 }]
+      },
+      q2: {
+        badge: "Q2: Multimodal (Road+Air)", qty: 20, unitWt: 40, L: 60, W: 50, H: 50, mode: "sequential", budget: "", maxDays: "",
+        rows: [
+          { name: "Leg 1: Road (Shenzhen to HKG)", billing: "kg", dim: 5000, rate: 0.50, surcharge: 0, fixed: 0, days: 1 },
+          { name: "Leg 2: Air (HKG to Frankfurt)", billing: "kg", dim: 6000, rate: 3.20, surcharge: 0.30, fixed: 0, days: 2 }
+        ]
+      },
+      q3: {
+        badge: "Q3: Routing Decision", qty: 50, unitWt: 40, L: 80, W: 60, H: 50, mode: "compare", budget: 5000, maxDays: 20,
+        rows: [
+          { name: "Option A: Direct Air", billing: "kg", dim: 6000, rate: 6.00, surcharge: 0, fixed: 150, days: 3 },
+          { name: "Option B: Sea-Air (via Dubai)", billing: "kg", dim: 6000, rate: 2.10, surcharge: 0, fixed: 250, days: 14 },
+          { name: "Option C: Sea Freight (LCL RT)", billing: "rt", dim: 1000, rate: 120.00, surcharge: 0, fixed: 300, days: 35 }
+        ]
+      }
+    };
+
+    function loadTLCPreset(key) {
+      const p = tlcPresets[key];
+      document.getElementById('tlc-qty').value = p.qty;
+      document.getElementById('tlc-unit-wt').value = p.unitWt;
+      document.getElementById('tlc-L').value = p.L;
+      document.getElementById('tlc-W').value = p.W;
+      document.getElementById('tlc-H').value = p.H;
+      document.getElementById('tlc-calc-mode').value = p.mode;
+      document.getElementById('tlc-budget').value = p.budget;
+      document.getElementById('tlc-maxdays').value = p.maxDays;
+      document.getElementById('tlc-badge').textContent = p.badge;
+
+      document.querySelectorAll('#page-tlc .preset-pill').forEach(b => b.classList.remove('active'));
+      const btn = document.getElementById('tlc-btn-' + key);
+      if (btn) btn.classList.add('active');
+
+      tlcRows = JSON.parse(JSON.stringify(p.rows));
+      renderTLCRows();
+      calcTLC();
+    }
+
+    function addTLCRow() {
+      tlcRows.push({ name: `Route / Leg #${tlcRows.length + 1}`, billing: "kg", dim: 6000, rate: "", surcharge: "", fixed: "", days: "" });
+      renderTLCRows();
+      calcTLC();
+    }
+
+    function removeTLCRow(idx) {
+      if (tlcRows.length <= 1) return;
+      tlcRows.splice(idx, 1);
+      renderTLCRows();
+      calcTLC();
+    }
+
+    function updateTLCRowField(idx, field, val) {
+      tlcRows[idx][field] = (field === 'name' || field === 'billing') ? val : (val === '' ? '' : parseFloat(val));
+      calcTLC();
+    }
+
+    function renderTLCRows() {
+      const tbody = document.getElementById('tlc-rows-body');
+      tbody.innerHTML = tlcRows.map((r, i) => `
+        <tr>
+          <td class="py-2 px-2"><input type="text" value="${r.name}" oninput="updateTLCRowField(${i}, 'name', this.value)" class="editorial-input px-2.5 py-1 text-xs w-44" /></td>
+          <td class="py-2 px-2">
+            <select onchange="updateTLCRowField(${i}, 'billing', this.value); renderTLCRows(); calcTLC();" class="editorial-input px-2 py-1 text-xs">
+              <option value="kg" ${r.billing === 'kg' ? 'selected' : ''}>Per kg (CW)</option>
+              <option value="rt" ${r.billing === 'rt' ? 'selected' : ''}>Sea LCL (RT)</option>
+            </select>
+          </td>
+          <td class="py-2 px-2"><input type="number" value="${r.dim}" placeholder="6000" oninput="updateTLCRowField(${i}, 'dim', this.value)" class="editorial-input px-2 py-1 text-xs font-mono-code w-20" ${r.billing === 'rt' ? 'disabled' : ''} /></td>
+          <td class="py-2 px-2"><input type="number" step="0.1" value="${r.rate}" placeholder="Rate" oninput="updateTLCRowField(${i}, 'rate', this.value)" class="editorial-input px-2 py-1 text-xs font-mono-code w-20" /></td>
+          <td class="py-2 px-2"><input type="number" step="0.1" value="${r.surcharge}" placeholder="0" oninput="updateTLCRowField(${i}, 'surcharge', this.value)" class="editorial-input px-2 py-1 text-xs font-mono-code w-20" /></td>
+          <td class="py-2 px-2"><input type="number" step="10" value="${r.fixed}" placeholder="0" oninput="updateTLCRowField(${i}, 'fixed', this.value)" class="editorial-input px-2 py-1 text-xs font-mono-code w-20" /></td>
+          <td class="py-2 px-2"><input type="number" step="1" value="${r.days}" placeholder="Days" oninput="updateTLCRowField(${i}, 'days', this.value)" class="editorial-input px-2 py-1 text-xs font-mono-code w-16" /></td>
+          <td id="tlc-row-vw-${i}" class="py-2 px-2 font-mono-code text-[#575653]">—</td>
+          <td id="tlc-row-cw-${i}" class="py-2 px-2 font-mono-code font-bold text-blue-700">—</td>
+          <td id="tlc-row-cost-${i}" class="py-2 px-2 font-mono-code font-bold text-[#141413]">—</td>
+          <td id="tlc-row-status-${i}" class="py-2 px-2">—</td>
+          <td class="py-2 px-1 text-right"><button onclick="removeTLCRow(${i})" class="text-[#87867F] hover:text-rose-600 px-1.5 py-1 text-xs">✕</button></td>
+        </tr>
+      `).join('');
+    }
+
+    function calcTLC() {
+      const qty = parseFloat(document.getElementById('tlc-qty').value);
+      const unitWt = parseFloat(document.getElementById('tlc-unit-wt').value);
+      const L = parseFloat(document.getElementById('tlc-L').value);
+      const W = parseFloat(document.getElementById('tlc-W').value);
+      const H = parseFloat(document.getElementById('tlc-H').value);
+      const mode = document.getElementById('tlc-calc-mode').value;
+      const budget = parseFloat(document.getElementById('tlc-budget').value) || 0;
+      const maxDays = parseFloat(document.getElementById('tlc-maxdays').value) || 0;
+
+      if (!qty || !unitWt || !L || !W || !H) {
+        document.getElementById('tlc-out-aw').textContent = '—';
+        document.getElementById('tlc-out-cbm').textContent = '—';
+        document.getElementById('tlc-out-vw6000').textContent = '—';
+        document.getElementById('tlc-out-vw5000').textContent = '—';
+        document.getElementById('tlc-verdict-text').textContent = 'Enter cargo quantity, weight, and L×W×H dimensions (or select a preset above) to compute chargeable weights.';
+        tlcRows.forEach((_, i) => {
+          const vwEl = document.getElementById(`tlc-row-vw-${i}`);
+          if (vwEl) {
+            vwEl.textContent = '—';
+            document.getElementById(`tlc-row-cw-${i}`).textContent = '—';
+            document.getElementById(`tlc-row-cost-${i}`).textContent = '—';
+            document.getElementById(`tlc-row-status-${i}`).textContent = '—';
+          }
+        });
+        return;
+      }
+
+      const totalAW = qty * unitWt;
+      const totalVolCM = qty * (L * W * H);
+      const totalCBM = totalVolCM / 1000000;
+
+      document.getElementById('tlc-out-aw').textContent = `${fmt(totalAW, 1)} kg`;
+      document.getElementById('tlc-out-cbm').textContent = `${fmt(totalCBM, 2)} CBM`;
+      document.getElementById('tlc-out-vw6000').textContent = `${fmt(totalVolCM / 6000, 1)} kg`;
+      document.getElementById('tlc-out-vw5000').textContent = `${fmt(totalVolCM / 5000, 1)} kg`;
+
+      let evaluatedResults = [];
+      tlcRows.forEach((r, i) => {
+        const rate = parseFloat(r.rate) || 0;
+        const sur = parseFloat(r.surcharge) || 0;
+        const fix = parseFloat(r.fixed) || 0;
+        const dim = parseFloat(r.dim) || 6000;
+        const days = parseFloat(r.days) || 0;
+
+        let vw = 0, cw = 0, cost = 0;
+        if (r.billing === 'kg') {
+          vw = totalVolCM / dim;
+          cw = Math.max(totalAW, vw);
+          cost = (cw * (rate + sur)) + fix;
+        } else {
+          cw = Math.max(totalAW / 1000, totalCBM);
+          cost = (cw * (rate + sur)) + fix;
+        }
+
+        document.getElementById(`tlc-row-vw-${i}`).textContent = r.billing === 'kg' ? `${fmt(vw, 1)} kg` : `${fmt(totalCBM, 2)} CBM`;
+        document.getElementById(`tlc-row-cw-${i}`).textContent = r.billing === 'kg' ? `${fmt(cw, 1)} kg` : `${fmt(cw, 2)} RT`;
+        document.getElementById(`tlc-row-cost-${i}`).textContent = rate > 0 || fix > 0 ? `$${fmt(cost, 2)}` : '—';
+
+        let isValid = true;
+        if (budget > 0 && cost > budget) isValid = false;
+        if (maxDays > 0 && days > maxDays) isValid = false;
+
+        document.getElementById(`tlc-row-status-${i}`).innerHTML = (rate > 0 || fix > 0) ? (isValid ?
+          `<span class="px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200 text-[10px] font-semibold">Feasible</span>` :
+          `<span class="px-2 py-0.5 rounded bg-rose-50 text-rose-800 border border-rose-200 text-[10px] font-semibold">Exceeds Limit</span>`) : '—';
+
+        if (rate > 0 || fix > 0) evaluatedResults.push({ name: r.name, cost, days, valid: isValid });
+      });
+
+      if (evaluatedResults.length === 0) {
+        document.getElementById('tlc-verdict-text').textContent = 'Enter a base rate ($) in the route table below to calculate total shipping cost.';
+        return;
+      }
+
+      if (mode === 'compare') {
+        let validOpts = evaluatedResults.filter(x => x.valid);
+        if (validOpts.length === 0) validOpts = evaluatedResults;
+        validOpts.sort((a, b) => a.cost - b.cost);
+        const best = validOpts[0];
+        document.getElementById('tlc-verdict-text').innerHTML = `Optimal Route Recommendation: <strong>${best.name}</strong> with Total Logistics Cost of <strong class="text-blue-700">$${fmt(best.cost, 2)}</strong>${best.days ? ` and transit time of <strong>${best.days} days</strong>` : ''}.`;
+      } else {
+        const totalSeqCost = evaluatedResults.reduce((a, b) => a + b.cost, 0);
+        const totalSeqDays = evaluatedResults.reduce((a, b) => a + b.days, 0);
+        document.getElementById('tlc-verdict-text').innerHTML = `Sequential Multimodal Total Cost: <strong class="text-blue-700">$${fmt(totalSeqCost, 2)}</strong> across ${evaluatedResults.length} legs (${totalSeqDays} total transit days).`;
+      }
+    }
+
+    function parseTLCQuestionText() {
+      const txt = document.getElementById('tlc-paste-input').value;
+      if (!txt.trim()) return;
+      const dimMatch = txt.match(/(\d+(?:\.\d+)?)\s*(?:cm)?\s*[x×*]\s*(\d+(?:\.\d+)?)\s*(?:cm)?\s*[x×*]\s*(\d+(?:\.\d+)?)/i);
+      const qtyMatch = txt.match(/(\d+)\s*(?:boxes|cartons|pallets|units|items|crates)/i);
+      const wtMatch = txt.match(/(\d+(?:\.\d+)?)\s*kg/i);
+      const rateMatch = txt.match(/\$\s*(\d+(?:\.\d+)?)/);
+
+      if (qtyMatch) document.getElementById('tlc-qty').value = qtyMatch[1];
+      if (wtMatch) document.getElementById('tlc-unit-wt').value = wtMatch[1];
+      if (dimMatch) {
+        document.getElementById('tlc-L').value = dimMatch[1];
+        document.getElementById('tlc-W').value = dimMatch[2];
+        document.getElementById('tlc-H').value = dimMatch[3];
+      }
+      if (rateMatch && tlcRows.length > 0) {
+        tlcRows[0].rate = parseFloat(rateMatch[1]);
+        renderTLCRows();
+      }
+      document.getElementById('tlc-badge').textContent = "Auto-Extracted";
+      const fb = document.getElementById('tlc-parse-feedback');
+      fb.textContent = "✓ Extracted cargo parameters from pasted text.";
+      fb.classList.remove('hidden');
+      calcTLC();
+    }
+
+    // =====================================================
+    // MODULE 2: NWCM ALLOCATION SOLVER (BLANK BY DEFAULT)
+    // =====================================================
+    let nwcmSupply = ["", "", ""];
+    let nwcmDemand = ["", "", ""];
+    let nwcmCosts = [["", "", ""], ["", "", ""], ["", "", ""]];
+
+    const nwcmPresets = {
+      blank: {
+        rows: 3, cols: 3,
+        supply: ["", "", ""],
+        demand: ["", "", ""],
+        costs: [["", "", ""], ["", "", ""], ["", "", ""]]
+      },
+      illus: {
+        rows: 3, cols: 3,
+        supply: [30, 40, 10],
+        demand: [20, 30, 30],
+        costs: [[4, 8, 5], [7, 3, 9], [6, 4, 7]]
+      },
+      scenA: {
+        rows: 4, cols: 5,
+        supply: [30, 40, 20, 50],
+        demand: [35, 25, 30, 20, 30],
+        costs: [
+          [4, 8, 6, 7, 5],
+          [3, 7, 9, 4, 2],
+          [5, 6, 8, 3, 7],
+          [4, 9, 3, 8, 6]
+        ]
+      },
+      scenB: {
+        rows: 6, cols: 4,
+        supply: [15, 25, 20, 30, 10, 20],
+        demand: [35, 25, 30, 30],
+        costs: [
+          [5, 6, 8, 7],
+          [4, 3, 6, 2],
+          [5, 8, 7, 4],
+          [7, 3, 6, 5],
+          [4, 6, 8, 9],
+          [5, 4, 7, 3]
+        ]
+      },
+      scenC: {
+        rows: 8, cols: 9,
+        supply: [20, 30, 25, 15, 40, 35, 20, 25],
+        demand: [15, 20, 30, 25, 20, 35, 25, 20, 20],
+        costs: [
+          [7, 5, 8, 6, 9, 4, 3, 7, 5],
+          [6, 8, 7, 5, 4, 6, 8, 3, 7],
+          [5, 9, 6, 8, 7, 5, 4, 6, 8],
+          [8, 7, 5, 9, 6, 7, 5, 8, 6],
+          [4, 6, 8, 7, 5, 9, 6, 8, 7],
+          [9, 5, 7, 6, 8, 4, 7, 6, 5],
+          [6, 8, 5, 7, 4, 6, 8, 5, 7],
+          [5, 7, 6, 8, 7, 5, 6, 8, 4]
+        ]
+      }
+    };
+
+    function loadNWCMPreset(key) {
+      const p = nwcmPresets[key];
+      document.getElementById('nwcm-rows').value = p.rows;
+      document.getElementById('nwcm-cols').value = p.cols;
+      nwcmSupply = [...p.supply];
+      nwcmDemand = [...p.demand];
+      nwcmCosts = JSON.parse(JSON.stringify(p.costs));
+
+      document.querySelectorAll('#page-nwcm .preset-pill').forEach(b => b.classList.remove('active'));
+      const btn = document.getElementById('nwcm-btn-' + key);
+      if (btn) btn.classList.add('active');
+
+      solveNWCM(true);
+    }
+
+    function resizeNWCMGrid() {
+      const rows = Math.min(10, Math.max(2, parseInt(document.getElementById('nwcm-rows').value) || 3));
+      const cols = Math.min(10, Math.max(2, parseInt(document.getElementById('nwcm-cols').value) || 3));
+      nwcmSupply = Array(rows).fill("");
+      nwcmDemand = Array(cols).fill("");
+      nwcmCosts = Array(rows).fill(0).map(() => Array(cols).fill(""));
+      document.querySelectorAll('#page-nwcm .preset-pill').forEach(b => b.classList.remove('active'));
+      solveNWCM(true);
+    }
+
+    function solveNWCM(rebuildDOM = false) {
+      const rows = nwcmSupply.length;
+      const cols = nwcmDemand.length;
+
+      const sNum = nwcmSupply.map(v => parseFloat(v) || 0);
+      const dNum = nwcmDemand.map(v => parseFloat(v) || 0);
+      const sumS = sNum.reduce((a, b) => a + b, 0);
+      const sumD = dNum.reduce((a, b) => a + b, 0);
+
+      document.getElementById('nwcm-sum-supply').textContent = sumS;
+      document.getElementById('nwcm-sum-demand').textContent = sumD;
+
+      let alloc = Array(rows).fill(0).map(() => Array(cols).fill(0));
+      let steps = [];
+      let totalCost = 0;
+
+      if (sumS > 0 && sumD > 0) {
+        let s = [...sNum];
+        let d = [...dNum];
+        let i = 0, j = 0;
+        while (i < rows && j < cols) {
+          if (s[i] === 0 && d[j] === 0) { i++; j++; continue; }
+          let qty = Math.min(s[i], d[j]);
+          if (qty > 0) {
+            alloc[i][j] = qty;
+            const unitCost = parseFloat(nwcmCosts[i][j]) || 0;
+            const subCost = qty * unitCost;
+            totalCost += subCost;
+            steps.push(`F${i+1} → C${j+1}: Allocate min(${s[i]}, ${d[j]}) = <strong>${qty} units</strong> × $${unitCost} = <strong>$${subCost}</strong>`);
+          }
+          s[i] -= qty;
+          d[j] -= qty;
+          if (s[i] === 0 && d[j] === 0) { i++; j++; }
+          else if (s[i] === 0) i++;
+          else j++;
+        }
+
+        document.getElementById('nwcm-total-cost').textContent = `$${totalCost.toLocaleString()}`;
+        const badge = document.getElementById('nwcm-balance-badge');
+        if (sumS === sumD) {
+          badge.textContent = `Balanced (${sumS} = ${sumD})`;
+          badge.className = "text-[11px] font-mono-code px-2.5 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200";
+        } else {
+          badge.textContent = `Unbalanced (S=${sumS}, D=${sumD})`;
+          badge.className = "text-[11px] font-mono-code px-2.5 py-0.5 rounded bg-amber-50 text-amber-800 border border-amber-200";
+        }
+        document.getElementById('nwcm-steps-list').innerHTML = steps.map((st, idx) => `<div>${idx + 1}. ${st}</div>`).join('');
+      } else {
+        document.getElementById('nwcm-total-cost').textContent = '—';
+        document.getElementById('nwcm-balance-badge').textContent = 'Blank Template';
+        document.getElementById('nwcm-balance-badge').className = "text-[11px] font-mono-code px-2.5 py-0.5 rounded bg-[#F3F2EE] text-[#575653]";
+        document.getElementById('nwcm-steps-list').innerHTML = `<div class="text-[#87867F] italic">Fill in Supply, Demand, and Unit Costs below (or click a preset above) to compute NWCM allocation.</div>`;
+      }
+
+      if (rebuildDOM) {
+        let html = `<table class="w-full text-center border-collapse text-xs"><thead><tr class="bg-[#FAF9F5] text-[#575653] font-mono-code">`;
+        html += `<th class="p-2 border border-[#E6E4DD]">Factory \\ Warehouse</th>`;
+        for (let c = 0; c < cols; c++) html += `<th class="p-2 border border-[#E6E4DD]">C${c+1}</th>`;
+        html += `<th class="p-2 border border-[#E6E4DD] bg-[#F3F2EE] text-[#141413]">Supply</th></tr></thead><tbody>`;
+
+        for (let r = 0; r < rows; r++) {
+          html += `<tr><td class="p-2 border border-[#E6E4DD] font-mono-code font-bold bg-[#FAF9F5]">F${r+1}</td>`;
+          for (let c = 0; c < cols; c++) {
+            html += `<td id="nwcm-cell-${r}-${c}" class="p-2 border border-[#E6E4DD] align-top">
+              <div class="flex items-center justify-center gap-1 text-[11px] text-[#575653]">
+                <span>$</span>
+                <input type="number" value="${nwcmCosts[r][c]}" placeholder="0" oninput="nwcmCosts[${r}][${c}]=this.value; solveNWCM(false);" class="editorial-input w-12 text-center px-1 py-0.5 text-xs font-mono-code" />
+              </div>
+              <div id="nwcm-alloc-badge-${r}-${c}" class="mt-1 min-h-[20px]"></div>
+            </td>`;
+          }
+          html += `<td class="p-2 border border-[#E6E4DD] bg-[#F3F2EE]/50">
+            <input type="number" value="${nwcmSupply[r]}" placeholder="Supply" oninput="nwcmSupply[${r}]=this.value; solveNWCM(false);" class="editorial-input w-16 text-center px-1.5 py-1 text-xs font-mono-code font-bold" />
+          </td></tr>`;
+        }
+
+        html += `<tr class="bg-[#F3F2EE]/50"><td class="p-2 border border-[#E6E4DD] font-mono-code font-bold">Demand</td>`;
+        for (let c = 0; c < cols; c++) {
+          html += `<td class="p-2 border border-[#E6E4DD]">
+            <input type="number" value="${nwcmDemand[c]}" placeholder="Demand" oninput="nwcmDemand[${c}]=this.value; solveNWCM(false);" class="editorial-input w-16 text-center px-1.5 py-1 text-xs font-mono-code font-bold" />
+          </td>`;
+        }
+        html += `<td class="p-2 border border-[#E6E4DD] font-mono-code font-bold text-[#141413]" id="nwcm-corner-sum">${sumS || ''}</td></tr></tbody></table>`;
+        document.getElementById('nwcm-table-container').innerHTML = html;
+      }
+
+      // Update allocation badges without losing input focus
+      for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < cols; c++) {
+          const cell = document.getElementById(`nwcm-cell-${r}-${c}`);
+          const badge = document.getElementById(`nwcm-alloc-badge-${r}-${c}`);
+          if (!cell || !badge) continue;
+          if (alloc[r][c] > 0) {
+            cell.classList.add('bg-emerald-50/60');
+            badge.innerHTML = `<span class="inline-block px-2 py-0.5 rounded bg-emerald-700 text-white font-mono-code font-bold text-[11px]">Alloc: ${alloc[r][c]}</span>`;
+          } else {
+            cell.classList.remove('bg-emerald-50/60');
+            badge.innerHTML = `<span class="text-[10px] text-[#87867F]">—</span>`;
+          }
+        }
+      }
+      const cornerEl = document.getElementById('nwcm-corner-sum');
+      if (cornerEl) cornerEl.textContent = sumS > 0 ? sumS : '';
+    }
+
+    function parseNWCMQuestionText() {
+      const txt = document.getElementById('nwcm-paste-input').value;
+      if (!txt.trim()) return;
+      const supMatch = txt.match(/supply[^0-9]*([\d,\s]+)/i);
+      const demMatch = txt.match(/demand[^0-9]*([\d,\s]+)/i);
+      if (supMatch && demMatch) {
+        const sArr = supMatch[1].trim().split(/[\s,]+/).map(Number).filter(n => !isNaN(n) && n > 0);
+        const dArr = demMatch[1].trim().split(/[\s,]+/).map(Number).filter(n => !isNaN(n) && n > 0);
+        if (sArr.length >= 2 && dArr.length >= 2) {
+          nwcmSupply = sArr;
+          nwcmDemand = dArr;
+          document.getElementById('nwcm-rows').value = sArr.length;
+          document.getElementById('nwcm-cols').value = dArr.length;
+          nwcmCosts = Array(sArr.length).fill(0).map(() => Array(dArr.length).fill(5));
+          solveNWCM(true);
+          const fb = document.getElementById('nwcm-parse-feedback');
+          fb.textContent = `✓ Extracted ${sArr.length}×${dArr.length} matrix from text.`;
+          fb.classList.remove('hidden');
+        }
+      }
+    }
+
+    // =====================================================
+    // MODULE 3: EOQ & EPQ ENGINE (BLANK BY DEFAULT)
+    // =====================================================
+    let sawtoothChartInstance = null;
+    let costChartInstance = null;
+
+    const eoqPresets = {
+      blank: { name: "Blank Template", D: "", S: "", H: "", d: "", p: "", L: "" },
+      illus: { name: "Illustration (D=12,000)", D: 12000, S: 150, H: 40, d: 40, p: 100, L: 5 },
+      q1:    { name: "Question 1 (Basic EOQ)", D: 8000, S: 50, H: 5, d: "", p: "", L: "" },
+      q2:    { name: "Question 2 (3PL Kitting)", D: 25000, S: 400, H: 8, d: 100, p: 250, L: 2 },
+      q3:    { name: "Question 3 (DC Shuttle)", D: 50000, S: 500, H: 20, d: 200, p: 500, L: 2 }
+    };
+
+    function loadEOQPreset(key) {
+      const p = eoqPresets[key];
+      document.getElementById('input-D').value = p.D;
+      document.getElementById('input-S').value = p.S;
+      document.getElementById('input-H').value = p.H;
+      document.getElementById('input-d').value = p.d;
+      document.getElementById('input-p').value = p.p;
+      document.getElementById('input-L').value = p.L;
+      document.getElementById('eoq-case-badge').textContent = p.name;
+
+      document.querySelectorAll('#page-eoq .preset-pill').forEach(b => b.classList.remove('active'));
+      const btn = document.getElementById('eoq-btn-' + key);
+      if (btn) btn.classList.add('active');
+
+      calculateEOQ();
+    }
+
+    function toggleHoldingMode() {
+      const isIC = document.getElementById('toggle-ic').checked;
+      document.getElementById('direct-H-box').classList.toggle('hidden', isIC);
+      document.getElementById('ic-H-box').classList.toggle('hidden', !isIC);
+      if (isIC) updateHFromIC();
+    }
+
+    function updateHFromIC() {
+      const i = parseFloat(document.getElementById('input-i').value) || 0;
+      const C = parseFloat(document.getElementById('input-C').value) || 0;
+      if (i > 0 && C > 0) {
+        document.getElementById('input-H').value = ((i / 100) * C).toFixed(2);
+      }
+      calculateEOQ();
+    }
+
+    function clearEOQOutputs() {
+      ['eoq-Q', 'eoq-Imax', 'eoq-avgInv', 'eoq-orders', 'eoq-orderCost', 'eoq-holdCost', 'eoq-TC',
+       'epq-Q', 'epq-Imax', 'epq-factor', 'epq-window', 'epq-orderCost', 'epq-holdCost', 'epq-TC',
+       'diff-space', 'diff-cost', 'out-workdays', 'out-rop'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = '—';
+      });
+      document.getElementById('validation-alert').classList.add('hidden');
+      document.getElementById('eoq-strategy-summary').textContent = 'Enter parameters (D, S, H, and optional d, p) or select a preset above to compute optimal batch sizes and render charts.';
+      if (sawtoothChartInstance) { sawtoothChartInstance.destroy(); sawtoothChartInstance = null; }
+      if (costChartInstance) { costChartInstance.destroy(); costChartInstance = null; }
+    }
+
+    function calculateEOQ() {
+      const D = parseFloat(document.getElementById('input-D').value);
+      const S = parseFloat(document.getElementById('input-S').value);
+      const H = parseFloat(document.getElementById('input-H').value);
+      const d = parseFloat(document.getElementById('input-d').value) || 0;
+      const p = parseFloat(document.getElementById('input-p').value) || 0;
+      const L = parseFloat(document.getElementById('input-L').value) || 0;
+
+      if (!D || !S || !H || D <= 0 || S <= 0 || H <= 0) {
+        clearEOQOutputs();
+        return;
+      }
+
+      const eoqQ = Math.sqrt((2 * D * S) / H);
+      const eoqImax = eoqQ;
+      const eoqAvgInv = eoqQ / 2;
+      const eoqOrders = D / eoqQ;
+      const eoqOrderCost = eoqOrders * S;
+      const eoqHoldCost = eoqAvgInv * H;
+      const eoqTC = eoqOrderCost + eoqHoldCost;
+
+      document.getElementById('eoq-Q').textContent = `${fmt(eoqQ, 2)} units`;
+      document.getElementById('eoq-Imax').textContent = `${fmt(eoqImax, 2)} units`;
+      document.getElementById('eoq-avgInv').textContent = `${fmt(eoqAvgInv, 2)} units`;
+      document.getElementById('eoq-orders').textContent = `${fmt(eoqOrders, 2)} / yr`;
+      document.getElementById('eoq-orderCost').textContent = `$${fmt(eoqOrderCost, 2)}`;
+      document.getElementById('eoq-holdCost').textContent = `$${fmt(eoqHoldCost, 2)}`;
+      document.getElementById('eoq-TC').textContent = `$${fmt(eoqTC, 2)}`;
+
+      document.getElementById('out-workdays').textContent = d > 0 ? `${fmt(D / d, 1)} days` : '—';
+      document.getElementById('out-rop').textContent = (d > 0 && L > 0) ? `${fmt(d * L, 0)} units` : '—';
+
+      const alertBox = document.getElementById('validation-alert');
+      let epqQ = null, epqImax = null, accumFactor = 1;
+
+      if (d > 0 && p > 0) {
+        if (p <= d) {
+          alertBox.classList.remove('hidden');
+          return;
+        }
+        alertBox.classList.add('hidden');
+        accumFactor = 1 - (d / p);
+        epqQ = Math.sqrt((2 * D * S) / (H * accumFactor));
+        epqImax = epqQ * accumFactor;
+        const epqAvgInv = epqImax / 2;
+        const epqWindow = epqQ / p;
+        const epqOrderCost = (D / epqQ) * S;
+        const epqHoldCost = epqAvgInv * H;
+        const epqTC = epqOrderCost + epqHoldCost;
+
+        document.getElementById('epq-Q').textContent = `${fmt(epqQ, 2)} units`;
+        document.getElementById('epq-Imax').textContent = `${fmt(epqImax, 2)} units`;
+        document.getElementById('epq-factor').textContent = `${accumFactor.toFixed(3)} (+${fmt(p - d, 0)}/d)`;
+        document.getElementById('epq-window').textContent = `${fmt(epqWindow, 2)} days`;
+        document.getElementById('epq-orderCost').textContent = `$${fmt(epqOrderCost, 2)}`;
+        document.getElementById('epq-holdCost').textContent = `$${fmt(epqHoldCost, 2)}`;
+        document.getElementById('epq-TC').textContent = `$${fmt(epqTC, 2)}`;
+
+        const spaceDiff = epqImax - eoqImax;
+        const spacePct = ((epqImax - eoqImax) / eoqImax) * 100;
+        const costSavings = eoqTC - epqTC;
+
+        document.getElementById('diff-space').textContent = `${fmt(spaceDiff, 1)} units (${fmt(spacePct, 1)}%)`;
+        document.getElementById('diff-cost').textContent = `$${fmt(costSavings, 2)} / yr`;
+        document.getElementById('eoq-strategy-summary').innerHTML = `<strong>Strategic Insight:</strong> Because daily demand (${d} units/day) consumes ${fmt((d/p)*100, 1)}% of each daily inbound delivery (${p} units/day) immediately, maximum warehouse inventory drops from <strong>${fmt(eoqImax, 1)} units</strong> (EOQ) down to <strong>${fmt(epqImax, 1)} units</strong> (EPQ)—saving <strong>${Math.abs(spacePct).toFixed(1)}%</strong> in peak storage space and <strong>$${fmt(costSavings, 2)}/yr</strong> in total logistics cost while smoothing dock workloads over ${fmt(epqWindow, 1)}-day windows.`;
+      } else {
+        alertBox.classList.add('hidden');
+        ['epq-Q', 'epq-Imax', 'epq-factor', 'epq-window', 'epq-orderCost', 'epq-holdCost', 'epq-TC', 'diff-space', 'diff-cost'].forEach(id => {
+          document.getElementById(id).textContent = '—';
+        });
+        document.getElementById('eoq-strategy-summary').innerHTML = `<strong>Basic EOQ Computed:</strong> Optimal order size is <strong>${fmt(eoqQ, 2)} units</strong> with a minimum total annual cost of <strong>$${fmt(eoqTC, 2)}</strong>. Enter Daily Demand ($d$) and Inbound Rate ($p$) to compare against Staggered EPQ.`;
+      }
+
+      updateEOQCharts(D, S, H, d, p, eoqQ, eoqImax, epqQ, epqImax, accumFactor);
+    }
+
+    function updateEOQCharts(D, S, H, d, p, eoqQ, eoqImax, epqQ, epqImax, accumFactor) {
+      const eoqCycleDays = d > 0 ? eoqQ / d : 10;
+      const epqCycleDays = (d > 0 && epqQ) ? epqQ / d : eoqCycleDays * 1.25;
+      const epqBuildDays = (p > 0 && epqQ) ? epqQ / p : 4;
+      const maxTime = Math.max(eoqCycleDays, epqCycleDays) * 2;
+
+      const eoqPoints = [{x:0, y:0}, {x:0.001, y:eoqImax}, {x:eoqCycleDays, y:0}, {x:eoqCycleDays+0.001, y:eoqImax}, {x:eoqCycleDays*2, y:0}];
+      const datasetsSaw = [
+        { label: `Basic EOQ (Peak = ${Math.round(eoqImax)})`, data: eoqPoints, showLine: true, borderColor: '#141413', borderWidth: 2, borderDash: [4,4], fill: false }
+      ];
+      if (epqQ && epqImax) {
+        const epqPoints = [{x:0, y:0}, {x:epqBuildDays, y:epqImax}, {x:epqCycleDays, y:0}, {x:epqCycleDays+epqBuildDays, y:epqImax}, {x:epqCycleDays*2, y:0}];
+        datasetsSaw.push({ label: `Staggered EPQ (Peak I_max = ${Math.round(epqImax)})`, data: epqPoints, showLine: true, borderColor: '#1D4ED8', borderWidth: 2.5, fill: true, backgroundColor: 'rgba(29, 78, 216, 0.08)' });
+      }
+
+      const ctxSaw = document.getElementById('sawtoothChart').getContext('2d');
+      if (sawtoothChartInstance) sawtoothChartInstance.destroy();
+      sawtoothChartInstance = new Chart(ctxSaw, {
+        type: 'scatter',
+        data: { datasets: datasetsSaw },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            x: { type: 'linear', min: 0, max: maxTime, title: { display: true, text: 'Time (Days)', font: { size: 11 } } },
+            y: { min: 0, title: { display: true, text: 'Warehouse Inventory (Units)', font: { size: 11 } } }
+          }
+        }
+      });
+
+      const minQ = Math.max(20, Math.round(eoqQ * 0.4));
+      const maxQ = Math.round((epqQ || eoqQ) * 1.75);
+      const step = Math.max(5, Math.round((maxQ - minQ) / 24));
+      let labels = [], eoqTCArr = [], epqTCArr = [];
+
+      for (let q = minQ; q <= maxQ; q += step) {
+        labels.push(q);
+        eoqTCArr.push((D / q) * S + (q / 2) * H);
+        if (epqQ) epqTCArr.push((D / q) * S + (q * accumFactor / 2) * H);
+      }
+
+      const datasetsCost = [
+        { label: 'EOQ Total Cost TC(Q)', data: eoqTCArr, borderColor: '#141413', borderWidth: 2, pointRadius: 0 }
+      ];
+      if (epqQ) {
+        datasetsCost.push({ label: 'EPQ Total Cost TCp(Q)', data: epqTCArr, borderColor: '#1D4ED8', borderWidth: 2.5, pointRadius: 0 });
+      }
+
+      const ctxCost = document.getElementById('costChart').getContext('2d');
+      if (costChartInstance) costChartInstance.destroy();
+      costChartInstance = new Chart(ctxCost, {
+        type: 'line',
+        data: { labels, datasets: datasetsCost },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            x: { title: { display: true, text: 'Order / Batch Size (Q)', font: { size: 11 } } },
+            y: { title: { display: true, text: 'Annual Cost ($)', font: { size: 11 } } }
+          }
+        }
+      });
+    }
+
+    function parseEOQQuestionText() {
+      const txt = document.getElementById('eoq-paste-input').value;
+      if (!txt.trim()) return;
+
+      const dAnnMatch = txt.match(/annual\s+demand[^0-9]*([\d,]+(?:\.\d+)?)/i) || txt.match(/D\s*[=:]\s*([\d,]+)/i);
+      const sMatch = txt.match(/(?:setup|ordering|dispatch)\s+cost[^0-9$]*\$?\s*([\d,]+(?:\.\d+)?)/i) || txt.match(/S\s*[=:]\s*\$?\s*([\d,]+)/i);
+      const hMatch = txt.match(/(?:holding|carrying)\s+cost[^0-9$]*\$?\s*([\d,]+(?:\.\d+)?)/i) || txt.match(/H\s*[=:]\s*\$?\s*([\d,]+)/i);
+      const dDayMatch = txt.match(/daily\s+(?:demand|dispatch)[^0-9]*([\d,]+(?:\.\d+)?)/i) || txt.match(/\(d\)[^0-9]*([\d,]+)/i);
+      const pDayMatch = txt.match(/(?:inbound|production|shuttle|assemble|arriving)[^0-9]*rate[^0-9]*([\d,]+(?:\.\d+)?)/i) || txt.match(/\(p\)[^0-9]*([\d,]+)/i);
+
+      if (dAnnMatch) document.getElementById('input-D').value = dAnnMatch[1].replace(/,/g, '');
+      if (sMatch) document.getElementById('input-S').value = sMatch[1].replace(/,/g, '');
+      if (hMatch) document.getElementById('input-H').value = hMatch[1].replace(/,/g, '');
+      if (dDayMatch) document.getElementById('input-d').value = dDayMatch[1].replace(/,/g, '');
+      if (pDayMatch) document.getElementById('input-p').value = pDayMatch[1].replace(/,/g, '');
+
+      document.getElementById('eoq-case-badge').textContent = "Auto-Extracted";
+      const fb = document.getElementById('eoq-parse-feedback');
+      fb.textContent = "✓ Extracted parameters from question text and updated calculator!";
+      fb.classList.remove('hidden');
+      calculateEOQ();
+    }
+
+    // =====================================================
+    // COLLAPSIBLE RIGHT AI STUDY ASSISTANT ENGINE
+    // =====================================================
+    function toggleAIDrawer() {
+      const drawer = document.getElementById('ai-drawer');
+      drawer.classList.toggle('hidden');
+      drawer.classList.toggle('flex');
+    }
+
+    function toggleAISettings() {
+      document.getElementById('ai-settings-box').classList.toggle('hidden');
+    }
+
+    function askAIQuick(q) {
+      document.getElementById('ai-chat-input').value = q;
+      handleAIChatSubmit(new Event('submit'));
+    }
+
+    async function handleAIChatSubmit(e) {
+      if (e && e.preventDefault) e.preventDefault();
+      const inp = document.getElementById('ai-chat-input');
+      const query = inp.value.trim();
+      if (!query) return;
+      inp.value = '';
+
+      const msgBox = document.getElementById('ai-chat-messages');
+      msgBox.innerHTML += `
+        <div class="p-2.5 rounded-xl bg-[#141413] text-white ml-6">
+          ${query.replace(/</g, '&lt;')}
+        </div>
+      `;
+      msgBox.scrollTop = msgBox.scrollHeight;
+
+      const apiKey = document.getElementById('ai-api-key').value.trim();
+      let replyHTML = "";
+
+      if (apiKey) {
+        try {
+          const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              contents: [{ parts: [{ text: `You are an expert tutor for LGT3301 (Logistics Technologies and Distribution Management). Keep answers concise, clear, and accurate. User question: ${query}` }] }]
+            })
+          });
+          const data = await res.json();
+          if (data.candidates && data.candidates[0]?.content?.parts?.[0]?.text) {
+            replyHTML = data.candidates[0].content.parts[0].text.replace(/\n/g, '<br>');
+          }
+        } catch (err) {
+          replyHTML = "";
+        }
+      }
+
+      if (!replyHTML) {
+        replyHTML = generateLocalAITutorResponse(query);
+      }
+
+      msgBox.innerHTML += `
+        <div class="p-3 rounded-xl bg-[#F3F2EE] text-[#141413] mr-4 leading-relaxed border border-[#E6E4DD]">
+          ${replyHTML}
+        </div>
+      `;
+      msgBox.scrollTop = msgBox.scrollHeight;
+    }
+
+    function generateLocalAITutorResponse(q) {
+      const s = q.toLowerCase();
+      if (s.includes('eoq') || s.includes('epq') || s.includes('imax') || s.includes('staggered')) {
+        return `<strong>EOQ vs. EPQ (Topic 4 & Tutorial 7):</strong><br>• <strong>Basic EOQ:</strong> Assumes instantaneous delivery ($Q^* = \\sqrt{2DS/H}$), so peak storage footprint equals $Q^*$.<br>• <strong>Staggered EPQ:</strong> Goods arrive gradually at rate $p$ while being dispatched at rate $d$ ($p > d$). Optimal batch is $Q_p^* = \\sqrt{\\frac{2DS}{H(1-d/p)}}$ and peak inventory is $I_{\\max} = Q_p^*(1 - d/p)$, reducing warehouse space and dock congestion.`;
+      }
+      if (s.includes('nwcm') || s.includes('north') || s.includes('corner')) {
+        return `<strong>North-West Corner Method (Topic 3 & Tutorial 5):</strong><br>Starts at cell $(F_1, C_1)$ and allocates $\\min(\\text{Supply}, \\text{Demand})$ stepwise toward the bottom-right corner.<br>• <strong>Limitation:</strong> It completely ignores unit transportation costs ($C_{ij}$), so it only provides an initial feasible solution—not the minimum-cost solution.`;
+      }
+      if (s.includes('tlc') || s.includes('volumetric') || s.includes('chargeable') || s.includes('dim') || s.includes('revenue ton')) {
+        return `<strong>Chargeable Weight & Multimodal TLC:</strong><br>• <strong>Air VW:</strong> $\\text{Vol (cm}^3) / 6000$<br>• <strong>Road VW:</strong> $\\text{Vol (cm}^3) / 5000$<br>• <strong>Chargeable Weight (CW):</strong> $\\max(\\text{Actual Wt}, \\text{VW})$<br>• <strong>Sea LCL Revenue Ton (RT):</strong> $\\max(\\text{Metric Tons}, \\text{CBM})$.`;
+      }
+      if (s.includes('scor') || s.includes('eers') || s.includes('value proposition')) {
+        return `<strong>Topic 1 Frameworks:</strong><br>• <strong>Integrative Value Proposition:</strong> Economic Value (Economies of Scale), Market Value (Economies of Scope), Relevancy Value (Customization).<br>• <strong>SCOR 5 Pillars:</strong> Plan, Source, Make, Deliver, Return.<br>• <strong>EERS Diamond:</strong> Effectiveness, Efficiency, Relevancy, Sustainability.`;
+      }
+      if (s.includes('cross') || s.includes('consolidat') || s.includes('break') || s.includes('spot') || s.includes('warehouse')) {
+        return `<strong>Topic 2 Warehousing Benefits:</strong><br>• <strong>Service Benefits:</strong> Spot-Stocking (seasonal), Full-Line Stocking (one-stop), Value-Added Services (postponement).<br>• <strong>Economic Benefits:</strong> Consolidation (combine LTL into FTL), Break-Bulk (split FTL into local deliveries), Cross-Docking (inbound straight to outbound without storage), Mixing, and Reverse Logistics.`;
+      }
+      if (s.includes('abc') || s.includes('pareto') || s.includes('rfid') || s.includes('machine learning')) {
+        return `<strong>Topic 4 Modern Inventory Practices:</strong><br>• <strong>ABC Analysis:</strong> Class A (~20% items = ~80% cost volume, tight control & prime slots), Class B (~30% items = ~15% volume), Class C (~50%+ items = ~5% volume).<br>• <strong>RFID vs. Barcodes:</strong> RFID needs no line-of-sight, reads bulk items fast at dock doors, has longer range, and is read/write.<br>• <strong>ML Demand Sensing:</strong> Best for short-term volatile demand, NPI, and weather-sensitive products.`;
+      }
+      if (s.includes('roa') || s.includes('cash') || s.includes('profit')) {
+        return `<strong>Topic 1 Financial Metrics:</strong><br>• <strong>Strategic Profit Model (ROA):</strong> $\\text{ROA} = \\text{Net Profit} / \\text{Total Assets}$. Reducing inventory via a WMS lowers Total Assets, boosting Asset Turnover and ROA.<br>• <strong>Cash-to-Cash Cycle:</strong> $\\text{DOI} + \\text{DOR} - \\text{DOP}$.`;
+      }
+      return `I can help you with any concept from <strong>Topics 1–4</strong> or the <strong>3 Tutorial Calculators (TLC, NWCM, EOQ/EPQ)</strong>! Try asking about specific terms like <em>"EOQ vs EPQ"</em>, <em>"SCOR model"</em>, <em>"Cross-Docking"</em>, <em>"NWCM limitations"</em>, <em>"ABC Analysis"</em>, or <em>"Cash-to-Cash cycle"</em>.`;
+    }
+
+    // Initialize All Calculators on Blank Template on Load
+    window.onload = () => {
+      loadTLCPreset('blank');
+      loadNWCMPreset('blank');
+      loadEOQPreset('blank');
+    };
+  </script>
+</body>
+</html>
